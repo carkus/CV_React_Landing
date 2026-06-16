@@ -12,9 +12,10 @@ npm run lint       # eslint
 ```
 
 Deployment scripts (PowerShell):
+
 ```powershell
 .\deploy.ps1       # npm run build then WinSCP sync dist/ → root@170.64.223.82:/var/www/carkus.com
-.\deploy-data.ps1  # sync public/data/*.json → c:\_work\carkus-data git repo and push
+.\deploy-data.ps1  # (lives in CV_carkus_landing — not used here; data is managed directly in the carkus-data repo)
 ```
 
 ## Architecture
@@ -27,7 +28,7 @@ This is a React 19 + TypeScript personal CV/portfolio site for Mark Scicluna, co
 - `src/pages/Home.tsx` — assembles all section components and wires the scroll-reveal IntersectionObserver (adds `.visible` to `.reveal` elements).
 - `src/pages/Profile.tsx` — standalone page with full reference letters, YouTube embeds, a local `.MOV` video, and press links. Has its own sticky nav; does not use the shared NavBar.
 
-**Data loading:** Each data-driven component fetches from `/data/*.json` on mount with a hardcoded fallback array matching the JSON shape. The JSON files live in `public/data/` and are served statically. No global state — each component owns its fetch.
+**Data loading:** Each data-driven component fetches from `https://raw.githubusercontent.com/carkus/carkus-data/main/*.json` on mount with a hardcoded fallback array matching the JSON shape. Data is managed directly in the `carkus-data` GitHub repo. No global state — each component owns its fetch.
 
 **CSS:** All styles are in `src/index.css` — a single flat file using CSS custom properties (`--ink`, `--navy`, `--slate`, `--steel`, `--mist`, `--silver`, `--chalk`, `--accent`, `--accent2`). No CSS modules, no Tailwind. The `App.css` from the Vite scaffold is unused and can be deleted.
 
