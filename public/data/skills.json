@@ -1,0 +1,21 @@
+[
+  { "name": "Flutter/Dart",        "cat": "Mobile",       "icon": "devicon-flutter-plain colored",     "pct": 95 },
+  { "name": "Swift / SwiftUI",     "cat": "iOS",          "icon": "devicon-swift-plain colored",       "pct": 92 },
+  { "name": "visionOS",            "cat": "Spatial",      "icon": "devicon-apple-plain",               "pct": 90 },
+  { "name": "Blazor",              "cat": "Web",          "icon": "devicon-blazor-plain colored",      "pct": 90 },
+  { "name": "Claude API",          "cat": "AI",           "icon": "◆",                                 "pct": 88 },
+  { "name": "React",               "cat": "Web",          "icon": "devicon-react-original colored",    "pct": 86 },
+  { "name": "C#",                  "cat": "Language",     "icon": "devicon-csharp-plain colored",      "pct": 86 },
+  { "name": "TypeScript",          "cat": "Language",     "icon": "devicon-typescript-plain colored",  "pct": 82 },
+  { "name": "RealityKit",          "cat": "Spatial",      "icon": "devicon-apple-plain",               "pct": 82 },
+  { "name": "Kotlin",              "cat": "Android",      "icon": "devicon-kotlin-plain colored",      "pct": 80 },
+  { "name": "AI Planning",         "cat": "Research",     "icon": "◆",                                 "pct": 78 },
+  { "name": "Gemini API",          "cat": "AI",           "icon": "devicon-google-plain colored",      "pct": 78 },
+  { "name": "Git / CI·CD",         "cat": "Tooling",      "icon": "devicon-git-plain colored",         "pct": 75 },
+  { "name": "Python",              "cat": "Scripting",    "icon": "devicon-python-plain colored",      "pct": 74 },
+  { "name": "UIKit",               "cat": "iOS",          "icon": "devicon-xcode-plain colored",       "pct": 72 },
+  { "name": "ASP.NET Core",        "cat": "Backend",      "icon": "devicon-dotnetcore-plain colored",  "pct": 70 },
+  { "name": "Jetpack Compose",     "cat": "Android",      "icon": "devicon-android-plain colored",     "pct": 70 },
+  { "name": "ARKit",               "cat": "Spatial",      "icon": "devicon-apple-plain",               "pct": 66 },
+  { "name": "systemd",             "cat": "DevOps",       "icon": "devicon-linux-plain colored",       "pct": 60 }
+]

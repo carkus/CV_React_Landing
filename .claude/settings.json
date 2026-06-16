@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(New-Item -ItemType Directory -Force \"c:\\\\_work\\\\CV_React_Landing\\\\src\\\\components\")",
+      "PowerShell(New-Item -ItemType Directory -Force \"c:\\\\_work\\\\CV_React_Landing\\\\src\\\\pages\")"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\dicar\\.claude\\projects\\c---work-CV-React-Landing\\memory"
+    ]
+  }
+}
