@@ -25,6 +25,7 @@ This is a React 19 + TypeScript personal CV/portfolio site for Mark Scicluna, co
 **Routing:** `src/App.tsx` — two routes via react-router-dom BrowserRouter: `/` (Home) and `/profile` (Profile).
 
 **Pages:**
+
 - `src/pages/Home.tsx` — assembles all section components and wires the scroll-reveal IntersectionObserver (adds `.visible` to `.reveal` elements).
 - `src/pages/Profile.tsx` — standalone page with full reference letters, YouTube embeds, a local `.MOV` video, and press links. Has its own sticky nav; does not use the shared NavBar.
 
