@@ -14,7 +14,7 @@ export default function ExpertiseSection() {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    fetch('/data/expertise.json')
+    fetch('https://raw.githubusercontent.com/carkus/carkus-data/main/expertise.json')
       .then(r => r.json())
       .then((data: ExpertisePanel[]) => { if (data?.length) setPanels(data); })
       .catch(() => {});

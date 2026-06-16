@@ -33,7 +33,7 @@ export default function HeroSection() {
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
-    fetch('/data/workitems.json')
+    fetch('https://raw.githubusercontent.com/carkus/carkus-data/main/workitems.json')
       .then(r => r.json())
       .then((data: WorkItem[]) => {
         const featured = data.filter(i => i.featured);

@@ -12,7 +12,7 @@ export default function TimelineSection() {
   const [entries, setEntries] = useState<TimelineEntry[]>(FALLBACK);
 
   useEffect(() => {
-    fetch('/data/timeline.json')
+    fetch('https://raw.githubusercontent.com/carkus/carkus-data/main/timeline.json')
       .then(r => r.json())
       .then((data: TimelineEntry[]) => { if (data?.length) setEntries(data); })
       .catch(() => {});

@@ -42,7 +42,7 @@ export default function SkillsSection() {
   const boardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    fetch('/data/skills.json')
+    fetch('https://raw.githubusercontent.com/carkus/carkus-data/main/skills.json')
       .then(r => r.json())
       .then((data: Skill[]) => { if (data?.length) setSkills(data); })
       .catch(() => {});

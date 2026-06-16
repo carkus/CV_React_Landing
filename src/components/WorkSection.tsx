@@ -49,7 +49,7 @@ export default function WorkSection() {
   const [rows, setRows] = useState<Row[]>(() => buildRows(FALLBACK));
 
   useEffect(() => {
-    fetch('/data/workitems.json')
+    fetch('https://raw.githubusercontent.com/carkus/carkus-data/main/workitems.json')
       .then(r => r.json())
       .then((data: WorkItem[]) => { if (data?.length) setRows(buildRows(data)); })
       .catch(() => {});
