@@ -18,8 +18,9 @@ export default function AboutSection() {
               Engineer by craft,<br /><em>builder by instinct</em>
             </h2>
             <div className="about-text reveal reveal-delay-2">
-              <p>Over a decade of shipping cross-platform software — my core focus is now in AI-assisted development and integration across Swift/SwiftUI, Flutter, .NET, and Kotlin, via the Claude and Gemini APIs — wiring intelligent behaviour into production mobile and web apps.</p>
-              <p>For 8 years I was a core engineer on ZOME at Rhizomenet — spanning Flutter, iOS, Android, and visionOS. Away from that, I've built web-based tools that use AI for catering content to users' preferences, document analysis, and forms generation.</p>
+              <p>Over a decade shipping cross-platform software — Swift/SwiftUI, React/React Native, .NET — and now into AI development and integration via the Claude and Gemini APIs. Our skills gained through hard work now inform us in how and what we build.</p>
+              <p>For 8 years I was a core engineer on ZOME at Rhizomenet — spanning native iOS, Android, Flutter, and visionOS. React has remained my consistent web toolkit.</p>
+              <p>Recent tools I've built use AI for catering content to users' preferences, document analysis, and forms generation.</p>
               <p>I hold an MSc in Computer Science (Distinction) from RMIT, with my main research in robotics task-planning and search efficiency. I'm drawn most recently to AI-augmented interfaces and spatial computing experiences.</p>
             </div>
             <div className="about-stats reveal reveal-delay-3">

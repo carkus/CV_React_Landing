@@ -65,7 +65,11 @@ export default function HeroSection() {
           <div className="hero-eyebrow">Senior Software Engineer</div>
           <h1 className="hero-name">Mark<br /><em>Scicluna</em></h1>
           <p className="hero-title">Cross-Platform · Spatial Computing · AI Systems</p>
-          <p className="hero-desc">Building production-grade experiences across mobile, spatial, and web — from Flutter and SwiftUI to visionOS and Blazor. Based in Melbourne. 10+ years shipping real products.</p>
+          <div className="hero-desc">
+            <p>Production-grade cross platform experiences — from React/Native, SwiftUI and Flutter, to visionOS and Blazor.</p>
+            <p>Senior level AI-assisted development.</p>
+            <p>Based in Melbourne. 10+ years shipping real products.</p>
+          </div>
           <Link to="/profile" className="btn-ghost btn-profile-link">Profile, References &amp; Media ↗</Link>
           <div className="hero-ctas">
             <a href="#work" className="btn-primary">View Work →</a>

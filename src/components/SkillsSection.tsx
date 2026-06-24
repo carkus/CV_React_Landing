@@ -2,16 +2,16 @@ import { useEffect, useRef, useState } from 'react';
 import type { Skill } from '../types';
 
 const FALLBACK: Skill[] = [
-  { name: 'Flutter/Dart',        cat: 'Mobile',       icon: 'devicon-flutter-plain colored',    pct: 95 },
-  { name: 'Swift / SwiftUI',     cat: 'iOS',          icon: 'devicon-swift-plain colored',      pct: 92 },
+  { name: 'Flutter/Dart',        cat: 'Mobile',       icon: 'devicon-flutter-plain colored',    pct: 92 },
+  { name: 'Swift / SwiftUI',     cat: 'Mobile',       icon: 'devicon-swift-plain colored',      pct: 92 },
   { name: 'visionOS',            cat: 'Spatial',      icon: 'devicon-apple-plain',              pct: 90 },
-  { name: 'Blazor',              cat: 'Web',          icon: 'devicon-blazor-plain colored',     pct: 90 },
-  { name: 'Claude API',          cat: 'AI',           icon: '◆',                                pct: 88 },
-  { name: 'React',               cat: 'Web',          icon: 'devicon-react-original colored',   pct: 86 },
+  { name: 'React',               cat: 'Web',          icon: 'devicon-react-original colored',   pct: 90 },
+  { name: 'Claude API',          cat: 'AI',           icon: '◆',                                pct: 86 },
   { name: 'C#',                  cat: 'Language',     icon: 'devicon-csharp-plain colored',     pct: 86 },
+  { name: 'Blazor',              cat: 'Web',          icon: 'devicon-blazor-plain colored',     pct: 84 },
   { name: 'TypeScript',          cat: 'Language',     icon: 'devicon-typescript-plain colored', pct: 82 },
-  { name: 'RealityKit',          cat: 'Spatial',      icon: 'devicon-apple-plain',              pct: 82 },
-  { name: 'Kotlin',              cat: 'Android',      icon: 'devicon-kotlin-plain colored',     pct: 80 },
+  { name: 'React Native',        cat: 'Mobile',       icon: 'devicon-react-original colored',   pct: 80 },
+  { name: 'Kotlin',              cat: 'Mobile',       icon: 'devicon-kotlin-plain colored',     pct: 80 },
   { name: 'AI Planning',         cat: 'Research',     icon: '◆',                                pct: 78 },
   { name: 'Gemini API',          cat: 'AI',           icon: 'devicon-google-plain colored',     pct: 78 },
   { name: 'Git / CI·CD',         cat: 'Tooling',      icon: 'devicon-git-plain colored',        pct: 75 },
@@ -90,7 +90,7 @@ export default function SkillsSection() {
       <div className="section-inner">
         <div className="section-eyebrow reveal">Skills</div>
         <h2 className="section-heading reveal reveal-delay-1">The toolkit</h2>
-        <p className="section-intro reveal reveal-delay-2">Senior software engineer with 10+ years shipping cross-platform products — mobile-first across Flutter and Swift/SwiftUI, spatial computing on visionOS and RealityKit, and AI-integrated web applications in Blazor. Increasingly focused on wiring Claude and Gemini APIs into production apps.</p>
+        <p className="section-intro reveal reveal-delay-2">Ten years of shipping across stacks — Swift, Flutter, React, visionOS. The work that interests me most now sits at the intersection of those platforms and AI: integrating Claude and Gemini into apps that assist the user intelligently.</p>
         <p className="section-sub reveal reveal-delay-3">High proficiency covers technology I have used in my daily work over a period of years. My extended stack is what I reach for regularly and know well, and other skills round out the rest.</p>
       </div>
       <div className="section-inner" style={{ paddingTop: 0 }}>
