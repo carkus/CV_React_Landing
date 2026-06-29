@@ -15,7 +15,7 @@ export default function AboutSection() {
           <div>
             <div className="section-eyebrow reveal">About</div>
             <h2 className="section-heading reveal reveal-delay-1">
-              Engineer by craft,<br /><em>builder by instinct</em>
+              Mobile, Web, AI<br /><em>One Engineer</em>
             </h2>
             <div className="about-text reveal reveal-delay-2">
               <p>Over a decade shipping cross-platform software — Swift/SwiftUI, React/React Native, .NET — and now into AI development and integration via the Claude and Gemini APIs. Our skills gained through hard work now inform us in how and what we build.</p>
