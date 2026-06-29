@@ -142,7 +142,7 @@ nav {
 
 /* ── SECTION BASE ────────────────────────────────────────────── */
 section { padding: 7rem 0; }
-.section-inner { max-width: 1280px; margin: 0 auto; padding-left: 3rem; padding-right: 3rem; }
+.section-inner { max-width: 1280px; margin: 0 auto; padding-left: var(--pad-x); padding-right: var(--pad-x); }
 .section-inner--no-top { padding-top: 0; }
 .section-eyebrow {
     font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.22em;
@@ -453,7 +453,8 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
     .skills-board { grid-template-columns: 1fr; }
     .work-row-wn, .work-row-nw, .work-row-eq { grid-template-columns: 1fr; }
     .work-item-featured, .work-item-wide { grid-column: auto; }
-    .work-grid-data { grid-template-columns: 1fr; }
+    .work-grid, .work-grid-data { grid-template-columns: 1fr; margin-left: calc(-1 * var(--pad-x) + 0.5rem); margin-right: calc(-1 * var(--pad-x) + 0.5rem); }
+    .work-subsection-header { padding-left: 1rem; padding-right: 1rem; }
     .work-item-w25, .work-item-w33, .work-item-w50, .work-item-w66, .work-item-w75, .work-item-w100 { grid-column: auto; }
     .work-item-info { transform: translateY(0); }
     .expertise-panel { width: 85vw; }

@@ -2,12 +2,12 @@ import { Fragment, useEffect, useState } from 'react';
 import type { WorkItem } from '../types';
 
 const FALLBACK: WorkItem[] = [
-  { subsection: 'Front', title: 'ZOME — Cross-platform product suite', tags: ['Flutter', 'Swift', 'Kotlin', 'visionOS'], imageUrl: 'https://images.unsplash.com/photo-1759661990336-51bd4b951fea?w=900&q=80', imageAlt: 'ZOME platform', description: 'End-to-end product suite spanning iOS, Android, and Apple Vision Pro — built with Flutter and native platform SDKs.', featured: true, links: [{ label: 'App Store ↗', url: 'https://itunes.apple.com/us/app/zome/id1382123356?ls=1&mt=8' }, { label: 'Play Store ↗', url: 'https://play.google.com/store/apps/details?id=com.zomecorp.zome' }] },
+  { subsection: 'Frontend', title: 'ZOME — Cross-platform product suite', tags: ['Flutter', 'Swift', 'Kotlin', 'visionOS'], imageUrl: 'https://images.unsplash.com/photo-1759661990336-51bd4b951fea?w=900&q=80', imageAlt: 'ZOME platform', description: 'End-to-end product suite spanning iOS, Android, and Apple Vision Pro — built with Flutter and native platform SDKs.', featured: true, links: [{ label: 'App Store ↗', url: 'https://itunes.apple.com/us/app/zome/id1382123356?ls=1&mt=8' }, { label: 'Play Store ↗', url: 'https://play.google.com/store/apps/details?id=com.zomecorp.zome' }] },
   { title: 'Chatty Prayers', tags: ['Blazor', 'C#', 'AI'], imageUrl: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&q=80', imageAlt: 'Chatty Prayers', description: 'AI-assisted prayer and devotional web app built with Blazor WebAssembly.', featured: false, links: [] },
   { title: 'Spatial UI Components', tags: ['visionOS', 'RealityKit'], imageUrl: 'https://images.unsplash.com/photo-1713445289643-fa1902dd9a03?w=600&q=80', imageAlt: 'visionOS spatial', description: 'A library of reusable spatial UI components for Apple Vision Pro using RealityKit and SwiftUI.', featured: false, links: [] },
   { title: 'PDF Form Builder', tags: ['Blazor', 'PDF Generation', 'AI'], imageUrl: 'https://images.unsplash.com/photo-1602407294553-6ac9170b3ed0?w=600&q=80', imageAlt: 'CV Builder', description: 'A browser-based drag-and-drop editor for building and exporting PDF forms, now featuring AI-powered form generation.', featured: true, links: [{ label: 'Open Editor ↗', url: 'https://editor.carkus.com/form-editor' }] },
   { title: 'Search in Robotic Task Planning', tags: ['Research', 'AI Planning'], imageUrl: 'https://images.unsplash.com/photo-1647427060118-4911c9821b82?w=600&q=80', imageAlt: 'Robotics research', description: 'Academic research into heuristic search algorithms applied to autonomous robotic task planning.', featured: false, links: [] },
-  { subsection: 'Back', title: 'ChattyPrayers.Api', tags: ['ASP.NET Core', 'Claude API', 'Gemini API', 'Ollama', 'RAG'], imageUrl: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&q=80', imageAlt: 'Server infrastructure', description: 'ASP.NET Core API powering streaming chat, multi-participant AI debate, SVG generation, and RAG-based conversation search via Ollama embeddings.', featured: false, links: [] },
+  { subsection: 'Backend', title: 'ChattyPrayers.Api', tags: ['ASP.NET Core', 'Claude API', 'Gemini API', 'Ollama', 'RAG'], imageUrl: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&q=80', imageAlt: 'Server infrastructure', description: 'ASP.NET Core API powering streaming chat, multi-participant AI debate, SVG generation, and RAG-based conversation search via Ollama embeddings.', featured: false, links: [] },
   { title: 'MarkdownForms.Api', tags: ['.NET Core', 'Markdown', 'PDF Generation', 'Claude API'], imageUrl: 'https://images.unsplash.com/photo-1555066931-4365d14431b9?w=600&q=80', imageAlt: 'Code editor', description: 'A .NET API that renders and processes dynamic form schemas defined in Markdown — PDF export with AcroForm generation and AI-assisted field population.', featured: false, links: [] },
 ];
 
@@ -89,7 +89,7 @@ export default function WorkSection() {
         <h2 className="section-heading reveal reveal-delay-1">Selected projects</h2>
         <div className="work-summation reveal reveal-delay-2">
           <div className="work-summation-col">
-            <div className="work-summation-label">Front</div>
+            <div className="work-summation-label">Frontend</div>
             <p className="work-summation-text">Spatial computing, cross-platform mobile, and AI-integrated web — shipping to App Store, Play Store, and Vision Pro from a single Flutter codebase, native Swift/SwiftUI for iOS and visionOS, and Blazor/React for the web layer. Claude and Gemini APIs wired directly into the UI.</p>
             <div className="work-summation-tags">
               {['Flutter', 'Swift / SwiftUI', 'visionOS', 'React', 'Blazor', 'Claude API', 'Gemini API'].map(t => <span key={t} className="skill-box work-tag">{t}</span>)}
@@ -97,7 +97,7 @@ export default function WorkSection() {
           </div>
           <div className="work-summation-divider" />
           <div className="work-summation-col">
-            <div className="work-summation-label">Back</div>
+            <div className="work-summation-label">Backend</div>
             <p className="work-summation-text">API-first .NET backends — streaming AI over SSE, multi-provider LLM orchestration with Ollama fallback, RAG via embedding search, and document pipelines with PDF generation. Structured prompt engineering with validated, typed outputs.</p>
             <div className="work-summation-tags">
               {['ASP.NET Core', '.NET', 'Ollama', 'RAG', 'PDF Generation', 'Multi-provider LLM'].map(t => <span key={t} className="skill-box work-tag">{t}</span>)}
