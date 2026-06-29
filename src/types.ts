@@ -19,6 +19,7 @@ export interface WorkItem {
   credit?: WorkCredit;
   imagePosition?: string;
   width?: 25 | 33 | 50 | 66 | 75 | 100;
+  subsection?: string;
 }
 
 export interface Skill {

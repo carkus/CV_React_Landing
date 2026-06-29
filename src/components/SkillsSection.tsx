@@ -48,6 +48,7 @@ export default function SkillsSection() {
       .catch(() => {});
   }, []);
 
+  // Skill bar cascade — reads data-pct from each row to set --pct
   useEffect(() => {
     const board = boardRef.current;
     if (!board) return;
@@ -66,6 +67,7 @@ export default function SkillsSection() {
     const cascade = () => {
       board.querySelectorAll<HTMLElement>('.skills-col').forEach(col => {
         col.querySelectorAll<HTMLElement>('.skill-row').forEach((row, i) => {
+          row.style.setProperty('--pct', row.dataset.pct ?? '0%');
           const t = setTimeout(() => {
             const fill = row.querySelector<HTMLElement>('.skill-row-bar-fill');
             if (fill) fill.style.transition = '';
@@ -93,13 +95,14 @@ export default function SkillsSection() {
         <p className="section-intro reveal reveal-delay-2">Ten years of shipping across stacks — Swift, Flutter, React, visionOS. The work that interests me most now sits at the intersection of those platforms and AI: integrating Claude and Gemini into apps that assist the user intelligently.</p>
         <p className="section-sub reveal reveal-delay-3">High proficiency covers technology I have used in my daily work over a period of years. My extended stack is what I reach for regularly and know well, and other skills round out the rest.</p>
       </div>
-      <div className="section-inner" style={{ paddingTop: 0 }}>
+
+      <div className="section-inner section-inner--no-top">
         <div className="skills-board" id="skillsBoard" ref={boardRef}>
           {cols.map(col => (
             <div key={col.header} className="skills-col">
               <div className="skills-col-header">{col.header}</div>
               {col.skills.map(s => (
-                <div key={s.name} className="skill-row" style={{ '--pct': `${s.pct}%` } as React.CSSProperties}>
+                <div key={s.name} className="skill-row" data-pct={`${s.pct}%`}>
                   <div className="skill-row-identity">
                     <div className="skill-row-icon"><SkillIcon icon={s.icon} /></div>
                     <div>
