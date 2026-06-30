@@ -67,6 +67,15 @@ function SkillIcon({ icon }: { icon: string }) {
   return <span>{icon}</span>;
 }
 
+function SkillTag({ s }: { s: Skill }) {
+  return (
+    <span className="skill-box etag">
+      <span className="etag-icon"><SkillIcon icon={s.icon} /></span>
+      {s.name}
+    </span>
+  );
+}
+
 export default function SkillsSection() {
   const [data, setData] = useState<SkillsJson>(FALLBACK_DATA);
   const boardRef = useRef<HTMLDivElement>(null);
@@ -164,7 +173,7 @@ export default function SkillsSection() {
           <div className="skills-other-box">
             <div className="skills-col-header">AI</div>
             <div className="skills-other">
-              {aiGroup.skills.map(s => <span key={s.name} className="skill-box etag">{s.name}</span>)}
+              {aiGroup.skills.map(s => <SkillTag key={s.name} s={s} />)}
             </div>
           </div>
         )}
@@ -172,7 +181,7 @@ export default function SkillsSection() {
           <div className="skills-other-box">
             <div className="skills-col-header">AR/VR</div>
             <div className="skills-other">
-              {arVrGroup.skills.map(s => <span key={s.name} className="skill-box etag">{s.name}</span>)}
+              {arVrGroup.skills.map(s => <SkillTag key={s.name} s={s} />)}
             </div>
           </div>
         )}
@@ -180,7 +189,7 @@ export default function SkillsSection() {
           <div className="skills-other-box">
             <div className="skills-col-header">Other Skills</div>
             <div className="skills-other">
-              {otherSkills.map(s => <span key={s.name} className="skill-box etag">{s.name}</span>)}
+              {otherSkills.map(s => <SkillTag key={s.name} s={s} />)}
             </div>
           </div>
         )}

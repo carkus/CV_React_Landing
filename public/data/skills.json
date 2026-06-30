@@ -56,6 +56,7 @@
   },
   "Other": {
     "skills": [
+      { "name": "NodeJS",          "icon": "devicon-nodejs-plain colored",     "pct": 80 },
       { "name": "Git / CI·CD",     "icon": "devicon-git-plain colored",        "pct": 75 },
       { "name": "systemd",         "icon": "devicon-linux-plain colored",      "pct": 60 },
       { "name": ".NET",            "icon": "devicon-dotnetcore-plain colored", "pct": 78 },
