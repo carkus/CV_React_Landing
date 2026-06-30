@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { ExpertisePanel } from '../types';
 
 const FALLBACK: ExpertisePanel[] = [
-  { num: '01', img: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=380&q=70', alt: 'Mobile', title: 'Mobile Engineering', desc: 'Production experience across Flutter, SwiftUI, React Native, and Kotlin — including complex native integrations, build pipelines, and lifecycle management.', tags: ['Flutter', 'SwiftUI', 'React Native', 'Jetpack Compose/Kotlin'] },
+  { num: '01', img: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=380&q=70', alt: 'Mobile', title: 'Mobile Engineering', desc: 'Production experience across cross-platform, SwiftUI, React Native, and Kotlin — including complex native integrations, build pipelines, and lifecycle management.', tags: ['Cross-platform', 'SwiftUI', 'React Native', 'Jetpack Compose/Kotlin'] },
   { num: '02', img: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=380&q=70', alt: 'Web', title: 'Web & Backend', desc: 'React as a primary web toolkit, with Blazor WebAssembly for .NET-integrated projects. ASP.NET Core APIs, deployment on DigitalOcean, and TypeScript throughout.', tags: ['React', 'Blazor WASM', 'C#', 'ASP.NET Core'] },
   { num: '03', img: 'https://images.unsplash.com/photo-1676299081847-824916de030a?w=380&q=70', alt: 'AI', title: 'AI & Research', desc: 'MSc thesis on heuristic search in robotic task planning. Applied AI integration via Anthropic Claude and Gemini APIs in production chat and content systems.', tags: ['Heuristic Search', 'Task Planning', 'Claude API', 'Gemini'] },
   { num: '04', img: 'https://images.unsplash.com/photo-1617802690992-15d93263d3a9?w=380&q=70', alt: 'Spatial', title: 'Spatial Computing', desc: 'Early visionOS developer. RealityKit, ARKit, hand-tracking gesture systems, custom animation via FromToByAnimation, and spatial UI architecture.', tags: ['visionOS', 'RealityKit', 'ARKit', 'SwiftUI'] },
@@ -14,7 +14,7 @@ export default function ExpertiseSection() {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    fetch('https://raw.githubusercontent.com/carkus/carkus-data/main/expertise.json')
+    fetch('/data/expertise.json')
       .then(r => r.json())
       .then((data: ExpertisePanel[]) => { if (data?.length) setPanels(data); })
       .catch(() => {});

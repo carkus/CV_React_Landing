@@ -5,7 +5,7 @@ import type { WorkItem } from '../types';
 const FALLBACK: WorkItem[] = [
   {
     title: 'ZOME — Spatial Messenger',
-    tags: ['Flutter', 'Swift', 'Kotlin', 'visionOS'],
+    tags: ['Cross-platform', 'Swift', 'Kotlin', 'visionOS'],
     imageUrl: 'https://images.unsplash.com/photo-1759661990336-51bd4b951fea?w=600&q=80',
     imageAlt: 'ZOME platform',
     description: '',
@@ -33,7 +33,7 @@ export default function HeroSection() {
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
-    fetch('https://raw.githubusercontent.com/carkus/carkus-data/main/workitems.json')
+    fetch('/data/workitems.json')
       .then(r => r.json())
       .then((data: WorkItem[]) => {
         const featured = data.filter(i => i.featured);
@@ -66,7 +66,7 @@ export default function HeroSection() {
           <h1 className="hero-name">Mark<br /><em>Scicluna</em></h1>
           <p className="hero-title">Cross-Platform · Spatial Computing · AI Systems</p>
           <div className="hero-desc">
-            <p>Production-grade cross platform experiences — from React/Native, SwiftUI and Flutter, to visionOS and Blazor.</p>
+            <p>Production-grade cross-platform experiences — from React/Native and SwiftUI, to visionOS and Blazor.</p>
             <p>Senior level AI-assisted development.</p>
             <p>Based in Melbourne. 10+ years shipping real products.</p>
           </div>

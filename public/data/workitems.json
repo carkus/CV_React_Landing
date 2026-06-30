@@ -1,0 +1,96 @@
+[
+  {
+    "subsection": "Frontend",
+    "title": "PDF Builder",
+    "tags": ["Blazor", "PDF Generation", "Claude API", "Structured Prompting"],
+    "imageUrl": "/img/pdf_form.png",
+    "imageAlt": "PDF Form Builder",
+    "imagePosition": "calc(50% - 50px) center",
+    "description": "Drag-and-drop PDF editor with AI form generation — describe a form in plain text and Claude generates the fields, layout, and pre-filled values via structured prompt engineering.",
+    "featured": true,
+    "width": 33,
+    "links": [
+      { "label": "Open Form Builder ↗", "url": "https://editor.carkus.com/form-editor" }
+    ]
+  },
+  {
+    "title": "Chatty Prayers — AI Debates, and Counsel",
+    "tags": ["Blazor", "Claude API", "Gemini API"],
+    "imageUrl": "/img/chatty_prayers.png",
+    "imageAlt": "Chatty Prayers",
+    "description": "Personality-driven AI platform with one-on-one chat, confidant reflection, and structured multi-participant debate — built with Blazor and the Claude and Gemini APIs.",
+    "featured": true,
+    "width": 66,
+    "links": [
+      { "label": "Open Chatty Prayers ↗", "url": "https://moot.carkus.com" }
+    ]
+  },
+  {
+    "title": "ZOME — Spatial Messenger",
+    "tags": ["Cross-platform", "Swift", "Kotlin", "visionOS"],
+    "imageUrl": "/img/ZOME_branding.png",
+    "imageAlt": "ZOME platform",
+    "description": "ZOME is a spatial platform and messenger where you can plant your messages anywhere in the world, at any location and even points in time.",
+    "featured": true,
+    "width": 66,
+    "links": [
+      { "label": "App Store ↗", "url": "https://itunes.apple.com/us/app/zome/id1382123356?ls=1&mt=8" },
+      { "label": "Play Store ↗", "url": "https://play.google.com/store/apps/details?id=com.zomecorp.zome" }
+    ]
+  },
+  {
+    "title": "JobFit™ — AI Job Match Analyser",
+    "tags": ["TypeScript", ".NET", "Claude API", "Gemini API", "Structured Output", "Multi-provider"],
+    "imageUrl": "https://images.unsplash.com/photo-1686771416282-3888ddaf249b?w=600&q=80",
+    "imageAlt": "Job interview handshake",
+    "description": "AI-powered tool that scores a CV against a job description, surfaces skill gaps, and drafts a cover letter.",
+    "featured": false,
+    "width": 33,
+    "links": [
+      { "label": "Open JobFit ↗", "url": "https://jobfit.carkus.com" }
+    ],
+    "credit": { "name": "Mina Rad", "url": "https://unsplash.com/@miinrad" }
+  },
+  {
+    "title": "Spatial UI Components",
+    "tags": ["visionOS", "RealityKit"],
+    "imageUrl": "/img/spatial_architect.png",
+    "imageAlt": "Spatial UI Components",
+    "description": "A library of reusable spatial UI components for Apple Vision Pro using RealityKit and SwiftUI.",
+    "featured": false,
+    "width": 50,
+    "links": []
+  },
+  {
+    "title": "Search in Robotic Task Planning",
+    "tags": ["AI Research", "Robotics Task Planning"],
+    "imageUrl": "https://images.unsplash.com/photo-1647427060118-4911c9821b82?w=600&q=80",
+    "imageAlt": "Robotics research",
+    "description": "Academic research into heuristic search and efficiency for algorithms applied to autonomous robotic task planning.",
+    "featured": false,
+    "width": 50,
+    "links": []
+  },
+  {
+    "subsection": "Backend",
+    "title": "ChattyPrayers.Api",
+    "tags": ["ASP.NET Core", "Claude API", "Gemini API", "Ollama", "RAG"],
+    "imageUrl": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&q=80",
+    "imageAlt": "Server infrastructure",
+    "description": "ASP.NET Core API powering streaming chat, multi-participant AI debate, SVG generation, and RAG-based conversation search via Ollama embeddings.",
+    "featured": false,
+    "width": 40,
+    "links": []
+  },
+  {
+    "title": "MarkdownForms.Api",
+    "tags": [".NET Core", "Markdown", "PDF Generation", "Claude API"],
+    "imageUrl": "/img/kelly-sikkema-6fIxFaOvwHQ-unsplash.jpg",
+    "imageAlt": "Code editor",
+    "description": "A .NET API that renders and processes dynamic form schemas defined in Markdown — PDF export with AcroForm generation and AI-assisted field population.",
+    "featured": false,
+    "width": 60,
+    "links": [],
+    "credit": { "name": "Kelly Sikkema", "url": "https://unsplash.com/@kellysikkema" }
+  }
+]

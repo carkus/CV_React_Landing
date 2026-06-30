@@ -18,7 +18,7 @@ export interface WorkItem {
   links: WorkLink[];
   credit?: WorkCredit;
   imagePosition?: string;
-  width?: 25 | 33 | 50 | 66 | 75 | 100;
+  width?: number;
   subsection?: string;
 }
 

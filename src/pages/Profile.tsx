@@ -25,8 +25,8 @@ export default function Profile() {
           <div className="pf-section-label">About</div>
           <div className="pf-about-grid">
             <div className="pf-about-text">
-              <p>Over a decade of shipping cross-platform software — my core focus is now in AI-assisted development and integration across Swift/SwiftUI, Flutter, .NET, and Kotlin, via the Claude and Gemini APIs — wiring intelligent behaviour into production mobile and web apps.</p>
-              <p>For 8 years I was a core engineer on ZOME at Rhizomenet — spanning Flutter, iOS, Android, and visionOS. Away from that, I've built web-based tools that use AI for catering content to users' preferences, document analysis, and forms generation.</p>
+              <p>Over a decade of shipping cross-platform software — my core focus is now in AI-assisted development and integration across Swift/SwiftUI, cross-platform mobile, .NET, and Kotlin, via the Claude and Gemini APIs — wiring intelligent behaviour into production mobile and web apps.</p>
+              <p>For 8 years I was a core engineer on ZOME at Rhizomenet — spanning cross-platform, iOS, Android, and visionOS. Away from that, I've built web-based tools that use AI for catering content to users' preferences, document analysis, and forms generation.</p>
               <p>I hold an MSc in Computer Science (Distinction) from RMIT, with my main research in robotics task-planning and search efficiency. I'm drawn most recently to AI-augmented interfaces and spatial computing experiences.</p>
             </div>
             <div className="pf-stats">

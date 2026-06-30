@@ -18,10 +18,9 @@ export default function AboutSection() {
               Mobile, Web, AI<br /><em>One Engineer</em>
             </h2>
             <div className="about-text reveal reveal-delay-2">
-              <p>Over a decade shipping cross-platform software — Swift/SwiftUI, React/React Native, .NET — and now into AI development and integration via the Claude and Gemini APIs. Our skills gained through hard work now inform us in how and what we build.</p>
-              <p>For 8 years I was a core engineer on ZOME at Rhizomenet — spanning native iOS, Android, Flutter, and visionOS. React has remained my consistent web toolkit.</p>
-              <p>Recent tools I've built use AI for catering content to users' preferences, document analysis, and forms generation.</p>
-              <p>I hold an MSc in Computer Science (Distinction) from RMIT, with my main research in robotics task-planning and search efficiency. I'm drawn most recently to AI-augmented interfaces and spatial computing experiences.</p>
+              <p>Over a decade shipping cross-platform mobile software in Swift/SwiftUI, Flutter, and React Native, alongside web development in React and Blazor/.NET. More recently, I've moved into AI development and integration, building on those platforms with the Claude and Gemini APIs.</p>
+              <p>For 8 years I was a core engineer on ZOME at Rhizomenet — spanning native iOS, Android, cross-platform, and visionOS. React has remained my consistent web toolkit.</p>
+              <p>I am actively continuing my Master's work in automation, exploring the progress of AI and its emerging applications, implications, and opportunities. Recent tools I've built use AI for tailoring content to user preferences, document analysis, and forms generation, following best practices in prompt engineering, structured outputs, and agentic workflow design. </p>
             </div>
             <div className="about-stats reveal reveal-delay-3">
               <div className="stat-item"><div className="stat-number">10+</div><div className="stat-label">Years experience</div></div>
