@@ -19,7 +19,7 @@
     "pct": 87,
     "skills": [
       { "name": "JavaScript",      "icon": "devicon-javascript-plain colored", "pct": 90 },
-      { "name": "React / Vue",     "icon": "devicon-react-original colored",   "pct": 90 },
+      { "name": "React",           "icon": "devicon-react-original colored",   "pct": 90 },
       { "name": "HTML",            "icon": "devicon-html5-plain colored",       "pct": 90 },
       { "name": "CSS",             "icon": "devicon-css3-plain colored",        "pct": 90 },
       { "name": "TypeScript",      "icon": "devicon-typescript-plain colored", "pct": 85 },
@@ -56,11 +56,12 @@
   },
   "Other": {
     "skills": [
+      { "name": "RESTful APIs",    "icon": "devicon-nodejs-plain colored",     "pct": 90 },
       { "name": "NodeJS",          "icon": "devicon-nodejs-plain colored",     "pct": 80 },
       { "name": "Git / CI·CD",     "icon": "devicon-git-plain colored",        "pct": 75 },
       { "name": "systemd",         "icon": "devicon-linux-plain colored",      "pct": 60 },
       { "name": ".NET",            "icon": "devicon-dotnetcore-plain colored", "pct": 78 },
-      { "name": "Vue",              "icon": "devicon-blazor-plain colored",     "pct": 70 }
+      { "name": "Vue",             "icon": "devicon-blazor-plain colored",     "pct": 70 }
     ]
   }
 }
