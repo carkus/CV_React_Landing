@@ -17,7 +17,7 @@ export default function NavBar() {
           <li><a href="#expertise">Expertise</a></li>
           <li><a href="#timeline">Timeline</a></li>
           <li><a href="#contact">Contact</a></li>
-          <li><a href="/files/mark-scicluna-cv-june2026.pdf" download className="nav-app-link">Download CV ↓</a></li>
+          <li><a href="/files/mark-scicluna-cv.pdf" download className="nav-app-link">↓ CV</a></li>
         </ul>
         <button className={`nav-hamburger${open ? ' open' : ''}`} onClick={() => setOpen(o => !o)} aria-label="Menu">
           <span /><span /><span />
@@ -30,7 +30,7 @@ export default function NavBar() {
         <a href="#expertise" onClick={close}>Expertise</a>
         <a href="#timeline"  onClick={close}>Timeline</a>
         <a href="#contact"   onClick={close}>Contact</a>
-        <a href="/files/mark-scicluna-cv-june2026.pdf" download style={{ color: 'var(--accent2)' }}>Download CV ↓</a>
+        <a href="/files/mark-scicluna-cv.pdf" download style={{ color: 'var(--accent2)' }}>↓ CV</a>
       </div>
     </nav>
   );

@@ -18,6 +18,7 @@ export interface WorkItem {
   links: WorkLink[];
   credit?: WorkCredit;
   imagePosition?: string;
+  heroImagePosition?: string;
   width?: number;
   subsection?: string;
 }

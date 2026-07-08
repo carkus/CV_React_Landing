@@ -50,7 +50,7 @@ export default function HeroSection() {
         setIdx(i => (i + 1) % items.length);
         setVisible(true);
       }, 700);
-    }, 8000);
+    }, 11000);
     return () => { if (timerRef.current) clearInterval(timerRef.current); };
   }, [items]);
 
@@ -66,14 +66,16 @@ export default function HeroSection() {
           <h1 className="hero-name">Mark<br /><em>Scicluna</em></h1>
           <p className="hero-title">Cross-Platform · Spatial Computing · AI Systems</p>
           <div className="hero-desc">
-            <p>Production-grade cross-platform experiences — from React/Native and SwiftUI, to visionOS and Blazor.</p>
+            <p>Production-grade cross-platform experiences — from React Native, Flutter and SwiftUI, to visionOS and Blazor.</p>
             <p>Senior level AI-assisted development.</p>
             <p>Based in Melbourne. 10+ years shipping real products.</p>
           </div>
-          <Link to="/profile" className="btn-ghost btn-profile-link">Profile, References &amp; Media ↗</Link>
+          <div className="hero-link-stack">
+            <Link to="/profile" className="btn-ghost">Profile, References &amp; Media ↗</Link>
+          </div>
           <div className="hero-ctas">
             <a href="#work" className="btn-primary">View Work →</a>
-            <a href="/files/mark-scicluna-cv-june2026.pdf" download className="btn-ghost">Download CV ↓</a>
+            <a href="/files/mark-scicluna-cv.pdf" download className="btn-ghost">Download CV ↓</a>
           </div>
           <div className="hero-social">
             <a href="https://github.com/carkus" target="_blank" rel="noopener noreferrer" className="social-link">GitHub ↗</a>
@@ -83,7 +85,7 @@ export default function HeroSection() {
         </div>
         <div className="hero-visual">
           <div className="platform-card">
-            <img className="platform-img" src={current.imageUrl} alt={current.imageAlt} style={{ opacity: visible ? 0.55 : 0 }} />
+            <img className="platform-img" src={current.imageUrl} alt={current.imageAlt} style={{ opacity: visible ? 0.85 : 0, ...(current.heroImagePosition ? { '--img-pos': current.heroImagePosition } as React.CSSProperties : {}) }} />
             <div className="platform-overlay" />
             {current.links.length > 0 && (
               <div className="platform-links" style={{ opacity: visible ? 1 : 0 }}>

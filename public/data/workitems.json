@@ -1,38 +1,63 @@
 [
-  {
-    "subsection": "Frontend",
+  { 
+    "subsection": "Full-stack",
     "title": "PDF Builder",
     "tags": ["Blazor", "PDF Generation", "Claude API", "Structured Prompting"],
     "imageUrl": "/img/pdf_form.png",
     "imageAlt": "PDF Form Builder",
     "imagePosition": "calc(50% - 50px) center",
+    "heroImagePosition": "80% center",
     "description": "Drag-and-drop PDF editor with AI form generation — describe a form in plain text and Claude generates the fields, layout, and pre-filled values via structured prompt engineering.",
     "featured": true,
-    "width": 33,
+    "width": 50,
     "links": [
       { "label": "Open Form Builder ↗", "url": "https://editor.carkus.com/form-editor" }
     ]
   },
   {
+    "title": "Scribbler 2026",
+    "tags": ["React", "TypeScript", "Express", "MySQL", "TipTap"],
+    "imageUrl": "/img/image_6bf08615.png",
+    "imageAlt": "Scribbler",
+    "description": "Collaborative writing platform for organising work into collections and articles — distraction-free rich-text editing, writer profiles, an activity feed, and messaging between collaborators.",
+    "featured": false,
+    "width": 50,
+    "links": [],
+    "credit": { "name": "Florian Klauer", "url": "https://unsplash.com/@florianklauer" }
+  },
+  {
+    "subsection": "Frontend",
     "title": "Chatty Prayers — AI Debates, and Counsel",
     "tags": ["Blazor", "Claude API", "Gemini API"],
     "imageUrl": "/img/chatty_prayers.png",
     "imageAlt": "Chatty Prayers",
+    "heroImagePosition": "50% center",
     "description": "Personality-driven AI platform with one-on-one chat, confidant reflection, and structured multi-participant debate — built with Blazor and the Claude and Gemini APIs.",
     "featured": true,
-    "width": 66,
+    "width": 50,
     "links": [
       { "label": "Open Chatty Prayers ↗", "url": "https://moot.carkus.com" }
     ]
   },
   {
+    "title": "Panic Stations",
+    "tags": ["React Native", "Expo", "TypeScript", "Zustand", "Game Dev"],
+    "imageUrl": "/img/image_a83945ea.png",
+    "imageAlt": "Panic Stations",
+    "description": "Turn-based sci-fi roguelike RPG built with React Native and Expo — procedurally generated space stations, tap-to-move pathfinding, and fog-of-war exploration.",
+    "featured": false,
+    "width": 50,
+    "links": []
+  },
+  {
     "title": "ZOME — Spatial Messenger",
     "tags": ["Cross-platform", "Swift", "Kotlin", "visionOS"],
-    "imageUrl": "/img/ZOME_branding.png",
+    "imageUrl": "/img/ZOME_vision_ui.png",
     "imageAlt": "ZOME platform",
+    "heroImagePosition": "50% center",
     "description": "ZOME is a spatial platform and messenger where you can plant your messages anywhere in the world, at any location and even points in time.",
     "featured": true,
-    "width": 66,
+    "width": 60,
     "links": [
       { "label": "App Store ↗", "url": "https://itunes.apple.com/us/app/zome/id1382123356?ls=1&mt=8" },
       { "label": "Play Store ↗", "url": "https://play.google.com/store/apps/details?id=com.zomecorp.zome" }
@@ -45,7 +70,7 @@
     "imageAlt": "Job interview handshake",
     "description": "AI-powered tool that scores a CV against a job description, surfaces skill gaps, and drafts a cover letter.",
     "featured": false,
-    "width": 33,
+    "width": 40,
     "links": [
       { "label": "Open JobFit ↗", "url": "https://jobfit.carkus.com" }
     ],
