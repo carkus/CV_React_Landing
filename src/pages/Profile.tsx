@@ -1,15 +1,17 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import ThemeToggle from '../components/ThemeToggle';
 
 export default function Profile() {
   const [theoExpanded, setTheoExpanded] = useState(false);
-  
+
   return (
     <div className="pf-page">
 
       <nav className="pf-nav">
         <Link to="/" className="pf-nav-back">← {window.location.host}</Link>
         <span className="pf-nav-title">Profile &amp; References</span>
+        <ThemeToggle />
       </nav>
 
       <header className="pf-header">

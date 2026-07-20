@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const PORTFOLIO_API_BASE = import.meta.env.DEV ? 'http://localhost:5131' : 'https://api.carkus.com';
 const PORTFOLIO_ASK_URL = `${PORTFOLIO_API_BASE}/v1/portfolio/ask`;
 const PORTFOLIO_DISCUSS_URL = `${PORTFOLIO_API_BASE}/v1/portfolio/discuss`;
+const PORTFOLIO_REFLECTION_URL = `${PORTFOLIO_API_BASE}/v1/portfolio/reflection`;
 
 function DiscussForm() {
   const [open, setOpen] = useState(false);
@@ -142,13 +143,45 @@ function AiAsk() {
   );
 }
 
+function AiReflection() {
+  const [text, setText] = useState('');
+  const [updatedAt, setUpdatedAt] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetch(PORTFOLIO_REFLECTION_URL)
+      .then(res => (res.ok ? res.json() : null))
+      .then((data: { text: string; updatedAt: string } | null) => {
+        if (data?.text) {
+          setText(data.text);
+          setUpdatedAt(data.updatedAt);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  if (!text) return null;
+
+  return (
+    <div className="ai-reflection reveal reveal-delay-2">
+      <div className="ai-reflection-label">In its own words</div>
+      <p className="ai-reflection-text">{text}</p>
+      {updatedAt && (
+        <div className="ai-reflection-meta">
+          Last rewrote this {new Date(updatedAt).toLocaleDateString()} — it decides for itself when to change it.
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function AskSection() {
   return (
     <section id="ask">
       <div className="section-inner">
-        <div className="section-eyebrow reveal">Ask</div>
+        <div className="section-eyebrow reveal">AI Assistant</div>
         <h2 className="section-heading reveal reveal-delay-1">Ask about me...</h2>
         <AiAsk />
+        <AiReflection />
       </div>
     </section>
   );

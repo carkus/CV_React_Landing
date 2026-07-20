@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import ThemeToggle from './ThemeToggle';
 
 export default function NavBar() {
   const [open, setOpen] = useState(false);
@@ -19,6 +20,7 @@ export default function NavBar() {
           <li><a href="#timeline">Timeline</a></li>
           <li><a href="#contact">Contact</a></li>
           <li><a href="/files/mark-scicluna-cv.pdf" download className="nav-app-link">↓ CV</a></li>
+          <li><ThemeToggle /></li>
         </ul>
         <button className={`nav-hamburger${open ? ' open' : ''}`} onClick={() => setOpen(o => !o)} aria-label="Menu">
           <span /><span /><span />
@@ -33,6 +35,7 @@ export default function NavBar() {
         <a href="#timeline"  onClick={close}>Timeline</a>
         <a href="#contact"   onClick={close}>Contact</a>
         <a href="/files/mark-scicluna-cv.pdf" download style={{ color: 'var(--accent2)' }}>↓ CV</a>
+        <ThemeToggle />
       </div>
     </nav>
   );
