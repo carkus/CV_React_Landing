@@ -33,13 +33,26 @@ export default function HeroSection() {
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
-    fetch('/data/workitems.json')
+    const controller = new AbortController();
+    
+    fetch('/data/workitems.json', { signal: controller.signal } )
       .then(r => r.json())
-      .then((data: WorkItem[]) => {
+      .then((data: WorkItem[]) => { 
+        console.log('Loaded workitems data');
         const featured = data.filter(i => i.featured);
         if (featured.length > 0) setItems(featured);
       })
-      .catch(() => {});
+      .catch((error) => {
+        // 3. Ignore the error if it was intentionally aborted by React
+        if (error.name !== 'AbortError') {
+          console.error('Failed to load workitems data:', error);
+        }
+      });
+
+    // 4. Cancel the fetch immediately if React unmounts/remounts the component
+    return () => {
+      controller.abort();
+    };
   }, []);
 
   useEffect(() => {
@@ -66,8 +79,8 @@ export default function HeroSection() {
           <h1 className="hero-name">Mark<br /><em>Scicluna</em></h1>
           <p className="hero-title">Cross-Platform · Spatial Computing · AI Systems</p>
           <div className="hero-desc">
-            <p>Production-grade cross-platform experiences — from React Native, Flutter and SwiftUI, to visionOS and Blazor.</p>
-            <p>Senior level AI-assisted development.</p>
+            <p>Production-grade cross-platform experiences — web to mobile, React/Blazor to Flutter/SwiftUI.</p>
+            <p>Applied AI research and engineering — RAG, agentic orchestration, and structured LLM systems.</p>
             <p>Based in Melbourne. 10+ years shipping real products.</p>
           </div>
           <div className="hero-link-stack">

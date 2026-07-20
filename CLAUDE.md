@@ -37,7 +37,7 @@ This is a React 19 + TypeScript personal CV/portfolio site for Mark Scicluna, co
 
 **Scroll-reveal animation:** `.reveal` elements start at `opacity:0; transform:translateY(28px)`. Home.tsx attaches a single IntersectionObserver after mount that adds `.visible` to trigger the transition. Skills section has its own separate cascade animation managed inside `SkillsSection.tsx` via a second IntersectionObserver on the board element.
 
-**Skill bar widths:** The `.skill-row` element carries `style={{ '--pct': '${s.pct}%' }}` as a CSS custom property. The `.skill-row.revealed .skill-row-bar-fill` rule reads `width: var(--pct)`. The `revealed` class is added by the cascade timer inside `SkillsSection.tsx`.
+**Skill proficiency stars:** Each `.skill-row` renders a 5-star rating (`.skill-row-stars`), one star per 20% of `s.pct`, filled count via `Math.round(s.pct / 20)`. The `revealed` class (added by the cascade timer inside `SkillsSection.tsx`) triggers the row's flip-in animation; star fill color is static, not animated separately.
 
 **Hero rotating card:** `HeroSection.tsx` filters `workitems.json` for `featured: true` items and cycles through them on an 8-second interval with a 700 ms opacity fade (controlled by a `visible` boolean state).
 

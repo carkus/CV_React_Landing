@@ -9,7 +9,6 @@ export default function ContactSection() {
         <div className="social-links">
           <a href="https://github.com/carkus" target="_blank" rel="noopener noreferrer" className="social-link">GitHub ↗</a>
           <a href="https://www.linkedin.com/in/mark-scicluna-b907809/" target="_blank" rel="noopener noreferrer" className="social-link">LinkedIn ↗</a>
-          <a href="/app/" target="_blank" rel="noopener noreferrer" className="social-link">CV Site ↗</a>
         </div>
       </div>
     </section>

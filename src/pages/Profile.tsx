@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 
 export default function Profile() {
   const [theoExpanded, setTheoExpanded] = useState(false);
-
+  
   return (
     <div className="pf-page">
 
       <nav className="pf-nav">
-        <Link to="/" className="pf-nav-back">← carkus.com</Link>
+        <Link to="/" className="pf-nav-back">← {window.location.host}</Link>
         <span className="pf-nav-title">Profile &amp; References</span>
       </nav>
 

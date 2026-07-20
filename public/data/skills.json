@@ -49,6 +49,15 @@
       { "name": "Java",            "icon": "devicon-xcode-plain colored",      "pct": 82 }
     ]
   },
+  "Data": {
+    "pct": 75,
+    "skills": [
+      { "name": "PostgreSQL",      "icon": "devicon-postgresql-plain colored", "pct": 80 },
+      { "name": "MongoDB",         "icon": "devicon-mongodb-plain colored",    "pct": 75 },
+      { "name": "SQL",             "icon": "◆",                                "pct": 78 },
+      { "name": "NoSQL",           "icon": "◆",                                "pct": 72 }
+    ]
+  },
   "Other": {
     "skills": [
       { "name": "RESTful APIs",    "icon": "devicon-nodejs-plain colored",     "pct": 90 },

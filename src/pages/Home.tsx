@@ -4,9 +4,10 @@ import HeroSection from '../components/HeroSection';
 import AboutSection from '../components/AboutSection';
 import SkillsSection from '../components/SkillsSection';
 import WorkSection from '../components/WorkSection';
+import AiSection from '../components/AiSection';
+import AskSection from '../components/AskSection';
 import ExpertiseSection from '../components/ExpertiseSection';
 import TimelineSection from '../components/TimelineSection';
-import MediaSection from '../components/MediaSection';
 import ReferencesSection from '../components/ReferencesSection';
 import ContactSection from '../components/ContactSection';
 import FooterSection from '../components/FooterSection';
@@ -25,11 +26,12 @@ export default function Home() {
       <NavBar />
       <HeroSection />
       <AboutSection />
+      <AskSection />
       <SkillsSection />
+      <AiSection />
       <WorkSection />
       <ExpertiseSection />
       <TimelineSection />
-      <MediaSection />
       <ReferencesSection />
       <ContactSection />
       <FooterSection />

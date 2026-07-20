@@ -38,6 +38,12 @@ const FALLBACK_DATA: SkillsJson = {
     { name: 'Kotlin',           icon: 'devicon-kotlin-plain colored',     pct: 75 },
     { name: 'UIKit',            icon: 'devicon-xcode-plain colored',      pct: 72 },
   ] },
+  Data: { pct: 75, skills: [
+    { name: 'PostgreSQL', icon: 'devicon-postgresql-plain colored', pct: 80 },
+    { name: 'MongoDB',    icon: 'devicon-mongodb-plain colored',    pct: 75 },
+    { name: 'SQL',        icon: '◆',                                pct: 78 },
+    { name: 'NoSQL',      icon: '◆',                                pct: 72 },
+  ] },
   'DevOps and Tooling': { pct: 75, skills: [
     { name: 'Git / CI·CD', icon: 'devicon-git-plain colored',   pct: 75 },
     { name: 'systemd',      icon: 'devicon-linux-plain colored', pct: 60 },
@@ -87,7 +93,7 @@ export default function SkillsSection() {
       .catch(() => {});
   }, []);
 
-  // Skill bar cascade — reads data-pct from each row to set --pct
+  // Skill row cascade — staggers the flip-in reveal of each row
   useEffect(() => {
     const board = boardRef.current;
     if (!board) return;
@@ -98,19 +104,12 @@ export default function SkillsSection() {
       timers = [];
       board.querySelectorAll<HTMLElement>('.skill-row').forEach(row => {
         row.classList.remove('revealed');
-        const fill = row.querySelector<HTMLElement>('.skill-row-bar-fill');
-        if (fill) fill.style.transition = 'none';
       });
     };
 
     const cascade = () => {
       board.querySelectorAll<HTMLElement>('.skill-row').forEach((row, i) => {
-        row.style.setProperty('--pct', row.dataset.pct ?? '0%');
-        const t = setTimeout(() => {
-          const fill = row.querySelector<HTMLElement>('.skill-row-bar-fill');
-          if (fill) fill.style.transition = '';
-          row.classList.add('revealed');
-        }, i * 90);
+        const t = setTimeout(() => row.classList.add('revealed'), i * 90);
         timers.push(t);
       });
     };
@@ -136,7 +135,7 @@ export default function SkillsSection() {
       <div className="section-inner">
         <div className="section-eyebrow reveal">Skills</div>
         <h2 className="section-heading reveal reveal-delay-1">The toolkit</h2>
-        <p className="section-intro reveal reveal-delay-2">I work regularly across a number of platforms, from building new systems to maintaining legacy code, which has given me broad exposure to cross-platform and native mobile development, and modern frontend frameworks. More recently, I've been focused on AI integration — revisiting my Master's work in automation through hands-on work with LLMs, both local and cloud-hosted, building RAG pipelines, agentic workflows, and structured output systems.</p>
+        <p className="section-intro reveal reveal-delay-2">I work regularly across a number of platforms, from building new systems to maintaining legacy code, which has given me broad exposure to cross-platform and native mobile development, and modern web frameworks. More recently, I've been focused on AI integration — revisiting my Master's work in automation through hands-on work with LLMs, both local and cloud-hosted, building RAG pipelines, agentic workflows, and structured output systems.</p>
         <p className="section-sub reveal reveal-delay-3">High proficiency covers the categories I work with regularly, ranked by depth of experience; other skills round out the rest:</p>
       </div>
 
@@ -150,18 +149,15 @@ export default function SkillsSection() {
               </div>
               <div className="skills-cat-techs">
                 {group.skills.map(s => (
-                  <div key={s.name} className="skill-row" data-pct={`${s.pct}%`}>
+                  <div key={s.name} className="skill-row">
                     <div className="skill-row-identity">
                       <div className="skill-row-icon"><SkillIcon icon={s.icon} /></div>
                       <div className="skill-row-name">{s.name}</div>
                     </div>
-                    <div className="skill-row-meter">
-                      <div className="skill-row-prof-label">
-                        Proficiency <span className="skill-row-pct">{s.pct}%</span>
-                      </div>
-                      <div className="skill-row-bar">
-                        <div className="skill-row-bar-fill" />
-                      </div>
+                    <div className="skill-row-stars" title={`${s.pct}% proficiency`}>
+                      {Array.from({ length: 5 }, (_, i) => (
+                        <span key={i} className={`skill-row-star${i < Math.round(s.pct / 20) ? ' filled' : ''}`}>★</span>
+                      ))}
                     </div>
                   </div>
                 ))}

@@ -98,9 +98,9 @@ export default function WorkSection() {
           <div className="work-summation-divider" />
           <div className="work-summation-col">
             <div className="work-summation-label">Backend</div>
-            <p className="work-summation-text">.NET or NodeJS backends — streaming AI over SSE, multi-provider LLM orchestration with Ollama fallback, RAG via embedding search, and document pipelines with PDF generation. Structured prompt engineering with validated, typed outputs.</p>
+            <p className="work-summation-text">NodeJS or .NET backends — streaming AI over SSE, multi-provider LLM orchestration with Ollama fallback, RAG via embedding search, PDF generation. Structured prompt engineering with validated, typed outputs.</p>
             <div className="work-summation-tags">
-              {['ASP.NET Core', 'Python', 'Ollama', 'RAG', 'PDF Generation', 'Multi-provider LLM'].map(t => <span key={t} className="skill-box work-tag">{t}</span>)}
+              {['Node JS', 'ASP.NET Core', 'Python', 'Ollama', 'RAG', 'PDF Generation', 'Multi-provider LLM'].map(t => <span key={t} className="skill-box work-tag">{t}</span>)}
             </div>
           </div>
         </div>

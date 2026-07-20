@@ -14,12 +14,28 @@ export default function ExpertiseSection() {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    fetch('/data/expertise.json')
+    const controller = new AbortController();
+    
+    fetch('/data/expertise.json', { signal: controller.signal } )
       .then(r => r.json())
-      .then((data: ExpertisePanel[]) => { if (data?.length) setPanels(data); })
-      .catch(() => {});
+      .then((data: ExpertisePanel[]) => { 
+        console.log('Loaded expertise data');
+        if (data?.length) setPanels(data); 
+      })
+      .catch((error) => {
+        // 3. Ignore the error if it was intentionally aborted by React
+        if (error.name !== 'AbortError') {
+          console.error('Failed to load expertise data:', error);
+        }
+      });
+
+    // 4. Cancel the fetch immediately if React unmounts/remounts the component
+    return () => {
+      controller.abort();
+    };
   }, []);
 
+  
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
