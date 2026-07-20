@@ -13,6 +13,7 @@ export default function FooterSection() {
       localStorage.setItem(OWNER_FLAG, '1');
     }
     if (localStorage.getItem(OWNER_FLAG) === '1') return;
+    if (import.meta.env.DEV) return;
 
     fetch(VISIT_URL, { method: 'POST' })
       .then(res => (res.ok ? res.json() : null))

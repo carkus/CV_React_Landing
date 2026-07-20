@@ -18,7 +18,21 @@ export default function Home() {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-    return () => obs.disconnect();
+
+    // Catches .reveal elements that mount later (e.g. after an async fetch resolves),
+    // which the querySelectorAll above would otherwise miss.
+    const mutObs = new MutationObserver(mutations => {
+      for (const m of mutations) {
+        m.addedNodes.forEach(node => {
+          if (!(node instanceof Element)) return;
+          if (node.matches('.reveal')) obs.observe(node);
+          node.querySelectorAll?.('.reveal').forEach(el => obs.observe(el));
+        });
+      }
+    });
+    mutObs.observe(document.body, { childList: true, subtree: true });
+
+    return () => { obs.disconnect(); mutObs.disconnect(); };
   }, []);
 
   return (
