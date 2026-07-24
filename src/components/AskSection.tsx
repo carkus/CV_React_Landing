@@ -1,9 +1,30 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const PORTFOLIO_API_BASE = import.meta.env.DEV ? 'http://localhost:5131' : 'https://api.carkus.com';
 const PORTFOLIO_ASK_URL = `${PORTFOLIO_API_BASE}/v1/portfolio/ask`;
 const PORTFOLIO_DISCUSS_URL = `${PORTFOLIO_API_BASE}/v1/portfolio/discuss`;
-const PORTFOLIO_REFLECTION_URL = `${PORTFOLIO_API_BASE}/v1/portfolio/reflection`;
+
+// Turns mentions of internal routes (e.g. "/profile") in the AI's plain-text reply
+// into real, clickable in-app links rather than dead text.
+function renderReplyWithLinks(text: string) {
+  const pattern = /\/profile\b/g;
+  const parts: (string | React.ReactElement)[] = [];
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+  let key = 0;
+
+  while ((match = pattern.exec(text)) !== null) {
+    if (match.index > lastIndex) parts.push(text.slice(lastIndex, match.index));
+    parts.push(
+      <Link key={key++} to="/profile" className="ai-ask-link">/profile</Link>
+    );
+    lastIndex = match.index + match[0].length;
+  }
+  if (lastIndex < text.length) parts.push(text.slice(lastIndex));
+
+  return parts;
+}
 
 function DiscussForm() {
   const [open, setOpen] = useState(false);
@@ -135,41 +156,10 @@ function AiAsk() {
         </button>
       </form>
       {error && <p className="ai-ask-error">{error}</p>}
-      {reply && <p className="ai-ask-reply">{reply}</p>}
+      {reply && <p className="ai-ask-reply">{renderReplyWithLinks(reply)}</p>}
       <div className="ai-discuss">
         <DiscussForm />
       </div>
-    </div>
-  );
-}
-
-function AiReflection() {
-  const [text, setText] = useState('');
-  const [updatedAt, setUpdatedAt] = useState<string | null>(null);
-
-  useEffect(() => {
-    fetch(PORTFOLIO_REFLECTION_URL)
-      .then(res => (res.ok ? res.json() : null))
-      .then((data: { text: string; updatedAt: string } | null) => {
-        if (data?.text) {
-          setText(data.text);
-          setUpdatedAt(data.updatedAt);
-        }
-      })
-      .catch(() => {});
-  }, []);
-
-  if (!text) return null;
-
-  return (
-    <div className="ai-reflection reveal reveal-delay-2">
-      <div className="ai-reflection-label">In its own words</div>
-      <p className="ai-reflection-text">{text}</p>
-      {updatedAt && (
-        <div className="ai-reflection-meta">
-          Last rewrote this {new Date(updatedAt).toLocaleDateString()} — it decides for itself when to change it.
-        </div>
-      )}
     </div>
   );
 }
@@ -181,7 +171,6 @@ export default function AskSection() {
         <div className="section-eyebrow reveal">AI Assistant</div>
         <h2 className="section-heading reveal reveal-delay-1">Ask about me...</h2>
         <AiAsk />
-        <AiReflection />
       </div>
     </section>
   );
