@@ -30,7 +30,6 @@ Docker • Git • CI/CD (Jenkins) • systemd • Linux
 .NET • MongoDB • UIKit
 
 ===
-
 # EDUCATION
 
 **Master of Computer Science**  
@@ -40,7 +39,6 @@ For my Master's project I demonstrated a technique for partial re-planning in ex
 Master's Thesis : 'Search efficiency in robotic task planning'
 
 ---
-
 # EXPERIENCE
 ## 2025 — [carkus.com](https://carkus.com)
 
@@ -53,7 +51,6 @@ Likewise, implementation of meta-agents where the user instructs the agents tool
 .NET • React/React Native (Vite, Expo) • TypeScript • Python • Claude & Gemini APIs • RAG
 
 ---
-
 ## 2017–2026 — ZOME (Rhizomenet)
 
 **Senior Application Developer (Middleware & UI)**
@@ -72,7 +69,6 @@ Platforms shipped:
 Flutter • SwiftUI/UIKit • Kotlin • Node.js • React • Vue • Java • MVVM
 
 ---
-
 ## 2007–2014 — RMIT University
 
 **Senior Application Developer (UI)**
@@ -95,7 +91,6 @@ Development support and platform promotion during international engagement and l
 Adapted designs by internationally renowned fashion designer [Hussein Chalayan](https://en.wikipedia.org/wiki/Hussein_Chalayan) into interactive digital fashion — wearable interfaces.
 
 ---
-
 # REFERENCES
 
 [Theodore Wohng](/references)  

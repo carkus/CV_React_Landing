@@ -27,11 +27,14 @@ const FALLBACK: WorkItem[] = [
   },
 ];
 
+type SlidePhase = 'idle' | 'exit' | 'enter-start' | 'enter';
+
 export default function HeroSection() {
   const [items, setItems] = useState<WorkItem[]>(FALLBACK);
   const [idx, setIdx] = useState(0);
-  const [visible, setVisible] = useState(true);
+  const [phase, setPhase] = useState<SlidePhase>('idle');
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const visible = phase === 'idle' || phase === 'enter';
 
   useEffect(() => {
     const controller = new AbortController();
@@ -59,14 +62,22 @@ export default function HeroSection() {
   useEffect(() => {
     if (items.length <= 1) return;
     timerRef.current = setInterval(() => {
-      setVisible(false);
+      setPhase('exit');
       setTimeout(() => {
         setIdx(i => (i + 1) % items.length);
-        setVisible(true);
-      }, 700);
+        // Jump the incoming image off-screen to the right with no transition,
+        // then release it into a transitioned sweep back to center next frame.
+        setPhase('enter-start');
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => setPhase('enter'));
+        });
+      }, 600);
     }, 11000);
     return () => { if (timerRef.current) clearInterval(timerRef.current); };
   }, [items]);
+
+  const slideTransition = phase === 'enter-start' ? 'none' : 'transform 0.6s ease-out, opacity 0.6s ease-out';
+  const slideTransform = phase === 'exit' ? 'translateX(-90px)' : phase === 'enter-start' ? 'translateX(90px)' : 'translateX(0)';
 
   const current = items[idx];
 
@@ -99,18 +110,28 @@ export default function HeroSection() {
         </div>
         <div className="hero-visual">
           <div className="platform-card">
-            <img className="platform-img" src={current.imageUrl} alt={current.imageAlt} style={{ opacity: visible ? 0.85 : 0, ...(current.heroImagePosition ? { '--img-pos': current.heroImagePosition } as React.CSSProperties : {}) }} />
-            <div className="platform-overlay" />
-            {current.links.length > 0 && (
-              <div className="platform-links" style={{ opacity: visible ? 1 : 0 }}>
-                {current.links.map(l => (
-                  <a key={l.url} href={l.url} target="_blank" rel="noopener noreferrer" className="platform-link">{l.label}</a>
-                ))}
+            <div
+              className="platform-slide"
+              style={{ transform: slideTransform, opacity: visible ? 1 : 0, transition: slideTransition }}
+            >
+              <img
+                className="platform-img"
+                src={current.imageUrl}
+                alt={current.imageAlt}
+                style={current.heroImagePosition ? { '--img-pos': current.heroImagePosition } as React.CSSProperties : undefined}
+              />
+              <div className="platform-overlay" />
+              {current.links.length > 0 && (
+                <div className="platform-links">
+                  {current.links.map(l => (
+                    <a key={l.url} href={l.url} target="_blank" rel="noopener noreferrer" className="platform-link">{l.label}</a>
+                  ))}
+                </div>
+              )}
+              <div className="platform-label">
+                <span>Featured Platform</span>
+                <p>{current.title}</p>
               </div>
-            )}
-            <div className="platform-label" style={{ opacity: visible ? 1 : 0 }}>
-              <span>Featured Platform</span>
-              <p>{current.title}</p>
             </div>
           </div>
         </div>

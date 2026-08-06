@@ -187,7 +187,8 @@ nav {
 :root[data-theme="light"] .platform-card {
     box-shadow: 0 0 0 1px color-mix(in srgb, var(--steel) 60%, transparent), 0 30px 60px -20px rgba(0,0,0,0.26), 0 0 60px -10px color-mix(in srgb, var(--accent) 13%, transparent);
 }
-.platform-img { width: 100%; height: 100%; object-fit: cover; object-position: var(--img-pos, center); opacity: 0.85; transition: opacity 0.3s ease; }
+.platform-slide { position: absolute; inset: 0; }
+.platform-img { width: 100%; height: 100%; object-fit: cover; object-position: var(--img-pos, center); opacity: 0.85; }
 .platform-overlay { position: absolute; inset: 0; background: linear-gradient(to top, var(--navy) 0%, transparent 60%); }
 .platform-label { position: absolute; bottom: 1.6rem; left: 1.6rem; right: 1.6rem; transition: opacity 0.7s ease; }
 .platform-label span { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--mist); }
