@@ -43,10 +43,10 @@ export default function Home() {
       <AskSection />
       <SkillsSection />
       <AiSection />
+      <ReferencesSection />
       <WorkSection />
       <ExpertiseSection />
       <TimelineSection />
-      <ReferencesSection />
       <ContactSection />
       <FooterSection />
     </>

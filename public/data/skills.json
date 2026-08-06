@@ -3,9 +3,9 @@
     "pct": 86,
     "skills": [
       { "name": "Flutter",          "icon": "devicon-flutter-plain colored",   "pct": 92 },
-      { "name": "React Native",     "icon": "devicon-react-original colored",  "pct": 90 },
+      { "name": "React Native",     "icon": "devicon-react-original colored",  "pct": 85 },
       { "name": "Redux/State",      "icon": "devicon-redux-original colored",  "pct": 90 },
-      { "name": "SwiftUI/UIKit",    "icon": "devicon-apple-original",          "pct": 85 },
+      { "name": "SwiftUI/UIKit",    "icon": "devicon-apple-original",          "pct": 90 },
       { "name": "Kotlin",           "icon": "devicon-android-plain colored",   "pct": 75 }
     ]
   },

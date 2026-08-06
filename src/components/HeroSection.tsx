@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import type { WorkItem } from '../types';
+import { downloadCv } from '../utils/cvPdf';
 
 const FALLBACK: WorkItem[] = [
   {
@@ -88,7 +89,7 @@ export default function HeroSection() {
           </div>
           <div className="hero-ctas">
             <a href="#work" className="btn-primary">View Work →</a>
-            <a href="/files/mark-scicluna-cv.pdf" download className="btn-ghost">Download CV ↓</a>
+            <a href="#" className="btn-ghost" onClick={e => { e.preventDefault(); downloadCv(); }}>Download CV ↓</a>
           </div>
           <div className="hero-social">
             <a href="https://github.com/carkus" target="_blank" rel="noopener noreferrer" className="social-link">GitHub ↗</a>

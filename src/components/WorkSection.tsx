@@ -1,4 +1,5 @@
 import { Fragment, useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import type { WorkItem } from '../types';
 
 const FALLBACK: WorkItem[] = [
@@ -47,7 +48,54 @@ function rowClass(kind: RowKind): string {
   return 'work-row work-row-eq';
 }
 
+function SlideshowOverlay({ images, alt, startIndex, onClose }: { images: string[]; alt: string; startIndex: number; onClose: () => void }) {
+  const [index, setIndex] = useState(startIndex);
+
+  useEffect(() => {
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowRight') setIndex(i => (i + 1) % images.length);
+      if (e.key === 'ArrowLeft') setIndex(i => (i - 1 + images.length) % images.length);
+    }
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [images.length, onClose]);
+
+  return createPortal(
+    <div className="slideshow-overlay" onClick={onClose}>
+      <button type="button" className="slideshow-close" onClick={onClose} aria-label="Close slideshow">✕</button>
+      <button
+        type="button"
+        className="slideshow-nav slideshow-prev"
+        aria-label="Previous image"
+        onClick={e => { e.stopPropagation(); setIndex(i => (i - 1 + images.length) % images.length); }}
+      >
+        ‹
+      </button>
+      <img
+        className="slideshow-image"
+        src={images[index]}
+        alt={`${alt} — ${index + 1} of ${images.length}`}
+        onClick={e => e.stopPropagation()}
+      />
+      <button
+        type="button"
+        className="slideshow-nav slideshow-next"
+        aria-label="Next image"
+        onClick={e => { e.stopPropagation(); setIndex(i => (i + 1) % images.length); }}
+      >
+        ›
+      </button>
+      <div className="slideshow-counter">{index + 1} / {images.length}</div>
+    </div>,
+    document.body
+  );
+}
+
 function WorkItemCard({ item, className, style }: { item: WorkItem; className: string; style?: React.CSSProperties }) {
+  const [slideshowOpen, setSlideshowOpen] = useState(false);
+  const hasSlideshow = !!item.slideshowImages && item.slideshowImages.length > 0;
+
   return (
     <div className={className} style={style}>
       <img src={item.imageUrl} alt={item.imageAlt} style={item.imagePosition ? { '--img-pos': item.imagePosition } as React.CSSProperties : undefined} />
@@ -58,13 +106,21 @@ function WorkItemCard({ item, className, style }: { item: WorkItem; className: s
           {item.tags.map(t => <span key={t} className="skill-box work-tag">{t}</span>)}
         </div>
       </div>
-      {item.links.length > 0 && (
+      {(item.links.length > 0 || hasSlideshow) && (
         <div className="work-item-links">
           {item.links.map(l => <a key={l.url} href={l.url} target="_blank" rel="noopener noreferrer" className="work-item-link">{l.label}</a>)}
+          {hasSlideshow && (
+            <button type="button" className="work-item-link work-item-link-btn" onClick={() => setSlideshowOpen(true)}>
+              Slideshow ↗
+            </button>
+          )}
         </div>
       )}
       {item.credit && (
         <a href={item.credit.url} target="_blank" rel="noopener noreferrer" className="work-item-credit">Image © {item.credit.name}</a>
+      )}
+      {hasSlideshow && slideshowOpen && (
+        <SlideshowOverlay images={item.slideshowImages!} alt={item.imageAlt} startIndex={0} onClose={() => setSlideshowOpen(false)} />
       )}
     </div>
   );
@@ -90,7 +146,7 @@ export default function WorkSection() {
         <div className="work-summation reveal reveal-delay-2">
           <div className="work-summation-col">
             <div className="work-summation-label">Frontend</div>
-            <p className="work-summation-text">Spatial computing, cross-platform mobile, and AI-integrated web — shipping to App Store, Play Store, and Vision Pro from a single cross-platform codebase, native Swift/SwiftUI for iOS and visionOS, and Blazor/React for the web layer. Claude and Gemini APIs wired directly into the UI.</p>
+            <p className="work-summation-text">Cross-platform mobile, AI-integrated web, and spatial computing — shipped to App Store, Play Store, and Vision Pro. Native Swift/SwiftUI for iOS and visionOS, and React/Blazor for the web layer. Claude and Gemini APIs wired directly into the UI, backed by multi-provider LLM cascades, RAG pipelines, and MCP tool integrations for structured, context-aware AI features across the stack.</p>
             <div className="work-summation-tags">
               {['Cross-platform', 'Swift / SwiftUI', 'visionOS', 'React', 'Blazor', 'Claude API', 'Gemini API'].map(t => <span key={t} className="skill-box work-tag">{t}</span>)}
             </div>
@@ -98,7 +154,7 @@ export default function WorkSection() {
           <div className="work-summation-divider" />
           <div className="work-summation-col">
             <div className="work-summation-label">Backend</div>
-            <p className="work-summation-text">NodeJS or .NET backends — streaming AI over SSE, multi-provider LLM orchestration with Ollama fallback, RAG via embedding search, PDF generation. Structured prompt engineering with validated, typed outputs.</p>
+            <p className="work-summation-text">NodeJS or .NET backends — streaming AI over SSE, multi-provider LLM orchestration with Ollama fallback, RAG via embedding search, agentic document pipelines with LangGraph and LlamaIndex, PDF generation, and MCP tool servers for direct integration with Claude Code and Claude Desktop. Structured prompt engineering with validated, typed outputs.</p>
             <div className="work-summation-tags">
               {['Node JS', 'ASP.NET Core', 'Python', 'Ollama', 'RAG', 'PDF Generation', 'Multi-provider LLM'].map(t => <span key={t} className="skill-box work-tag">{t}</span>)}
             </div>
@@ -116,7 +172,7 @@ export default function WorkSection() {
               {items.map(item => (
                 <Fragment key={item.title}>
                   {item.subsection && <div className="work-subsection-header">{item.subsection}</div>}
-                  <WorkItemCard item={item} className="work-item" style={{ '--w': item.width ?? 33 } as React.CSSProperties} />
+                  <WorkItemCard item={item} className="work-item" style={{ '--w': item.width ?? 33, '--h': item.height ?? 100 } as React.CSSProperties} />
                 </Fragment>
               ))}
             </div>

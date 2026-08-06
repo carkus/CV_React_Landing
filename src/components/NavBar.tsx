@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ThemeToggle from './ThemeToggle';
+import { downloadCv } from '../utils/cvPdf';
 
 export default function NavBar() {
   const [open, setOpen] = useState(false);
 
   const close = () => setOpen(false);
+  const handleDownloadCv = (e: React.MouseEvent) => { e.preventDefault(); downloadCv(); };
 
   return (
     <nav>
@@ -19,7 +21,7 @@ export default function NavBar() {
           <li><a href="#expertise">Expertise</a></li>
           <li><a href="#timeline">Timeline</a></li>
           <li><a href="#contact">Contact</a></li>
-          <li><a href="/files/mark-scicluna-cv.pdf" download className="nav-app-link">↓ CV</a></li>
+          <li><a href="#" className="nav-app-link" onClick={handleDownloadCv}>↓ CV</a></li>
           <li><ThemeToggle /></li>
         </ul>
         <button className={`nav-hamburger${open ? ' open' : ''}`} onClick={() => setOpen(o => !o)} aria-label="Menu">
@@ -34,7 +36,7 @@ export default function NavBar() {
         <a href="#expertise" onClick={close}>Expertise</a>
         <a href="#timeline"  onClick={close}>Timeline</a>
         <a href="#contact"   onClick={close}>Contact</a>
-        <a href="/files/mark-scicluna-cv.pdf" download style={{ color: 'var(--accent2)' }}>↓ CV</a>
+        <a href="#" style={{ color: 'var(--accent2)' }} onClick={e => { close(); handleDownloadCv(e); }}>↓ CV</a>
         <ThemeToggle />
       </div>
     </nav>

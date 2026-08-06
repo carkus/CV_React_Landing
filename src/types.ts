@@ -20,7 +20,9 @@ export interface WorkItem {
   imagePosition?: string;
   heroImagePosition?: string;
   width?: number;
+  height?: number;
   subsection?: string;
+  slideshowImages?: string[];
 }
 
 export interface Skill {
