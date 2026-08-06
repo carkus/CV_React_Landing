@@ -114,6 +114,15 @@ export default function HeroSection() {
   const current = items[idx];
   const next = items[(idx + 1) % items.length];
 
+  // The dot to highlight jumps to the target as soon as a slide starts
+  // animating, rather than waiting for handleTransitionEnd to commit idx —
+  // it should track what's sliding into view, not what's sliding out.
+  const displayIdx = pending === 'next'
+    ? (idx + 1) % items.length
+    : pending === 'prev'
+      ? (idx - 1 + items.length) % items.length
+      : idx;
+
   const renderSlide = (item: WorkItem) => (
     <>
       <img
@@ -198,7 +207,7 @@ export default function HeroSection() {
               // clickable, so it can't fight the drag handlers on the card.
               <div className="platform-dots">
                 {items.map((item, i) => (
-                  <span key={item.title} className={`platform-dot${i === idx ? ' active' : ''}`} />
+                  <span key={item.title} className={`platform-dot${i === displayIdx ? ' active' : ''}`} />
                 ))}
               </div>
             )}
