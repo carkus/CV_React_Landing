@@ -110,6 +110,15 @@ export default function HeroSection() {
   };
   const handlePointerCancel = () => { dragRef.current = null; };
 
+  // Tap a dot, jump straight to that slide — no animation, no adjacency
+  // special-casing, just index → index.
+  const goToIndex = (i: number) => {
+    if (i === idx) return;
+    setPending(null);
+    setIdx(i);
+    resetTimer();
+  };
+
   const prev = items[(idx - 1 + items.length) % items.length];
   const current = items[idx];
   const next = items[(idx + 1) % items.length];
@@ -203,11 +212,16 @@ export default function HeroSection() {
               <div className="platform-slide">{renderSlide(next)}</div>
             </div>
             {items.length > 1 && (
-              // Purely a "there's more, and you can swipe" affordance — not
-              // clickable, so it can't fight the drag handlers on the card.
               <div className="platform-dots">
                 {items.map((item, i) => (
-                  <span key={item.title} className={`platform-dot${i === displayIdx ? ' active' : ''}`} />
+                  <button
+                    key={item.title}
+                    type="button"
+                    aria-label={`Show ${item.title}`}
+                    className={`platform-dot${i === displayIdx ? ' active' : ''}`}
+                    onClick={e => { e.stopPropagation(); goToIndex(i); }}
+                    onPointerDown={e => e.stopPropagation()}
+                  />
                 ))}
               </div>
             )}

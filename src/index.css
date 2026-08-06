@@ -230,9 +230,20 @@ nav {
 .platform-links { position: absolute; top: 1.4rem; left: 1.4rem; display: flex; gap: 0.6rem; flex-wrap: wrap; z-index: 2; }
 .platform-link { font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.1em; text-transform: uppercase; color: #8a9ab8; text-decoration: none; border: 1px solid #8a9ab8; padding: 0.22rem 0.6rem; background: rgba(13,21,38,0.5); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); transition: color 0.2s, border-color 0.2s; }
 .platform-link:hover { color: #e8ecf4; border-color: #5a8aee; }
-.platform-dots { position: absolute; top: 1.4rem; right: 1.4rem; display: flex; gap: 0.4rem; z-index: 2; pointer-events: none; }
-.platform-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.35); transition: background 0.3s, transform 0.3s; }
-.platform-dot.active { background: var(--accent2, #5a8aee); transform: scale(1.5); }
+.platform-dots { position: absolute; top: 1.4rem; right: 1.4rem; display: flex; gap: 0.5rem; z-index: 2; }
+.platform-dot {
+    /* box-sizing override is load-bearing: the site-wide border-box reset
+       would make the 0.4rem padding alone exceed the 5px width, collapsing
+       the content box to nothing — content-box lets the visible dot stay
+       5px while padding still pads out a bigger tap target. */
+    box-sizing: content-box;
+    width: 5px; height: 5px; padding: 0.4rem; margin: -0.4rem;
+    background-clip: content-box; border: none; border-radius: 50%;
+    background-color: rgba(255,255,255,0.35); cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+.platform-dot:hover { background-color: rgba(255,255,255,0.6); }
+.platform-dot.active { background-color: var(--accent2, #5a8aee); transform: scale(1.5); }
 @media (prefers-reduced-motion: reduce) { .platform-track { transition: none !important; } }
 
 /* ── SECTION BASE ────────────────────────────────────────────── */
