@@ -47,9 +47,9 @@
     "imageUrl": "/img/zome_banner_mobile_no_button.png",
     "imageAlt": "ZOME platform",
     "imagePosition": "left center",
-    "heroImagePosition": "left center",
     "description": "ZOME is a spatial platform and messenger where you can plant your messages anywhere in the world, at any location and even points in time.",
     "featured": false,
+    "heroExclude": true,
     "width": 60,
     "slideshowImages": ["/img/zome_phone1.png", "/img/zome_phone2.png", "/img/zome_phone3.png", "/img/zome_phone4.png", "/img/zome_phone5.png", "/img/zome_phone6.png", "/img/zome_phone7.png"],
     "links": [
@@ -64,6 +64,7 @@
     "imageAlt": "Spatial UI Components",
     "description": "A library of reusable spatial UI components for Apple Vision Pro using RealityKit, SwiftUI.",
     "featured": false,
+    "heroImageOffset": 80,
     "width": 100,
     "height": 90,
     "links": []
@@ -87,7 +88,7 @@
     "tags": ["TypeScript", ".NET", "Claude API", "Gemini API", "Structured Output", "Multi-provider"],
     "imageUrl": "https://images.unsplash.com/photo-1686771416282-3888ddaf249b?w=600&q=80",
     "imageAlt": "Job interview handshake",
-    "description": "AI-powered .NET CLI/API tool that scores a CV against a job description, surfaces skill gaps, and drafts a cover letter — using a multi-provider LLM cascade (OpenAI → Anthropic → Gemini → Ollama) with schema-first structured output, and exposed as three MCP tools (analyze_job_fit, generate_cover_letter, fetch_job_from_url) for use directly from Claude Code or Claude Desktop.",
+    "description": "Multi-provider AI tool that scores CVs against job descriptions, surfaces skill gaps, and drafts cover letters — exposed as three MCP tools for direct use from Claude Code and Claude Desktop.",
     "featured": false,
     "width": 50,
     "links": [
@@ -102,6 +103,7 @@
     "imageAlt": "Panic Stations",
     "description": "Turn-based sci-fi roguelike RPG built with React Native and Expo — procedurally generated space stations, tap-to-move pathfinding, and fog-of-war exploration.",
     "featured": false,
+    "heroExclude": true,
     "width": 50,
     "links": []
   },

@@ -144,8 +144,14 @@ nav {
 .hero-inner {
     position: relative; z-index: 1;
     max-width: 1280px; width: 100%; margin: 0 auto;
-    padding: 8rem 3rem 4rem;
-    display: grid; grid-template-columns: 1fr 1fr; align-items: stretch; gap: 4rem;
+    /* Equal top/bottom padding so #hero's flex align-items:center (below)
+       actually reads as vertically centered in the viewport, instead of the
+       old asymmetric 8rem/4rem split pushing content visibly downward. */
+    padding: 6rem 3rem;
+    /* Visual column trimmed 10% (1.2fr → 1.08fr, exactly *0.9) and the freed
+       space handed to the text column (0.8fr → 0.92fr) so the total 2fr width
+       — and hero-inner's own footprint — stays unchanged, just rebalanced. */
+    display: grid; grid-template-columns: 0.92fr 1.08fr; align-items: stretch; gap: 3rem;
 }
 .hero-eyebrow {
     font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.22em;
@@ -176,9 +182,12 @@ nav {
 }
 .btn-ghost:hover { color: var(--chalk); border-color: var(--mist); transform: translateY(-1px); }
 
-.hero-visual { position: relative; z-index: 1; display: flex; justify-content: center; align-items: stretch; }
+/* min-width: 0 overrides the flex/grid default of min-width: auto — without it,
+   .platform-track's intrinsic (very wide, max-content) size would force this
+   whole chain wider than the grid column instead of clipping via overflow. */
+.hero-visual { position: relative; z-index: 1; display: flex; justify-content: center; align-items: stretch; min-width: 0; }
 .platform-card {
-    width: 100%; height: 100%;
+    width: 100%; height: 100%; min-width: 0;
     background: linear-gradient(145deg, var(--slate) 0%, var(--navy) 100%);
     border: 1px solid var(--steel); border-radius: 2px;
     position: relative; overflow: hidden;
@@ -187,15 +196,38 @@ nav {
 :root[data-theme="light"] .platform-card {
     box-shadow: 0 0 0 1px color-mix(in srgb, var(--steel) 60%, transparent), 0 30px 60px -20px rgba(0,0,0,0.26), 0 0 60px -10px color-mix(in srgb, var(--accent) 13%, transparent);
 }
-.platform-slide { position: absolute; inset: 0; }
+/* Full-bleed sliding carousel: .platform-track holds exactly two full-card
+   slides side by side (current + next) in a track twice the card's width.
+   At rest it sits at translateX(0%), showing only the first (current) slide
+   through the card's overflow:hidden. On each cycle it animates to -50% —
+   exactly one slide-width — sliding the current slide fully off and the
+   next slide fully in as one continuous motion, no opacity fade involved.
+   When the transition ends, React swaps the index and snaps back to 0%
+   with transition:none so the new "current" slide is pixel-identical to
+   where the incoming slide just landed — no flicker, ready to preload the
+   slide after next off-screen to the right for the following cycle. */
+.platform-track { display: flex; width: 200%; height: 100%; }
+.platform-slide { position: relative; width: 50%; height: 100%; flex-shrink: 0; }
 .platform-img { width: 100%; height: 100%; object-fit: cover; object-position: var(--img-pos, center); opacity: 0.85; }
-.platform-overlay { position: absolute; inset: 0; background: linear-gradient(to top, var(--navy) 0%, transparent 60%); }
-.platform-label { position: absolute; bottom: 1.6rem; left: 1.6rem; right: 1.6rem; transition: opacity 0.7s ease; }
+/* Multi-stop fade (was a flat 0%→60% linear) so the dark reaches further up
+   the card and holds more opacity near the bottom — needed now that
+   .platform-desc can run several unclamped lines and still needs to read
+   clearly over an arbitrary photo. */
+.platform-overlay { position: absolute; inset: 0; background: linear-gradient(to top, var(--navy) 0%, rgba(13,21,38,0.88) 22%, rgba(13,21,38,0.55) 45%, rgba(13,21,38,0.15) 68%, transparent 82%); }
+.platform-label { position: absolute; bottom: 1.6rem; left: 1.6rem; right: 1.6rem; z-index: 2; }
 .platform-label span { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--mist); }
 .platform-label p { font-family: var(--serif); font-size: 1.3rem; color: var(--chalk); margin-top: 0.3rem; }
-.platform-links { position: absolute; top: 1.4rem; left: 1.4rem; display: flex; gap: 0.6rem; flex-wrap: wrap; z-index: 2; transition: opacity 0.7s ease; }
+/* Higher specificity than ".platform-label p" above so it overrides the
+   title's serif styling instead of inheriting it. Unclamped — full
+   description text, wrapping across as many lines as it needs. */
+.platform-label p.platform-desc {
+    font-family: var(--serif); font-weight: 400; font-size: 1rem; line-height: 1.5;
+    color: var(--silver); margin-top: 0.5rem; width: 100%;
+}
+.platform-links { position: absolute; top: 1.4rem; left: 1.4rem; display: flex; gap: 0.6rem; flex-wrap: wrap; z-index: 2; }
 .platform-link { font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.1em; text-transform: uppercase; color: #8a9ab8; text-decoration: none; border: 1px solid #8a9ab8; padding: 0.22rem 0.6rem; background: rgba(13,21,38,0.5); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); transition: color 0.2s, border-color 0.2s; }
 .platform-link:hover { color: #e8ecf4; border-color: #5a8aee; }
+@media (prefers-reduced-motion: reduce) { .platform-track { transition: none !important; } }
 
 /* ── SECTION BASE ────────────────────────────────────────────── */
 section { padding: 7rem 0; }

@@ -19,10 +19,21 @@ export interface WorkItem {
   credit?: WorkCredit;
   imagePosition?: string;
   heroImagePosition?: string;
+  /** Plain horizontal crop offset for the hero slide image, 0–100 (percent from
+   *  the left). Simpler alternative to heroImagePosition's raw CSS string —
+   *  just a number to nudge left/right. Takes precedence over heroImagePosition
+   *  when both are set. */
+  heroImageOffset?: number;
+  /** Raw CSS `transform` value (e.g. 'scale(1.15) translateY(-4%)') applied to
+   *  the hero slide image, for fine-tuning framing/zoom beyond what
+   *  heroImagePosition's object-position crop anchor alone can reach. */
+  heroImageTransform?: string;
   width?: number;
   height?: number;
   subsection?: string;
   slideshowImages?: string[];
+  /** When true, this item is skipped by the hero rotation even if it has an imageUrl. */
+  heroExclude?: boolean;
 }
 
 export interface Skill {
