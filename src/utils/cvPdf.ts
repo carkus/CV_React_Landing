@@ -5,14 +5,14 @@
 // is always built fresh from the live content rather than served as a static file.
 import { jsPDF } from 'jspdf';
 
-interface CvLink {
+export interface CvLink {
   label: string;
   url: string;
 }
 
-type CvTextBlock = { type: 'h1' | 'h2' | 'bold' | 'italic' | 'bullet' | 'p'; text: string; links: CvLink[] };
-type CvMarkerBlock = { type: 'hr' | 'pagebreak' | 'br' };
-type CvBlock = CvTextBlock | CvMarkerBlock;
+export type CvTextBlock = { type: 'h1' | 'h2' | 'bold' | 'italic' | 'bullet' | 'p'; text: string; links: CvLink[] };
+export type CvMarkerBlock = { type: 'hr' | 'pagebreak' | 'br' };
+export type CvBlock = CvTextBlock | CvMarkerBlock;
 
 const LINK_PATTERN = /\[([^\]]+)\]\(([^)]+)\)/g;
 
@@ -70,7 +70,7 @@ const MARGIN = 15;
 const CONTENT_W = 180;
 const PAGE_H = 277;
 
-function buildPdf(blocks: CvBlock[]): jsPDF {
+export function buildPdf(blocks: CvBlock[]): jsPDF {
   const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
   let y = MARGIN;
 
