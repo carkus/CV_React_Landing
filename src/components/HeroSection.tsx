@@ -29,12 +29,16 @@ const FALLBACK: WorkItem[] = [
 
 const DWELL_MS = 10000; // time each project sits fully visible before sliding on
 const SLIDE_MS = 1400;  // slide transition duration
+const SWIPE_THRESHOLD_PX = 40; // minimum horizontal drag before it counts as a swipe, not a tap
 
 export default function HeroSection() {
   const [items, setItems] = useState<WorkItem[]>(FALLBACK);
   const [idx, setIdx] = useState(0);
-  const [sliding, setSliding] = useState(false);
+  // null = idle; 'next'/'prev' = a slide transition is currently animating
+  // toward that direction, driven either by the dwell timer or a swipe.
+  const [pending, setPending] = useState<'next' | 'prev' | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const dragRef = useRef<{ startX: number } | null>(null);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -59,22 +63,54 @@ export default function HeroSection() {
     };
   }, []);
 
-  useEffect(() => {
-    if (items.length <= 1) return;
-    timerRef.current = setInterval(() => setSliding(true), DWELL_MS);
-    return () => { if (timerRef.current) clearInterval(timerRef.current); };
-  }, [items]);
-
-  // Called when the slide-out/slide-in transform transition finishes: commit
-  // the new index and snap the track back to 0% with no transition, so the
-  // now-current slide is pixel-identical to where the incoming slide just
-  // landed — no flicker, ready for the next cycle to slide in from the right.
-  const handleTransitionEnd = () => {
-    if (!sliding) return;
-    setIdx(i => (i + 1) % items.length);
-    setSliding(false);
+  // (Re)starts the auto-advance clock. Pulled out so a manual swipe can reset
+  // the dwell period instead of the next auto-advance landing a moment later.
+  const resetTimer = () => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    if (items.length > 1) {
+      // Functional update + only set if idle: a tick that lands mid-swipe
+      // just no-ops instead of stomping the in-progress transition.
+      timerRef.current = setInterval(() => setPending(p => p ?? 'next'), DWELL_MS);
+    }
   };
 
+  useEffect(() => {
+    resetTimer();
+    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [items]);
+
+  const triggerSlide = (dir: 'next' | 'prev') => {
+    setPending(p => p ?? dir);
+    resetTimer();
+  };
+
+  // Called when the track's transform transition finishes: commit the index
+  // change and snap the track back to the idle -33.3333% with no transition,
+  // so the now-current slide is pixel-identical to where the incoming slide
+  // just landed — no flicker, ready for the next swipe or auto-advance.
+  const handleTransitionEnd = () => {
+    if (!pending) return;
+    const dir = pending;
+    setIdx(i => dir === 'next' ? (i + 1) % items.length : (i - 1 + items.length) % items.length);
+    setPending(null);
+  };
+
+  const handlePointerDown = (e: React.PointerEvent) => {
+    dragRef.current = { startX: e.clientX };
+  };
+  const handlePointerUp = (e: React.PointerEvent) => {
+    const drag = dragRef.current;
+    dragRef.current = null;
+    if (!drag || items.length <= 1) return;
+    const deltaX = e.clientX - drag.startX;
+    // Small movement (or none) is a tap/click — let links underneath fire normally.
+    if (Math.abs(deltaX) < SWIPE_THRESHOLD_PX) return;
+    triggerSlide(deltaX < 0 ? 'next' : 'prev');
+  };
+  const handlePointerCancel = () => { dragRef.current = null; };
+
+  const prev = items[(idx - 1 + items.length) % items.length];
   const current = items[idx];
   const next = items[(idx + 1) % items.length];
 
@@ -119,9 +155,9 @@ export default function HeroSection() {
           <h1 className="hero-name">Mark<br /><em>Scicluna</em></h1>
           <p className="hero-title">Cross-Platform · Spatial Computing · AI Systems</p>
           <div className="hero-desc">
-            <p>Production-grade cross-platform experiences. Web to mobile, React/Blazor to Flutter/SwiftUI.</p>
-            <p>Building AI features that hold up outside a demo — RAG search, structured outputs, fallback across providers so one API outage doesn't take the feature down with it.</p>
-            <p>Based in Melbourne. 10+ years shipping real products.</p>
+            <p>Cross-platform development from web to mobile — React and Blazor on the frontend, Flutter and SwiftUI on device.</p>
+            <p>AI features built for production, not just demos — RAG search, structured outputs, and multi-provider fallback so one API outage doesn't take the whole thing down.</p>
+            <p>Based in Melbourne. Over a decade of shipping real products.</p>
           </div>
           <div className="hero-link-stack">
             <Link to="/profile" className="btn-ghost">Profile, References &amp; Media ↗</Link>
@@ -137,18 +173,35 @@ export default function HeroSection() {
           </div>
         </div>
         <div className="hero-visual">
-          <div className="platform-card">
+          <div
+            className="platform-card"
+            onPointerDown={handlePointerDown}
+            onPointerUp={handlePointerUp}
+            onPointerCancel={handlePointerCancel}
+          >
             <div
               className="platform-track"
               onTransitionEnd={handleTransitionEnd}
               style={{
-                transform: `translateX(${sliding ? '-50%' : '0%'})`,
-                transition: sliding ? `transform ${SLIDE_MS}ms ease` : 'none',
+                transform: `translateX(${
+                  pending === 'next' ? '-66.6666%' : pending === 'prev' ? '0%' : '-33.3333%'
+                })`,
+                transition: pending ? `transform ${SLIDE_MS}ms ease` : 'none',
               }}
             >
+              <div className="platform-slide">{renderSlide(prev)}</div>
               <div className="platform-slide">{renderSlide(current)}</div>
               <div className="platform-slide">{renderSlide(next)}</div>
             </div>
+            {items.length > 1 && (
+              // Purely a "there's more, and you can swipe" affordance — not
+              // clickable, so it can't fight the drag handlers on the card.
+              <div className="platform-dots">
+                {items.map((item, i) => (
+                  <span key={item.title} className={`platform-dot${i === idx ? ' active' : ''}`} />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

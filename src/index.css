@@ -206,27 +206,33 @@ nav {
    with transition:none so the new "current" slide is pixel-identical to
    where the incoming slide just landed — no flicker, ready to preload the
    slide after next off-screen to the right for the following cycle. */
-.platform-track { display: flex; width: 200%; height: 100%; }
-.platform-slide { position: relative; width: 50%; height: 100%; flex-shrink: 0; }
-.platform-img { width: 100%; height: 100%; object-fit: cover; object-position: var(--img-pos, center); opacity: 0.85; }
+/* Three slides (prev + current + next) so the track can animate either
+   direction for swipe — idle position sits at -33.3333% (current centred),
+   sliding to -66.6666% (next) or 0% (prev) and snapping back on commit. */
+.platform-track { display: flex; width: 300%; height: 100%; touch-action: pan-y; }
+.platform-slide { position: relative; width: 33.3333%; height: 100%; flex-shrink: 0; }
+.platform-img { width: 100%; height: 100%; object-fit: cover; object-position: var(--img-pos, center); opacity: 0.85; -webkit-user-drag: none; -webkit-user-select: none; user-select: none; }
 /* Multi-stop fade (was a flat 0%→60% linear) so the dark reaches further up
    the card and holds more opacity near the bottom — needed now that
    .platform-desc can run several unclamped lines and still needs to read
    clearly over an arbitrary photo. */
 .platform-overlay { position: absolute; inset: 0; background: linear-gradient(to top, var(--navy) 0%, rgba(13,21,38,0.88) 22%, rgba(13,21,38,0.55) 45%, rgba(13,21,38,0.15) 68%, transparent 82%); }
-.platform-label { position: absolute; bottom: 1.6rem; left: 1.6rem; right: 1.6rem; z-index: 2; }
+.platform-label { position: absolute; bottom: 1.6rem; left: 1.6rem; right: 1.6rem; z-index: 2; -webkit-user-select: none; user-select: none; }
 .platform-label span { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--mist); }
 .platform-label p { font-family: var(--serif); font-size: 1.3rem; color: var(--chalk); margin-top: 0.3rem; }
 /* Higher specificity than ".platform-label p" above so it overrides the
    title's serif styling instead of inheriting it. Unclamped — full
    description text, wrapping across as many lines as it needs. */
 .platform-label p.platform-desc {
-    font-family: var(--serif); font-weight: 400; font-size: 1rem; line-height: 1.5;
+    font-family: var(--serif); font-weight: 400; font-size: 1.1rem; line-height: 1.5;
     color: var(--silver); margin-top: 0.5rem; width: 100%;
 }
 .platform-links { position: absolute; top: 1.4rem; left: 1.4rem; display: flex; gap: 0.6rem; flex-wrap: wrap; z-index: 2; }
 .platform-link { font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.1em; text-transform: uppercase; color: #8a9ab8; text-decoration: none; border: 1px solid #8a9ab8; padding: 0.22rem 0.6rem; background: rgba(13,21,38,0.5); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); transition: color 0.2s, border-color 0.2s; }
 .platform-link:hover { color: #e8ecf4; border-color: #5a8aee; }
+.platform-dots { position: absolute; top: 1.4rem; right: 1.4rem; display: flex; gap: 0.4rem; z-index: 2; pointer-events: none; }
+.platform-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.35); transition: background 0.3s, transform 0.3s; }
+.platform-dot.active { background: var(--accent2, #5a8aee); transform: scale(1.5); }
 @media (prefers-reduced-motion: reduce) { .platform-track { transition: none !important; } }
 
 /* ── SECTION BASE ────────────────────────────────────────────── */
