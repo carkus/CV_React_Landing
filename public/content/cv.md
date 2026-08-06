@@ -4,11 +4,11 @@ Senior software engineer with 10+ years professional experience.
 Commercial, in-house, and educational development across web, iOS, Android, cross-platform, and spatial computing (visionOS, XR).  
 
 ---
-[My Website at carkus.com](https://carkus.com)  
-[(+61) 0408 513 913](tel:+61408513913)  
-Email: [markanthonyscicluna@gmail.com](mailto:markanthonyscicluna@gmail.com)  
-GitHub: [github.com/carkus](https://github.com/carkus)  
-LinkedIn: [linkedin.com/in/mark-scicluna-b907809](https://www.linkedin.com/in/mark-scicluna-b907809/)
+[https://carkus.com](https://carkus.com)  
+[(+61) 0408 513 913](tel:+61408513913)
+[dicarkus@hotmail.com](mailto:dicarkus@hotmail.com)  
+[https://github.com/carkus](https://github.com/carkus)  
+[linkedin.com/in/mark-scicluna-b907809](https://www.linkedin.com/in/mark-scicluna-b907809/)
 ---
 
 # SKILLS

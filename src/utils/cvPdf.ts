@@ -177,7 +177,7 @@ function buildPdf(blocks: CvBlock[]): jsPDF {
         checkPage(6);
         pdf.setDrawColor(200);
         pdf.line(MARGIN, y, MARGIN + CONTENT_W, y);
-        y += 4;
+        y += 6;
         break;
     }
     y += 1;
