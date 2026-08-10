@@ -1,17 +1,17 @@
 [
   { 
     "subsection": "Full-stack",
-    "title": "PDF Builder",
+    "title": "AI Forms - PDF Builder",
     "tags": ["Blazor", "PDF Generation", "Agentic Pipeline", "Claude API", "Structured Prompting"],
     "imageUrl": "/img/pdf_form.png",
-    "imageAlt": "PDF Form Builder",
+    "imageAlt": "AI Forms - PDF Builder",
     "imagePosition": "calc(50% - 50px) center",
     "heroImagePosition": "80% center",
     "description": "Drag-and-drop PDF editor with AI form generation — describe a form in plain text and an agentic LangGraph/LlamaIndex pipeline generates the fields, layout, and pre-filled values via structured prompt engineering and smart field extraction.",
     "featured": true,
     "width": 50,
     "links": [
-      { "label": "Open PDF Builder ↗", "url": "https://editor.carkus.com/form-editor" }
+      { "label": "Open AI Forms - PDF Builder ↗", "url": "https://editor.carkus.com/form-editor" }
     ]
   },
   {
@@ -34,7 +34,7 @@
     "heroImagePosition": "50% center",
     "description": "ZOME is a spatial platform and messenger where you can plant your messages anywhere in the world, at any location and even points in time.",
     "featured": true,
-    "width": 40,
+    "width": 60,
     "slideshowImages": ["/img/zome_ar1.png", "/img/zome_ar2.png", "/img/zome_ar3.png", "/img/zome_ar4.png", "/img/zome_ar5.png", "/img/zome_ar6.png", "/img/zome_ar7.png"],
     "links": [
       { "label": "App Store ↗", "url": "https://itunes.apple.com/us/app/zome/id1382123356?ls=1&mt=8" },
@@ -44,13 +44,13 @@
   {
   "title": "ZOME — Mobile version",
     "tags": ["Cross-platform", "Flutter", "Swift", "Kotlin"],
-    "imageUrl": "/img/zome_banner_mobile_no_button.png",
+    "imageUrl": "/img/icon_crop_sq.png",
     "imageAlt": "ZOME platform",
     "imagePosition": "left center",
     "description": "ZOME is a spatial platform and messenger where you can plant your messages anywhere in the world, at any location and even points in time.",
     "featured": false,
     "heroExclude": true,
-    "width": 60,
+    "width": 40,
     "slideshowImages": ["/img/zome_phone1.png", "/img/zome_phone2.png", "/img/zome_phone3.png", "/img/zome_phone4.png", "/img/zome_phone5.png", "/img/zome_phone6.png", "/img/zome_phone7.png"],
     "links": [
       { "label": "App Store ↗", "url": "https://itunes.apple.com/us/app/zome/id1382123356?ls=1&mt=8" },
@@ -88,7 +88,7 @@
     "tags": ["TypeScript", ".NET", "Claude API", "Gemini API", "Structured Output", "Multi-provider"],
     "imageUrl": "https://images.unsplash.com/photo-1686771416282-3888ddaf249b?w=600&q=80",
     "imageAlt": "Job interview handshake",
-    "description": "Multi-provider AI tool that scores CVs against job descriptions, surfaces skill gaps, and drafts cover letters — exposed as three MCP tools for direct use from Claude Code and Claude Desktop.",
+    "description": "Multi-provider AI tool that scores CVs against job descriptions, generates ATS compliant resumes, surfaces skill gaps, and drafts cover letters — exposes MCP tools for direct use from Claude.",
     "featured": false,
     "width": 50,
     "links": [

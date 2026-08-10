@@ -174,7 +174,7 @@ export default function HeroSection() {
           <p className="hero-title">Cross-Platform · Spatial Computing · AI Systems</p>
           <div className="hero-desc">
             <p>Cross-platform development from web to mobile — React and Blazor on the frontend, Flutter and SwiftUI on device.</p>
-            <p>AI features built for production, not just demos — RAG search, structured outputs, and multi-provider fallback so one API outage doesn't take the whole thing down.</p>
+            <p>Production-grade AI systems: RAG search, structured outputs, and multi-provider fallback architecture to eliminate single points of failure.</p>
             <p>Based in Melbourne. Over a decade of shipping real products.</p>
           </div>
           <div className="hero-link-stack">

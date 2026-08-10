@@ -18,7 +18,7 @@ export default function AboutSection() {
               Mobile, Web, AI<br /><em>One Engineer</em>
             </h2>
             <div className="about-text reveal reveal-delay-2">
-              <p>Over a decade shipping cross-platform mobile software in Swift/SwiftUI, Flutter, and React Native, alongside web development in React and Blazor/.NET. More recently, I've moved into AI development and integration, building on those platforms with the Claude and Gemini APIs.</p>
+              <p>Over 10 years experience in cross-platform mobile software in Swift/SwiftUI, Flutter, and React Native, alongside web development in React and Blazor/.NET. More recently, I've moved into AI development and integration, building on those platforms with the Claude and Gemini APIs.</p>
               <p>For 8 years I was a core engineer on ZOME at Rhizomenet — spanning native iOS, Android, cross-platform (Flutter), and visionOS. React has remained my consistent web toolkit.</p>
               <p>Building on my Master's research in automation, I've continued exploring the progress of AI and its emerging applications, implications, and opportunities. Recent tools I've built use AI for tailoring content to user preferences, document analysis, and forms generation, following best practices in prompt engineering, structured outputs, and agentic workflow design. </p>
             </div>

@@ -286,6 +286,21 @@ section { padding: 7rem 0; }
 .about-text p { font-family: var(--serif); font-weight: 300; font-size: clamp(1.15rem, 1.8vw, 1.45rem); line-height: 1.6; color: var(--chalk); margin-bottom: 1.4rem; }
 .about-text strong { color: var(--chalk); font-weight: 500; }
 
+/* ── ACHIEVEMENTS ────────────────────────────────────────────── */
+#achievements { background: var(--ink); border-top: 1px solid var(--slate); }
+.achievements-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5px; background: var(--slate); border: 1px solid var(--slate); }
+.achievement-card { background: var(--navy); padding: 1.6rem 1.8rem; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+.achievement-main { display: flex; flex-direction: row; align-items: flex-start; gap: 1.2rem; position: relative; z-index: 1; }
+.achievement-icon { width: 32px; height: 32px; background: var(--slate); border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; color: var(--accent2); flex-shrink: 0; }
+.achievement-body { min-width: 0; }
+.achievement-title { font-family: var(--serif); font-size: 1.05rem; font-weight: 400; color: var(--chalk); margin-bottom: 0.6rem; }
+.achievement-list { font-size: 0.78rem; line-height: 1.55; color: var(--mist); margin: 0; padding-left: 1.1rem; }
+.achievement-list li { margin-bottom: 0.35rem; }
+.achievement-list li:last-child { margin-bottom: 0; }
+.achievement-list li::marker { color: var(--accent2); }
+.achievement-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: auto; padding-top: 0.9rem; position: relative; z-index: 1; }
+@media (max-width: 720px) { .achievements-grid { grid-template-columns: 1fr; } }
+
 /* ── SKILLS ──────────────────────────────────────────────────── */
 #skills { background: var(--ink); border-top: 1px solid var(--slate); }
 .skills-tier-label { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--steel); padding: 0 0 0.75rem 0.5rem; }

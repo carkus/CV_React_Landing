@@ -59,3 +59,10 @@ export interface TimelineEntry {
   desc: string;
   tags: string[];
 }
+
+export interface Achievement {
+  icon: string;
+  title: string;
+  points: string[];
+  tags: string[];
+}
