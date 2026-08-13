@@ -50,14 +50,30 @@
     position: relative;
     overflow: hidden;
     border: 3px solid transparent;
+    /* Same exact gradient/colors/stops as before — the only addition is
+       background-size (giving the gradient room to move) and the animation
+       below sliding it back and forth. Because the gradient starts and ends
+       on the same orange, the loop point is seamless, no visible jump. */
     background:
         linear-gradient(#0a0e1c, #0a0e1c) padding-box,
         linear-gradient(135deg, #ff8a3d 0%, #ff2e9e 45%, #2de0e0 75%, #ff8a3d 100%) border-box;
+    background-size: 100% 100%, 300% 300%;
+    animation: smooth-border-flow 8s ease infinite;
     box-shadow:
         0 0 20px rgba(255,90,60,0.25),
         0 0 40px rgba(255,46,158,0.18),
         0 0 60px rgba(45,224,224,0.12),
         0 20px 45px rgba(0,0,0,0.6);
+}
+
+@keyframes smooth-border-flow {
+    0% { background-position: 0% 0%, 0% 50%; }
+    50% { background-position: 0% 0%, 100% 50%; }
+    100% { background-position: 0% 0%, 0% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .smooth-card { animation: none; }
 }
 
 /* Faint grain, screened over the dark card so it reads as neon-sign noise
