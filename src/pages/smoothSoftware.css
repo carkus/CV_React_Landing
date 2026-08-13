@@ -44,21 +44,10 @@
 .smooth-card {
     width: 100%;
     max-width: 36rem;
-    background: #0a0e1c;
     border-radius: 1.5rem;
-    padding: 1.25rem;
+    padding: 3px; /* border thickness — the rotating plate behind shows through this ring */
     position: relative;
     overflow: hidden;
-    border: 3px solid transparent;
-    /* Same exact gradient/colors/stops as before — the only addition is
-       background-size (giving the gradient room to move) and the animation
-       below sliding it back and forth. Because the gradient starts and ends
-       on the same orange, the loop point is seamless, no visible jump. */
-    background:
-        linear-gradient(#0a0e1c, #0a0e1c) padding-box,
-        linear-gradient(135deg, #ff8a3d 0%, #ff2e9e 45%, #2de0e0 75%, #ff8a3d 100%) border-box;
-    background-size: 100% 100%, 300% 300%;
-    animation: smooth-border-flow 8s ease infinite;
     box-shadow:
         0 0 20px rgba(255,90,60,0.25),
         0 0 40px rgba(255,46,158,0.18),
@@ -66,19 +55,51 @@
         0 20px 45px rgba(0,0,0,0.6);
 }
 
-@keyframes smooth-border-flow {
-    0% { background-position: 0% 0%, 0% 50%; }
-    50% { background-position: 0% 0%, 100% 50%; }
-    100% { background-position: 0% 0%, 0% 50%; }
+/* The actual "moving border" mechanism: an oversized gradient plate behind
+   everything, genuinely rotating (not just sliding), clipped to the card's
+   rounded rect by the parent's overflow:hidden. .smooth-card-inner paints a
+   solid layer on top of it, so only a thin ring around the edge — the
+   border — shows the rotating colors through. Same original stops as
+   before, with a gold/yellow note mixed in between the orange and pink. */
+.smooth-card::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 220%;
+    height: 220%;
+    /* Yellow is stretched into a band (not a single stop) — the plate is
+       oversized (220%) so it can rotate without exposing gaps at the card's
+       corners, which means any single narrow stop only sweeps past the
+       visible ring briefly. A wider band keeps it reliably visible each
+       cycle instead of flickering past unnoticed. */
+    background: linear-gradient(135deg, #ff8a3d 0%, #ffd23d 12%, #ffd23d 32%, #ff2e9e 48%, #2de0e0 75%, #ff8a3d 100%);
+    animation: smooth-border-spin 8s linear infinite;
+    transform: translate(-50%, -50%) rotate(0deg);
+    transform-origin: center;
+}
+
+@keyframes smooth-border-spin {
+    to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .smooth-card { animation: none; }
+    .smooth-card::before { animation: none; }
+}
+
+.smooth-card-inner {
+    position: relative;
+    z-index: 1;
+    background: #0a0e1c;
+    border-radius: calc(1.5rem - 3px);
+    padding: 1.25rem;
+    height: 100%;
+    overflow: hidden;
 }
 
 /* Faint grain, screened over the dark card so it reads as neon-sign noise
    rather than paper texture. No image assets needed. */
-.smooth-card::before {
+.smooth-card-inner::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -144,7 +165,7 @@
 .smooth-divider-inner { display: flex; flex-direction: column; align-items: center; gap: 0.85rem; text-align: center; }
 .smooth-pitch { font-size: 0.97rem; color: #e9dcc0; line-height: 1.5; font-weight: 600; margin: 0; }
 .smooth-pitch-fast { display: inline-block; margin-top: 0.15rem; font-size: 1.4em; color: #ff4fa8; font-weight: 700; text-shadow: 0 0 10px rgba(255,79,168,0.55); }
-.smooth-pitch-sub { font-size: 0.76rem; color: #7c8bb8; margin: 0; }
+.smooth-pitch-sub { font-size: 0.8rem; color: #7c8bb8; margin: 0; }
 
 .smooth-discuss-toggle {
     background: none;
@@ -159,6 +180,7 @@
     transition: color 0.2s;
 }
 .smooth-discuss-toggle:hover { color: #ff8a3d; }
+.smooth-discuss-sent { color: #ffb020; cursor: default; text-shadow: 0 0 10px rgba(255,176,32,0.5); }
 
 .smooth-discuss-form {
     display: flex;
@@ -188,6 +210,7 @@
 .smooth-discuss-textarea { resize: vertical; min-height: 3.2rem; }
 .smooth-discuss-submit {
     align-self: center;
+    margin-top: 0.5rem;
     background: linear-gradient(135deg, #ff8a3d, #ff2e9e);
     border: none;
     border-radius: 999px;
@@ -256,22 +279,14 @@
 
 @media (min-width: 768px) {
     .smooth-page { padding: 2rem; }
-    .smooth-card { padding: 1.75rem; }
+    .smooth-card-inner { padding: 1.75rem; }
     .smooth-offerings-main { font-size: 1.1rem; }
     .smooth-offerings-sub { font-size: 1rem; }
     .smooth-pitch { font-size: 0.84rem; }
-    .smooth-pitch-sub { font-size: 0.78rem; }
+    .smooth-pitch-sub { font-size: 0.82rem; }
     .smooth-spark { display: block; }
     .smooth-divider-inner { padding: 0 1rem; }
     .smooth-badge-text { font-size: 2.3rem; }
-}
-
-@media (min-width: 1024px) {
-    .smooth-grid { grid-template-columns: 1.55fr 1fr; }
-    .smooth-col-left { text-align: left; }
-    .smooth-title img { margin: 0; }
-    .smooth-contacts { align-items: flex-start; margin: 0; }
-    .smooth-badge-row { justify-content: flex-end; }
 }
 
 @media (min-width: 640px) {

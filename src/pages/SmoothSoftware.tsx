@@ -18,6 +18,14 @@ function SmoothDiscussForm() {
   const [status, setStatus] = useState<'idle' | 'sent' | 'error'>('idle');
   const [error, setError] = useState('');
 
+  // Revert the "Sent" confirmation back to the toggle link after a pause,
+  // rather than leaving it there permanently.
+  useEffect(() => {
+    if (status !== 'sent') return;
+    const timer = setTimeout(() => setStatus('idle'), 10000);
+    return () => clearTimeout(timer);
+  }, [status]);
+
   async function send(e: React.FormEvent) {
     e.preventDefault();
     const trimmedEmail = email.trim();
@@ -41,13 +49,19 @@ function SmoothDiscussForm() {
       }
       if (!res.ok) throw new Error();
       setStatus('sent');
+      setEmail('');
       setMessage('');
+      setOpen(false);
     } catch {
       setError("Couldn't send that — try again in a moment.");
       setStatus('error');
     } finally {
       setLoading(false);
     }
+  }
+
+  if (status === 'sent') {
+    return <p className="smooth-discuss-toggle smooth-discuss-sent">Sent — I'll reply directly to your email shortly.</p>;
   }
 
   if (!open) {
@@ -79,7 +93,6 @@ function SmoothDiscussForm() {
       <button className="smooth-discuss-submit" type="submit" disabled={loading || !email.trim() || !message.trim()}>
         {loading ? '···' : 'Send →'}
       </button>
-      {status === 'sent' && <p className="smooth-discuss-status">Thanks — I'll reply directly to your email shortly.</p>}
       {status === 'error' && <p className="smooth-discuss-status smooth-discuss-status-error">{error}</p>}
     </form>
   );
@@ -122,6 +135,7 @@ export default function SmoothSoftware() {
     <div className="smooth-page">
       <Link to="/" className="smooth-back">← Back to carkus.com</Link>
       <div className="smooth-card">
+        <div className="smooth-card-inner">
         {/* Decorative flowing neon curves, echoing the source mockup's ribbon
             accents. The real source ribbon lines sit crammed against adjacent
             text/badge art with no clean margin to crop (same issue as the
@@ -165,7 +179,7 @@ export default function SmoothSoftware() {
                   to build reliable, high-quality software —<br />
                   <span className="smooth-pitch-fast">fast.</span>
                 </p>
-                <p className="smooth-pitch-sub">You get senior-level outcomes without the enterprise overhead.</p>
+                <p className="smooth-pitch-sub">Senior-level outcomes without the enterprise overhead.</p>
               </div>
             </div>
 
@@ -191,6 +205,7 @@ export default function SmoothSoftware() {
             </div>
           </div>
 
+        </div>
         </div>
       </div>
     </div>
