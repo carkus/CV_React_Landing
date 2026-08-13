@@ -101,9 +101,18 @@ function DiscussForm() {
   );
 }
 
+// Icon + label for whichever provider actually answered — the backend falls back from
+// Claude to Gemini if the primary provider is unavailable, so this reflects the truth of
+// what generated the reply rather than assuming a fixed provider.
+const PROVIDER_ICONS: Record<string, { src: string; label: string }> = {
+  Claude: { src: '/img/claude-ai.svg', label: 'Claude' },
+  Gemini: { src: '/img/gemini.svg', label: 'Gemini' },
+};
+
 function AiAsk() {
   const [message, setMessage] = useState('');
   const [reply, setReply] = useState('');
+  const [provider, setProvider] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -115,6 +124,7 @@ function AiAsk() {
     setLoading(true);
     setError('');
     setReply('');
+    setProvider('');
 
     try {
       const res = await fetch(PORTFOLIO_ASK_URL, {
@@ -123,8 +133,9 @@ function AiAsk() {
         body: JSON.stringify({ message: trimmed }),
       });
       if (!res.ok) throw new Error();
-      const data: { reply: string } = await res.json();
+      const data: { reply: string; provider?: string } = await res.json();
       setReply(data.reply);
+      setProvider(data.provider ?? '');
     } catch {
       setError("Couldn't reach the assistant — try again in a moment.");
     } finally {
@@ -136,6 +147,7 @@ function AiAsk() {
     setMessage(value);
     if (!value.trim()) {
       setReply('');
+      setProvider('');
       setError('');
     }
   }
@@ -156,7 +168,17 @@ function AiAsk() {
         </button>
       </form>
       {error && <p className="ai-ask-error">{error}</p>}
-      {reply && <p className="ai-ask-reply">{renderReplyWithLinks(reply)}</p>}
+      {reply && (
+        <div className="ai-ask-reply-block">
+          <p className="ai-ask-reply">{renderReplyWithLinks(reply)}</p>
+          {provider && PROVIDER_ICONS[provider] && (
+            <div className="ai-ask-provider">
+              <img src={PROVIDER_ICONS[provider].src} alt="" />
+              <span>Answered by {PROVIDER_ICONS[provider].label}</span>
+            </div>
+          )}
+        </div>
+      )}
       <div className="ai-discuss">
         <DiscussForm />
       </div>

@@ -171,10 +171,10 @@ nav {
        actually reads as vertically centered in the viewport, instead of the
        old asymmetric 8rem/4rem split pushing content visibly downward. */
     padding: 6rem 3rem;
-    /* Visual column trimmed 10% (1.2fr → 1.08fr, exactly *0.9) and the freed
-       space handed to the text column (0.8fr → 0.92fr) so the total 2fr width
-       — and hero-inner's own footprint — stays unchanged, just rebalanced. */
-    display: grid; grid-template-columns: 0.92fr 1.08fr; align-items: stretch; gap: 3rem;
+    /* Matches #about's 1fr/1fr split below, so the two stacked sections
+       read as sharing the same column rhythm instead of each picking its
+       own ratio. */
+    display: grid; grid-template-columns: 1fr 1fr; align-items: stretch; gap: 3rem;
 }
 .hero-eyebrow {
     font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.22em;
@@ -299,7 +299,7 @@ section { padding: 7rem 0; }
 
 /* ── ABOUT ───────────────────────────────────────────────────── */
 #about { background: var(--navy); border-top: 1px solid var(--slate); }
-.about-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 5rem; align-items: start; }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
 .about-image-stack { position: relative; height: 560px; }
 .about-img-main { position: absolute; top: 0; left: 0; width: 86%; height: 90%; object-fit: cover; filter: grayscale(30%); border: 1px solid var(--steel); box-shadow: 0 35px 70px -18px rgba(0,0,0,0.7); }
 .about-img-accent { position: absolute; bottom: -20px; right: 0; width: 58%; height: 54%; object-fit: cover; filter: grayscale(10%); border: 1px solid var(--accent); box-shadow: 0 0 30px color-mix(in srgb, var(--accent) 20%, transparent), 0 35px 70px -18px rgba(0,0,0,0.7); }
@@ -479,9 +479,14 @@ section { padding: 7rem 0; }
 .ai-ask-submit:hover:not(:disabled) { background: var(--accent2); border-color: var(--accent2); }
 .ai-ask-submit:disabled { opacity: 0.5; cursor: default; }
 .ai-ask-reply, .ai-ask-error { font-size: 0.85rem; line-height: 1.6; margin: 1rem 0 0; }
-.ai-ask-reply { color: var(--mist); }
+.ai-ask-reply { color: var(--mist); margin: 0; }
 .ai-ask-error { color: var(--error); }
 .ai-ask-link { color: var(--accent2); text-decoration: underline; text-underline-offset: 3px; }
+.ai-ask-reply-block { margin-top: 1rem; }
+/* Which provider actually generated the reply — the backend falls back Claude → Gemini,
+   so this badge reflects the true source per-answer rather than a fixed assumption. */
+.ai-ask-provider { display: flex; align-items: center; gap: 0.45rem; margin-top: 0.7rem; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--steel); }
+.ai-ask-provider img { width: 14px; height: 14px; }
 @media (max-width: 560px) { .ai-ask-form { flex-direction: column; } }
 .ai-reflection { margin-top: 1.5px; background: var(--navy); border: 1px solid var(--slate); padding: 1.6rem 1.8rem; }
 .ai-reflection-label { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent2); margin-bottom: 0.6rem; }
