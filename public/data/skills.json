@@ -64,7 +64,9 @@
       { "name": "RESTful APIs",  "icon": "devicon-nodejs-plain colored",      "pct": 90 },
       { "name": "Web Sockets",   "icon": "devicon-nodejs-plain colored",      "pct": 80 },
       { "name": "NodeJS",        "icon": "devicon-nodejs-plain colored",      "pct": 80 },
-      { "name": "Git / CI·CD",   "icon": "devicon-git-plain colored",         "pct": 75 },
+      { "name": "TDD",           "icon": "devicon-nodejs-plain colored",      "pct": 80 },
+      { "name": "Git",           "icon": "devicon-git-plain colored",         "pct": 75 },
+      { "name": "CI·CD (Jenkins/Fastlane)",   "icon": "devicon-jenkins-plain colored",         "pct": 75 },
       { "name": "systemd",       "icon": "devicon-linux-plain colored",       "pct": 60 },
       { "name": ".NET",          "icon": "devicon-dotnetcore-plain colored",  "pct": 78 },
       { "name": "Vue",           "icon": "devicon-blazor-plain colored",      "pct": 70 }

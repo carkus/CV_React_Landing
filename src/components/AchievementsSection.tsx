@@ -4,39 +4,60 @@ const ACHIEVEMENTS: Achievement[] = [
   {
     icon: '⬢',
     title: 'Cross-Platform Mobile Delivery',
-    points: ['Developed and maintained cross-platform mobile applications across iOS and Android, delivering features across multiple production apps with regular releases to the App Store and Google Play'],
+    points: [
+      'iOS & Android, shared codebase',
+      'Regular App Store / Google Play releases',
+      'Multiple production apps maintained',
+    ],
     tags: ['Swift', 'SwiftUI', 'Flutter', 'Kotlin'],
   },
   {
     icon: '◈',
     title: 'ZOME Platform — UI & Middleware',
-    points: ['Built UI and contributed to middleware for the ZOME platform across Flutter and visionOS, supporting both cross-platform mobile and spatial application experiences'],
+    points: [
+      'Flutter + visionOS UI development',
+      'Cross-platform middleware contributions',
+      'Spatial & mobile app support',
+    ],
     tags: ['Flutter', 'visionOS', 'Middleware'],
   },
   {
     icon: '⊞',
     title: 'Geospatial Web — ZOME Atlas',
-    points: ['Designed and developed responsive, accessible web interfaces using React and Vue.js, including ZOME Atlas, a geospatial search application built with React and Google Maps integration'],
+    points: [
+      'Responsive interfaces in React & Vue.js',
+      'ZOME Atlas geospatial search app',
+      'Google Maps integration, accessibility-first',
+    ],
     tags: ['React', 'Vue.js', 'Google Maps', 'Accessibility'],
   },
   {
     icon: '⇌',
     title: 'Cross-Functional Collaboration',
-    points: ['Collaborated closely with UI/UX designers, backend engineers, and product managers to translate wireframes and visual designs into interactive, cross-browser-compatible interfaces'],
+    points: [
+      'Worked closely with UI/UX, backend, product',
+      'Wireframes → interactive interfaces',
+      'Cross-browser compatibility',
+    ],
     tags: ['UI/UX', 'Cross-browser'],
   },
   {
     icon: '⟲',
     title: 'Spatial Performance & Scale',
-    points: ['Worked on spatial and immersive applications, including visionOS interfaces and 3D interaction workflows, and refactored bulk data handling in SwiftUI for visionOS to improve performance and scalability under heavier data loads'],
+    points: [
+      'visionOS interfaces, 3D interaction workflows',
+      'SwiftUI bulk-data refactor for visionOS',
+      'Performance & scalability under heavier loads',
+    ],
     tags: ['visionOS', '3D Interaction', 'Performance', 'Scalability'],
   },
   {
     icon: '⚙',
     title: 'Release Engineering & Stability',
     points: [
-      'Contributed to CI/CD pipelines and mobile release processes to support reliable builds and deployments',
-      'Resolved platform-specific issues across devices, frameworks, and operating systems to improve stability and performance',
+      'CI/CD pipeline contributions',
+      'Mobile build & release management',
+      'Cross-device/platform stability fixes',
     ],
     tags: ['CI/CD', 'Release Engineering', 'Stability'],
   },

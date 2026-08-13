@@ -9,7 +9,6 @@ import AiSection from '../components/AiSection';
 import AskSection from '../components/AskSection';
 import ExpertiseSection from '../components/ExpertiseSection';
 import TimelineSection from '../components/TimelineSection';
-import ReferencesSection from '../components/ReferencesSection';
 import ContactSection from '../components/ContactSection';
 import FooterSection from '../components/FooterSection';
 
@@ -41,11 +40,10 @@ export default function Home() {
       <NavBar />
       <HeroSection />
       <AboutSection />
-      <AchievementsSection />
       <AskSection />
+      <AchievementsSection />
       <SkillsSection />
       <AiSection />
-      <ReferencesSection />
       <WorkSection />
       <ExpertiseSection />
       <TimelineSection />

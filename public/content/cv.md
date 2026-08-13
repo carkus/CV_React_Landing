@@ -1,5 +1,4 @@
 # Mark Scicluna
-
 Senior software engineer with 10+ years professional experience.  
 Commercial, in-house, and educational development across web, iOS, Android, cross-platform, and spatial computing (visionOS, XR).  
 
@@ -15,7 +14,7 @@ Commercial, in-house, and educational development across web, iOS, Android, cros
 ## Highly Skilled  
 Flutter • SwiftUI/UIKit • visionOS • JavaScript • React • HTML • CSS • RESTful APIs
 ## Mobile  
-Flutter • SwiftUI/UIKit • Kotlin • React Native
+Flutter • SwiftUI/UIKit • Kotlin • React Native • Redux/State
 ## AR / VR
 visionOS • XR
 ## Web
@@ -24,10 +23,14 @@ JavaScript • React / Vue • HTML • CSS • TypeScript • Blazor / ASP.NET 
 Claude & Gemini APIs • Claude Code • LLM/PDDL Planning • Agentic Orchestration • RAG • MCP • LangChain / LangGraph • LlamaIndex • Schema-Constrained Generation
 ## Language
 Swift • Objective C • Python • C# • Kotlin • Java
+## Data
+PostgreSQL • MongoDB • SQL • NoSQL
+## State
+Redux • Provider
 ## DevOps & Tooling
 Docker • Git • CI/CD (Jenkins) • systemd • Linux
 ## Other
-.NET • MongoDB • UIKit
+.NET • UIKit • TDD (Flutter_test, jest, xUnit)
 
 ===
 # EDUCATION
