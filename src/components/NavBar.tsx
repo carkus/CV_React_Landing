@@ -61,6 +61,7 @@ export default function NavBar() {
           <span>Elsewhere</span>
         </div>
         <a href="/profile#references" className="nav-drawer-diversion" onClick={close}>↗ Reference letters</a>
+        <a href="/smooth-software" className="nav-drawer-diversion" onClick={close}>↗ Smooth Software</a>
       </div>
     </nav>
   );
