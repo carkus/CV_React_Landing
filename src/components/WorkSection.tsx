@@ -98,7 +98,17 @@ function WorkItemCard({ item, className, style }: { item: WorkItem; className: s
 
   return (
     <div className={className} style={style}>
-      <img src={item.imageUrl} alt={item.imageAlt} style={item.imagePosition ? { '--img-pos': item.imagePosition } as React.CSSProperties : undefined} />
+      <img
+        src={item.imageUrl}
+        alt={item.imageAlt}
+        style={
+          item.imageOffset != null
+            // Clamped 0-100 — outside that range the image is pushed past its
+            // own edge and a blank gap shows through instead of any content.
+            ? { '--img-pos': `${Math.min(100, Math.max(0, item.imageOffset))}% center` } as React.CSSProperties
+            : item.imagePosition ? { '--img-pos': item.imagePosition } as React.CSSProperties : undefined
+        }
+      />
       <div className="work-item-info">
         <p className="work-item-desc">{item.description}</p>
         <div className="work-item-title">{item.title}</div>
@@ -146,7 +156,11 @@ export default function WorkSection() {
         <div className="work-summation reveal reveal-delay-2">
           <div className="work-summation-col">
             <div className="work-summation-label">Frontend</div>
-            <p className="work-summation-text">Cross-platform mobile, AI-integrated web, and spatial computing — shipped to App Store, Play Store, and Vision Pro. Native Swift/SwiftUI for iOS and visionOS, and React/Blazor for the web layer. Claude and Gemini APIs wired directly into the UI, backed by multi-provider LLM cascades, RAG pipelines, and MCP tool integrations for structured, context-aware AI features across the stack.</p>
+            <ul className="work-summation-list">
+              <li>Cross-platform mobile, AI-integrated web, and spatial computing — shipped to App Store, Play Store, and Vision Pro</li>
+              <li>Native Swift/SwiftUI for iOS and visionOS, and React/Blazor for the web layer</li>
+              <li>Claude and Gemini APIs wired directly into the UI, backed by multi-provider LLM cascades, RAG pipelines, and MCP tool integrations for structured, context-aware AI features</li>
+            </ul>
             <div className="work-summation-tags">
               {['Cross-platform', 'Swift / SwiftUI', 'visionOS', 'React', 'Blazor', 'Claude API', 'Gemini API'].map(t => <span key={t} className="skill-box work-tag">{t}</span>)}
             </div>
@@ -154,7 +168,12 @@ export default function WorkSection() {
           <div className="work-summation-divider" />
           <div className="work-summation-col">
             <div className="work-summation-label">Backend</div>
-            <p className="work-summation-text">NodeJS or .NET backends — streaming AI over SSE, multi-provider LLM orchestration with Ollama fallback, RAG via embedding search, agentic document pipelines with LangGraph and LlamaIndex, PDF generation, and MCP tool servers for direct integration with Claude Code and Claude Desktop. Structured prompt engineering with validated, typed outputs.</p>
+            <ul className="work-summation-list">
+              <li>NodeJS or .NET backends, streaming AI over SSE</li>
+              <li>Multi-provider LLM orchestration with Ollama fallback, RAG via embedding search</li>
+              <li>Agentic document pipelines with LangGraph and LlamaIndex, plus PDF generation and MCP tool servers for Claude Code and Claude Desktop</li>
+              <li>Structured prompt engineering with validated, typed outputs</li>
+            </ul>
             <div className="work-summation-tags">
               {['Node JS', 'ASP.NET Core', 'Python', 'Ollama', 'RAG', 'PDF Generation', 'Multi-provider LLM'].map(t => <span key={t} className="skill-box work-tag">{t}</span>)}
             </div>

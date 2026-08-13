@@ -51,19 +51,19 @@ export default function AiSection() {
       <div className="section-inner">
         <div className="section-eyebrow reveal">AI</div>
         <h2 className="section-heading reveal reveal-delay-1">AI work across fields</h2>
-        <div className="ai-threads reveal reveal-delay-2">
+        <div className="info-card-grid reveal reveal-delay-2">
           {AI_THREADS.map(t => (
-            <div key={t.num} className="ai-thread">
-              <div className="ai-thread-main">
-                <div className="ai-thread-icon">{t.icon}</div>
-                <div className="ai-thread-body">
-                  <div className="ai-thread-title">{t.title}</div>
-                  <ul className="ai-thread-list">
+            <div key={t.num} className="info-card">
+              <div className="info-card-main">
+                <div className="info-card-icon">{t.icon}</div>
+                <div className="info-card-body">
+                  <div className="info-card-title">{t.title}</div>
+                  <ul className="info-card-list">
                     {t.points.map(p => <li key={p}>{p}</li>)}
                   </ul>
                 </div>
               </div>
-              <div className="ai-thread-tags">
+              <div className="info-card-tags">
                 {t.tags.map(tag => <span key={tag} className="skill-box ai-tag">{tag}</span>)}
               </div>
             </div>
