@@ -69,19 +69,19 @@ export default function AchievementsSection() {
       <div className="section-inner">
         <div className="section-eyebrow reveal">Achievements</div>
         <h2 className="section-heading reveal reveal-delay-1">Shipping, at scale</h2>
-        <div className="achievements-grid reveal reveal-delay-2">
+        <div className="info-card-grid reveal reveal-delay-2">
           {ACHIEVEMENTS.map(a => (
-            <div key={a.title} className="achievement-card">
-              <div className="achievement-main">
-                <div className="achievement-icon">{a.icon}</div>
-                <div className="achievement-body">
-                  <div className="achievement-title">{a.title}</div>
-                  <ul className="achievement-list">
+            <div key={a.title} className="info-card">
+              <div className="info-card-main">
+                <div className="info-card-icon">{a.icon}</div>
+                <div className="info-card-body">
+                  <div className="info-card-title">{a.title}</div>
+                  <ul className="info-card-list">
                     {a.points.map(p => <li key={p}>{p}</li>)}
                   </ul>
                 </div>
               </div>
-              <div className="achievement-tags">
+              <div className="info-card-tags">
                 {a.tags.map(t => <span key={t} className="skill-box etag">{t}</span>)}
               </div>
             </div>

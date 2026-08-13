@@ -18,6 +18,12 @@ export interface WorkItem {
   links: WorkLink[];
   credit?: WorkCredit;
   imagePosition?: string;
+  /** Plain horizontal crop offset for the work-grid tile image, 0–100 (percent from
+   *  the left). Simpler alternative to imagePosition's raw CSS string — just a
+   *  number to nudge left/right. Takes precedence over imagePosition when both
+   *  are set. Mirrors heroImageOffset below, but for the grid tile instead of
+   *  the hero slide. */
+  imageOffset?: number;
   heroImagePosition?: string;
   /** Plain horizontal crop offset for the hero slide image, 0–100 (percent from
    *  the left). Simpler alternative to heroImagePosition's raw CSS string —

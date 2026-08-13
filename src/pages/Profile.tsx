@@ -1,9 +1,18 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ThemeToggle from '../components/ThemeToggle';
 
 export default function Profile() {
   const [theoExpanded, setTheoExpanded] = useState(false);
+
+  // The browser's native hash-scroll-on-load fires before this client-rendered
+  // page has mounted its content, so a link like /profile#references lands at
+  // the top instead of the target section. Scroll to it manually once mounted.
+  useEffect(() => {
+    if (!window.location.hash) return;
+    const el = document.querySelector(window.location.hash);
+    el?.scrollIntoView();
+  }, []);
 
   return (
     <div className="pf-page">
@@ -41,7 +50,7 @@ export default function Profile() {
         </div>
       </section>
 
-      <section className="pf-section pf-section--alt">
+      <section id="references" className="pf-section pf-section--alt">
         <div className="pf-section-inner">
           <div className="pf-section-label">References</div>
           <div className="pf-refs">
