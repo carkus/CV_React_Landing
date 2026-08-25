@@ -1,6 +1,7 @@
 import { Fragment, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import type { WorkItem } from '../types';
+import { resolveImgPos } from '../utils/imagePosition';
 
 const FALLBACK: WorkItem[] = [
   { subsection: 'Frontend', title: 'ZOME — Cross-platform product suite', tags: ['Cross-platform', 'Swift', 'Kotlin', 'visionOS'], imageUrl: 'https://images.unsplash.com/photo-1759661990336-51bd4b951fea?w=900&q=80', imageAlt: 'ZOME platform', description: 'End-to-end product suite spanning iOS, Android, and Apple Vision Pro — built cross-platform with native platform SDKs.', featured: true, links: [{ label: 'App Store ↗', url: 'https://itunes.apple.com/us/app/zome/id1382123356?ls=1&mt=8' }, { label: 'Play Store ↗', url: 'https://play.google.com/store/apps/details?id=com.zomecorp.zome' }] },
@@ -95,19 +96,14 @@ function SlideshowOverlay({ images, alt, startIndex, onClose }: { images: string
 function WorkItemCard({ item, className, style }: { item: WorkItem; className: string; style?: React.CSSProperties }) {
   const [slideshowOpen, setSlideshowOpen] = useState(false);
   const hasSlideshow = !!item.slideshowImages && item.slideshowImages.length > 0;
+  const imgPos = resolveImgPos(item.imageOffset, item.imageOffsetY, item.imagePosition);
 
   return (
     <div className={className} style={style}>
       <img
         src={item.imageUrl}
         alt={item.imageAlt}
-        style={
-          item.imageOffset != null
-            // Clamped 0-100 — outside that range the image is pushed past its
-            // own edge and a blank gap shows through instead of any content.
-            ? { '--img-pos': `${Math.min(100, Math.max(0, item.imageOffset))}% center` } as React.CSSProperties
-            : item.imagePosition ? { '--img-pos': item.imagePosition } as React.CSSProperties : undefined
-        }
+        style={imgPos ? { '--img-pos': imgPos } as React.CSSProperties : undefined}
       />
       <div className="work-item-info">
         <p className="work-item-desc">{item.description}</p>

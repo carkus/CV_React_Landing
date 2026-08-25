@@ -3,7 +3,7 @@ Senior software engineer with 10+ years professional experience.
 Commercial, in-house, and educational development across web, iOS, Android, cross-platform, and spatial computing (visionOS, XR).  
 
 ---
-[https://carkus.com](https://carkus.com)  
+[https://mscicluna.com](https://mscicluna.com)  
 [(+61) 0408 513 913](tel:+61408513913)
 [dicarkus@hotmail.com](mailto:dicarkus@hotmail.com)  
 [https://github.com/carkus](https://github.com/carkus)  
@@ -43,7 +43,7 @@ Master's Thesis : 'Search efficiency in robotic task planning'
 
 ---
 # EXPERIENCE
-## 2025 — [carkus.com](https://carkus.com)
+## 2025 — [mscicluna.com](https://mscicluna.com)
 
 **Senior Developer, Owner**
 Increasingly very AI-focused work, both for meeting the requirements of clients and fun.  

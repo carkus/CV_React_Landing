@@ -23,4 +23,4 @@ Write-Host "Uploading to $ServerHost`:$RemotePath ..."
 
 if ($LASTEXITCODE -ne 0) { Write-Error "Upload failed. Check deploy.log."; exit 1 }
 
-Write-Host "Done. https://carkus.com/"
+Write-Host "Done. https://mscicluna.com/"

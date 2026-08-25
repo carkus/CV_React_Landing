@@ -64,7 +64,7 @@ export default function Notepad() {
   return (
     <div className="pf-page np-page">
       <nav className="pf-nav">
-        <Link to="/" className="pf-nav-back">← carkus.com</Link>
+        <Link to="/" className="pf-nav-back">← mscicluna.com</Link>
         <span className="pf-nav-title">Websocket Notepad</span>
       </nav>
 

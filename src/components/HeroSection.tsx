@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import type { WorkItem } from '../types';
 import { downloadCv } from '../utils/cvPdf';
+import { resolveImgPos } from '../utils/imagePosition';
 
 const FALLBACK: WorkItem[] = [
   {
@@ -46,11 +47,10 @@ export default function HeroSection() {
     fetch('/data/workitems.json', { signal: controller.signal } )
       .then(r => r.json())
       .then((data: WorkItem[]) => {
-        // Rotate through every project with an image, not just the featured
-        // few, so the card shows more of the work rather than the same 2-3 —
-        // except items explicitly opted out via heroExclude.
-        const withImages = data.filter(i => i.imageUrl && !i.heroExclude);
-        if (withImages.length > 0) setItems(withImages);
+        // Only featured projects rotate through the hero card, and only if
+        // they have an image — heroExclude opts a featured item out anyway.
+        const featured = data.filter(i => i.featured && i.imageUrl && !i.heroExclude);
+        if (featured.length > 0) setItems(featured);
       })
       .catch((error) => {
         if (error.name !== 'AbortError') {
@@ -132,18 +132,16 @@ export default function HeroSection() {
       ? (idx - 1 + items.length) % items.length
       : idx;
 
-  const renderSlide = (item: WorkItem) => (
+  const renderSlide = (item: WorkItem) => {
+    const imgPos = resolveImgPos(item.heroImageOffset, item.heroImageOffsetY, item.heroImagePosition);
+    return (
     <>
       <img
         className="platform-img"
         src={item.imageUrl}
         alt={item.imageAlt}
         style={{
-          ...(item.heroImageOffset != null
-            // Clamped 0-100 — outside that range the image is pushed past its
-            // own edge and a blank gap shows through instead of any content.
-            ? { '--img-pos': `${Math.min(100, Math.max(0, item.heroImageOffset))}% center` } as React.CSSProperties
-            : item.heroImagePosition ? { '--img-pos': item.heroImagePosition } as React.CSSProperties : {}),
+          ...(imgPos ? { '--img-pos': imgPos } as React.CSSProperties : {}),
           ...(item.heroImageTransform ? { transform: item.heroImageTransform } : {}),
         }}
       />
@@ -161,7 +159,8 @@ export default function HeroSection() {
         {item.description && <p className="platform-desc">{item.description}</p>}
       </div>
     </>
-  );
+    );
+  };
 
   return (
     <section id="hero">

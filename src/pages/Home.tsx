@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import NavBar from '../components/NavBar';
 import HeroSection from '../components/HeroSection';
 import AboutSection from '../components/AboutSection';
-import AchievementsSection from '../components/AchievementsSection';
 import SkillsSection from '../components/SkillsSection';
 import WorkSection from '../components/WorkSection';
 import AiSection from '../components/AiSection';
@@ -41,9 +40,8 @@ export default function Home() {
       <HeroSection />
       <AboutSection />
       <AskSection />
-      <AchievementsSection />
-      <SkillsSection />
       <AiSection />
+      <SkillsSection />
       <WorkSection />
       <ExpertiseSection />
       <TimelineSection />

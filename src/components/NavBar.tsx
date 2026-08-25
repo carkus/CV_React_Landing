@@ -34,7 +34,6 @@ export default function NavBar() {
         <Link to="/" className="nav-logo">Mark Scicluna</Link>
         <ul className="nav-links">
           <li><a href="#about">About</a></li>
-          <li><a href="#achievements">Achievements</a></li>
           <li><a href="#ask">Ask AI</a></li>
           <li><a href="#skills">Skills</a></li>
           <li><a href="#work">Work</a></li>
@@ -49,7 +48,6 @@ export default function NavBar() {
       </div>
       <div className={`nav-drawer${open ? ' open' : ''}`}>
         <a href="#about"        onClick={close}>About</a>
-        <a href="#achievements" onClick={close}>Achievements</a>
         <a href="#ask"          onClick={close}>Ask AI</a>
         <a href="#skills"       onClick={close}>Skills</a>
         <a href="#work"         onClick={close}>Work</a>

@@ -22,7 +22,7 @@
   },
   {
     "year": ["Personal"],
-    "role": "carkus.com",
+    "role": "mscicluna.com",
     "org": "Independent — Portfolio & Projects",
     "desc": "Personal projects including Chatty Prayers (Blazor AI companion app), PDF Forms (Blazor PDF builder with AcroForm generation), and spatial computing prototypes on visionOS.",
     "tags": ["React", "Blazor", "Python", "Claude API", "visionOS", "PDF Generation"]

@@ -9,7 +9,7 @@
     "heroImagePosition": "80% center",
     "description": "Drag-and-drop PDF editor with AI form generation — describe a form in plain text and an agentic LangGraph/LlamaIndex pipeline generates the fields, layout, and pre-filled values via structured prompt engineering and smart field extraction.",
     "featured": true,
-    "width": 50,
+    "width": 40,
     "links": [
       { "label": "Open AI Forms - PDF Builder ↗", "url": "https://editor.carkus.com/form-editor" }
     ]
@@ -20,8 +20,8 @@
     "imageUrl": "/img/image_6bf08615.png",
     "imageAlt": "Scribbler",
     "description": "Collaborative writing platform for organising work into collections and articles — distraction-free rich-text editing, writer profiles, an activity feed, and messaging between collaborators.",
-    "featured": false,
-    "width": 50,
+    "featured": true,
+    "width": 60,
     "links": [],
     "credit": { "name": "Florian Klauer", "url": "https://unsplash.com/@florianklauer" }
   },
@@ -48,7 +48,7 @@
     "imageAlt": "ZOME platform",
     "imagePosition": "left center",
     "description": "ZOME is a spatial platform and messenger where you can plant your messages anywhere in the world, at any location and even points in time.",
-    "featured": false,
+    "featured": true,
     "heroExclude": true,
     "width": 40,
     "slideshowImages": ["/img/zome_phone1.png", "/img/zome_phone2.png", "/img/zome_phone3.png", "/img/zome_phone4.png", "/img/zome_phone5.png", "/img/zome_phone6.png", "/img/zome_phone7.png"],
@@ -85,16 +85,17 @@
   },
   {
     "title": "JobFit™ — AI Job Match Analyser",
-    "tags": ["TypeScript", ".NET", "Claude API", "Gemini API", "Structured Output", "Multi-provider"],
-    "imageUrl": "https://images.unsplash.com/photo-1686771416282-3888ddaf249b?w=600&q=80",
+    "tags": ["TypeScript", ".NET", "MCP", "Claude API", "Gemini API", "Structured Output", "Multi-provider"],
+    "imageUrl": "/img/jobfit_card.png",
     "imageAlt": "Job interview handshake",
     "description": "Multi-provider AI tool that scores CVs against job descriptions, generates ATS compliant resumes, surfaces skill gaps, and drafts cover letters — exposes MCP tools for direct use from Claude.",
     "featured": false,
+    "imageOffsetY": 20,
     "width": 50,
     "links": [
       { "label": "Open JobFit ↗", "url": "https://jobfit.carkus.com" }
     ],
-    "credit": { "name": "Mina Rad", "url": "https://unsplash.com/@miinrad" }
+    "_credit": { "name": "Mina Rad", "url": "https://unsplash.com/@miinrad" }
   },
   {
     "title": "Panic Stations",
@@ -113,7 +114,7 @@
     "imageUrl": "https://images.unsplash.com/photo-1647427060118-4911c9821b82?w=600&q=80",
     "imageAlt": "Robotics research",
     "description": "Academic research into heuristic search and efficiency for algorithms applied to autonomous robotic task planning.",
-    "featured": false,
+    "featured": true,
     "width": 50,
     "links": []
   },

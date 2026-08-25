@@ -24,7 +24,7 @@ export default function FooterSection() {
   return (
     <footer>
       <div className="footer-inner">
-        <p>© 2026 Mark Scicluna · carkus.com</p>
+        <p>© 2026 Mark Scicluna · mscicluna.com</p>
         <p>Melbourne, Australia</p>
         {count !== null && <p className="footer-visitors">{count.toLocaleString()} visits</p>}
       </div>

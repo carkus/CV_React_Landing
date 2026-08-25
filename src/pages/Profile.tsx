@@ -153,7 +153,7 @@ export default function Profile() {
       </section>
 
       <div className="pf-footer">
-        <Link to="/" className="pf-footer-back">← Back to carkus.com</Link>
+        <Link to="/" className="pf-footer-back">← Back to mscicluna.com</Link>
       </div>
 
     </div>

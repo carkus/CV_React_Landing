@@ -133,7 +133,7 @@ export default function SmoothSoftware() {
 
   return (
     <div className="smooth-page">
-      <Link to="/" className="smooth-back">← Back to carkus.com</Link>
+      <Link to="/" className="smooth-back">← Back to mscicluna.com</Link>
       <div className="smooth-card">
         <div className="smooth-card-inner">
         {/* Decorative flowing neon curves, echoing the source mockup's ribbon
@@ -179,7 +179,7 @@ export default function SmoothSoftware() {
                   to build reliable, high-quality software —<br />
                   <span className="smooth-pitch-fast">fast.</span>
                 </p>
-                <p className="smooth-pitch-sub">Senior-level outcomes without the enterprise overhead.</p>
+                <p className="smooth-pitch-sub">Genuine outcomes without the enterprise overhead.</p>
               </div>
             </div>
 
