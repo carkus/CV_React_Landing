@@ -1,5 +1,16 @@
 [
-  { 
+  {
+    "subsection": "Small Projects",
+    "title": "FPG Receipts",
+    "tags": ["React", "TypeScript", "ASP.NET Core"],
+    "imageUrl": "/img/fpg_logo.jpg",
+    "imageAlt": "FPG Receipts app",
+    "description": "Receipt generator built for the Fitzroy Public Gallery — line items, commission and GST calculation, and bank details, laid out live against a print-ready preview pane for one-click PDF export.",
+    "featured": false,
+    "width": 34,
+    "links": []
+  },
+  {
     "subsection": "Full-stack",
     "title": "AI Forms - PDF Builder",
     "tags": ["Blazor", "PDF Generation", "Agentic Pipeline", "Claude API", "Structured Prompting"],
@@ -17,14 +28,15 @@
   {
     "title": "Scribbler 2026",
     "tags": ["React", "TypeScript", "Express", "MySQL", "TipTap"],
-    "imageUrl": "/img/image_6bf08615.png",
+    "imageUrl": "/img/scribbler-2.png",
     "imageAlt": "Scribbler",
-    "description": "Collaborative writing platform for organising work into collections and articles — distraction-free rich-text editing, writer profiles, an activity feed, and messaging between collaborators.",
+    "description": "Collaborative writing platform for organising work into Collections and Articles, allows suggestions and appraisal notifications, messaging — and distraction-free rich-text editing.",
     "featured": true,
     "width": 60,
-    "links": [],
-    "credit": { "name": "Florian Klauer", "url": "https://unsplash.com/@florianklauer" }
-  },
+    "links": [
+      { "label": "Coming Soon", "url": "" }
+    ]
+    },
   {
     "subsection": "Mobile & AR/VR",
     "title": "ZOME — Spatial Messenger  —  VisionOS & Android XR version",
@@ -78,7 +90,7 @@
     "heroImagePosition": "50% center",
     "description": "Personality-driven AI platform with one-on-one chat, confidant reflection, and structured multi-participant debate — built with Blazor and a RAG pipeline over the Claude and Gemini APIs, with conversation and dialogue persistence powering multi-personality, multi-participant exchanges.",
     "featured": true,
-    "width": 50,
+    "width": 45,
     "links": [
       { "label": "Open Chatty Prayers ↗", "url": "https://moot.carkus.com" }
     ]
@@ -86,12 +98,12 @@
   {
     "title": "JobFit™ — AI Job Match Analyser",
     "tags": ["TypeScript", ".NET", "MCP", "Claude API", "Gemini API", "Structured Output", "Multi-provider"],
-    "imageUrl": "/img/jobfit_card.png",
+    "imageUrl": "/img/jobfit_card_noblurb.png",
     "imageAlt": "Job interview handshake",
     "description": "Multi-provider AI tool that scores CVs against job descriptions, generates ATS compliant resumes, surfaces skill gaps, and drafts cover letters — exposes MCP tools for direct use from Claude.",
     "featured": false,
     "imageOffsetY": 20,
-    "width": 50,
+    "width": 55,
     "links": [
       { "label": "Open JobFit ↗", "url": "https://jobfit.carkus.com" }
     ],
