@@ -1,9 +1,16 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ThemeToggle from '../components/ThemeToggle';
+import { useDocumentMeta } from '../hooks/useDocumentMeta';
 
 export default function Profile() {
   const [theoExpanded, setTheoExpanded] = useState(false);
+
+  useDocumentMeta({
+    title: 'Profile, References & Media — Mark Scicluna',
+    description: 'Reference letters, press coverage, and video from Mark Scicluna’s career as a software engineer — cross-platform mobile, web, spatial computing, and AI systems work.',
+    path: '/profile',
+  });
 
   // The browser's native hash-scroll-on-load fires before this client-rendered
   // page has mounted its content, so a link like /profile#references lands at

@@ -3,7 +3,12 @@
 // wwwroot/index.html's `generatePdfFromJson` jsPDF renderer. The markdown source
 // (public/content/cv.md) is fetched and re-parsed on every download, so the PDF
 // is always built fresh from the live content rather than served as a static file.
-import { jsPDF } from 'jspdf';
+//
+// jsPDF is imported dynamically (inside buildPdf, not at module top-level) purely
+// for bundle size: its ESM build unconditionally pulls in html2canvas even though
+// we only use jsPDF's vector/text APIs, adding ~200kB to the main chunk every
+// visitor would otherwise download whether or not they ever click "Download CV".
+import type { jsPDF as JsPDFInstance } from 'jspdf';
 
 export interface CvLink {
   label: string;
@@ -70,7 +75,8 @@ const MARGIN = 15;
 const CONTENT_W = 180;
 const PAGE_H = 277;
 
-export function buildPdf(blocks: CvBlock[]): jsPDF {
+export async function buildPdf(blocks: CvBlock[]): Promise<JsPDFInstance> {
+  const { jsPDF } = await import('jspdf');
   const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
   let y = MARGIN;
 
@@ -204,7 +210,7 @@ export async function downloadCv(): Promise<void> {
   if (!res.ok) throw new Error(`Failed to load CV source (${res.status})`);
   const markdown = await res.text();
   const blocks = parseMarkdownToBlocks(markdown);
-  const pdf = buildPdf(blocks);
+  const pdf = await buildPdf(blocks);
   const sessionId = Math.random().toString(16).slice(2, 8).toUpperCase();
   pdf.save(`mark-scicluna-cv-${sessionId}.pdf`);
 }

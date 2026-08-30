@@ -1,8 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import type { WorkItem } from '../types';
-import { downloadCv } from '../utils/cvPdf';
 import { resolveImgPos } from '../utils/imagePosition';
+
+// CV generation moved server-side — the button calls JobFit's own CV generator directly
+// (GET /api/cv/download, a fresh render on every click) instead of building a PDF
+// client-side or linking to a pre-baked static file. JobFit's dev server is hardcoded to
+// port 5173 (jobfit/Program.cs); mirrors the PORTFOLIO_API_BASE pattern already used in
+// AskSection.tsx/FooterSection.tsx. Update the prod URL once JobFit is actually deployed.
+const JOBFIT_API_BASE = import.meta.env.DEV ? 'http://localhost:5173' : 'https://jobfit.carkus.com';
+const CV_PDF_PATH = `${JOBFIT_API_BASE}/api/cv/download`;
 
 const FALLBACK: WorkItem[] = [
   {
@@ -182,7 +189,7 @@ export default function HeroSection() {
           </div>
           <div className="hero-ctas">
             <a href="#work" className="btn-primary">View Work →</a>
-            <a href="#" className="btn-ghost" onClick={e => { e.preventDefault(); downloadCv(); }}>Download CV ↓</a>
+            <a href={CV_PDF_PATH} download className="btn-ghost">Download CV ↓</a>
           </div>
           <div className="hero-social">
             <a href="https://github.com/carkus" target="_blank" rel="noopener noreferrer" className="social-link">GitHub ↗</a>

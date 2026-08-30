@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useDocumentMeta } from '../hooks/useDocumentMeta';
 import NavBar from '../components/NavBar';
 import HeroSection from '../components/HeroSection';
 import AboutSection from '../components/AboutSection';
@@ -12,6 +13,12 @@ import ContactSection from '../components/ContactSection';
 import FooterSection from '../components/FooterSection';
 
 export default function Home() {
+  useDocumentMeta({
+    title: 'Mark Scicluna',
+    description: 'Mark Scicluna — software engineer with 10+ years building cross-platform mobile (Swift/SwiftUI, Flutter, React Native), web (React, Blazor/.NET), and visionOS/spatial computing apps. Recent work in multi-provider LLM orchestration, RAG, and structured AI outputs. Based in Melbourne, Australia, open to remote.',
+    path: '/',
+  });
+
   useEffect(() => {
     const obs = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });

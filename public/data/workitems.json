@@ -7,11 +7,10 @@
     "imageAlt": "FPG Receipts app",
     "description": "Receipt generator built for the Fitzroy Public Gallery — line items, commission and GST calculation, and bank details, laid out live against a print-ready preview pane for one-click PDF export.",
     "featured": false,
-    "width": 34,
+    "width": 50,
     "links": []
   },
   {
-    "subsection": "Full-stack",
     "title": "AI Forms - PDF Builder",
     "tags": ["Blazor", "PDF Generation", "Agentic Pipeline", "Claude API", "Structured Prompting"],
     "imageUrl": "/img/pdf_form.png",
@@ -20,23 +19,11 @@
     "heroImagePosition": "80% center",
     "description": "Drag-and-drop PDF editor with AI form generation — describe a form in plain text and an agentic LangGraph/LlamaIndex pipeline generates the fields, layout, and pre-filled values via structured prompt engineering and smart field extraction.",
     "featured": true,
-    "width": 40,
+    "width": 50,
     "links": [
       { "label": "Open AI Forms - PDF Builder ↗", "url": "https://editor.carkus.com/form-editor" }
     ]
   },
-  {
-    "title": "Scribbler 2026",
-    "tags": ["React", "TypeScript", "Express", "MySQL", "TipTap"],
-    "imageUrl": "/img/scribbler-2.png",
-    "imageAlt": "Scribbler",
-    "description": "Collaborative writing platform for organising work into Collections and Articles, allows suggestions and appraisal notifications, messaging — and distraction-free rich-text editing.",
-    "featured": true,
-    "width": 60,
-    "links": [
-      { "label": "Coming Soon", "url": "" }
-    ]
-    },
   {
     "subsection": "Mobile & AR/VR",
     "title": "ZOME — Spatial Messenger  —  VisionOS & Android XR version",
@@ -69,6 +56,19 @@
       { "label": "Play Store ↗", "url": "https://play.google.com/store/apps/details?id=com.zomecorp.zome" }
     ]
   },
+  {
+    "subsection": "Social",
+    "title": "Scribbler 2026",
+    "tags": ["React", "TypeScript", "Express", "MySQL", "TipTap"],
+    "imageUrl": "/img/scribbler-2.png",
+    "imageAlt": "Scribbler",
+    "description": "Collaborative writing platform for organising work into Collections and Articles, allows suggestions and appraisal notifications, messaging — and distraction-free rich-text editing.",
+    "featured": true,
+    "width": 34,
+    "links": [
+      { "label": "Coming Soon", "url": "" }
+    ]
+    },
   {
     "title": "Spatial UI Components for VisionOS",
     "tags": ["visionOS", "Android XR"],

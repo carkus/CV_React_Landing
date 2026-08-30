@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDocumentMeta } from '../hooks/useDocumentMeta';
 import './smoothSoftware.css';
 
 const FONT_HREF = 'https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap';
@@ -125,11 +126,12 @@ const FEATURES = [
 export default function SmoothSoftware() {
   useSmoothFonts();
 
-  useEffect(() => {
-    const prev = document.title;
-    document.title = 'Smooth Software — Mark Scicluna';
-    return () => { document.title = prev; };
-  }, []);
+  useDocumentMeta({
+    title: 'Smooth Software — Mark Scicluna',
+    description: 'Websites, apps, and back-office tools — AI-accelerated engineering with human expertise. Fixed scope, straight rates, fast turnaround.',
+    path: '/smooth-software',
+    image: 'https://mscicluna.com/img/65fd5b21-a666-4fb2-8ae4-36071a6d2631.png',
+  });
 
   return (
     <div className="smooth-page">
