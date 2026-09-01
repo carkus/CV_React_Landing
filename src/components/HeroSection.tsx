@@ -187,6 +187,10 @@ export default function HeroSection() {
           <div className="hero-link-stack">
             <Link to="/profile" className="btn-ghost">Profile, References &amp; Media ↗</Link>
           </div>
+          <div className="hero-status">
+            <span className="hero-status-dot" />
+            Open to remote opportunities
+          </div>
           <div className="hero-ctas">
             <a href="#work" className="btn-primary">View Work →</a>
             <a href={CV_PDF_PATH} download className="btn-ghost">Download CV ↓</a>
