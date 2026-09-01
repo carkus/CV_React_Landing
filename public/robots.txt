@@ -1,4 +1,5 @@
 User-agent: *
+Disallow: /notepad
 Allow: /
 
 Sitemap: https://mscicluna.com/sitemap.xml

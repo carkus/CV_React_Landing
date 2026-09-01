@@ -83,3 +83,10 @@ export interface Achievement {
   points: string[];
   tags: string[];
 }
+
+export interface SmallProject {
+  title: string;
+  description: string;
+  tags: string[];
+  url?: string;
+}

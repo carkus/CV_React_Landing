@@ -251,7 +251,7 @@
     width: 100%;
 }
 .smooth-feature { display: flex; align-items: center; gap: 0.6rem; text-align: left; }
-.smooth-feature-icon { width: 2.2rem; height: 2.2rem; flex-shrink: 0; display: block; }
+.smooth-feature-icon { width: 2.2rem; height: 2.2rem; flex-shrink: 0; display: block; filter: drop-shadow(0 0 4px currentColor) drop-shadow(0 0 8px currentColor); }
 .smooth-feature-text { font-family: 'Fredoka', sans-serif; font-size: 0.78rem; font-weight: 600; color: #f0e4c8; margin: 0; line-height: 1.25; text-align: left; }
 
 /* The starburst PNG (public/img/smooth-badge.png) is retired — its source

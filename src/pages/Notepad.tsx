@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDocumentMeta } from '../seo';
 
 const WS_URL = 'wss://api.carkus.com/ws/subscribe';
 const INITIAL_BACKOFF_MS = 1000;
@@ -16,6 +17,13 @@ type IncomingEnvelope = {
 type Status = 'connecting' | 'open' | 'closed';
 
 export default function Notepad() {
+  useDocumentMeta({
+    title: 'Notepad — Mark Scicluna',
+    description: 'Live notepad utility.',
+    path: '/notepad',
+    noindex: true,
+  });
+
   const [messages, setMessages] = useState<IncomingEnvelope[]>([]);
   const [status, setStatus] = useState<Status>('connecting');
 

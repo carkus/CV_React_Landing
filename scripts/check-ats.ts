@@ -14,7 +14,7 @@ import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { getDocument } from 'pdfjs-dist/legacy/build/pdf.mjs';
-import { parseMarkdownToBlocks, buildPdf, type CvBlock, type CvTextBlock } from '../src/utils/cvPdf';
+import { parseMarkdownToBlocks, buildPdf, type CvBlock, type CvTextBlock, type CvRowBlock, type CvLink } from '../src/utils/cvPdf';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const CV_PATH = path.join(__dirname, '..', 'public', 'content', 'cv.md');
@@ -29,6 +29,20 @@ const fail = (m: string) => results.push({ level: 'fail', message: m });
 
 function isTextBlock(b: CvBlock): b is CvTextBlock {
   return 'text' in b;
+}
+
+function isRowBlock(b: CvBlock): b is CvRowBlock {
+  return b.type === 'row';
+}
+
+// 'row' blocks (References' name/email, title/phone pairs) carry links on
+// leftLinks/rightLinks rather than a single .links, so they need folding into
+// the same flat list the contact-link and round-trip checks scan.
+function allBlockLinks(blocks: CvBlock[]): CvLink[] {
+  return [
+    ...blocks.filter(isTextBlock).flatMap(b => b.links),
+    ...blocks.filter(isRowBlock).flatMap(b => [...b.leftLinks, ...b.rightLinks]),
+  ];
 }
 
 function normalize(s: string): string {
@@ -51,7 +65,7 @@ async function main() {
     else fail(`No top-level heading matching "${label}" — ATS section-detection relies on standard headings like this`);
   }
 
-  const allLinks = blocks.filter(isTextBlock).flatMap(b => b.links);
+  const allLinks = allBlockLinks(blocks);
   if (allLinks.some(l => l.url.startsWith('mailto:'))) pass('Email contact link present');
   else warn('No mailto: link found — ATS parsers look for an email address near the top of the document');
   if (allLinks.some(l => l.url.startsWith('tel:'))) pass('Phone contact link present');
@@ -90,15 +104,16 @@ async function main() {
   else fail('PDF has no extractable text at all — it would be invisible to any ATS');
 
   const textBlocks = blocks.filter(isTextBlock).filter(b => b.text.trim() !== '');
+  const rowSides = blocks.filter(isRowBlock).flatMap(b => [b.left, b.right]).filter(s => s.trim() !== '');
   let missing = 0;
-  for (const block of textBlocks) {
-    const needle = normalize(block.text);
+  for (const needleText of [...textBlocks.map(b => b.text), ...rowSides]) {
+    const needle = normalize(needleText);
     if (needle && !extractedNorm.includes(needle)) {
       missing++;
-      warn(`Block text not found intact in extracted PDF text (may just be a line-wrap/spacing artifact — verify visually): "${block.text.slice(0, 60)}${block.text.length > 60 ? '…' : ''}"`);
+      warn(`Block text not found intact in extracted PDF text (may just be a line-wrap/spacing artifact — verify visually): "${needleText.slice(0, 60)}${needleText.length > 60 ? '…' : ''}"`);
     }
   }
-  if (missing === 0) pass(`All ${textBlocks.length} text blocks round-tripped into the PDF's extracted text intact`);
+  if (missing === 0) pass(`All ${textBlocks.length + rowSides.length} text blocks round-tripped into the PDF's extracted text intact`);
 
   pass(`Rendered as ${doc.numPages} page(s) using the standard Helvetica core font (no custom/embedded font that could fail to extract)`);
 

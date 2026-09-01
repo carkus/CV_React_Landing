@@ -5,12 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && tsx scripts/generate-sitemap.ts && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "check-ats": "tsx scripts/check-ats.ts"
+    "check-ats": "tsx scripts/check-ats.ts",
+    "generate-sitemap": "tsx scripts/generate-sitemap.ts"
   },
   "dependencies": {
+    "@carkus/seo-react": "file:../carkus-seo-react",
     "jspdf": "^4.2.1",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useDocumentMeta } from '../hooks/useDocumentMeta';
+import { useDocumentMeta } from '../seo';
 import './smoothSoftware.css';
 
 const FONT_HREF = 'https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap';
@@ -100,11 +100,41 @@ function SmoothDiscussForm() {
 }
 
 // This page carries its own deliberately distinct brand — the neon "postcard" mockup at
-// public/img/65fd5b21-a666-4fb2-8ae4-36071a6d2631.png. Rather than re-drawing the wordmark,
-// badge, and icons with fonts/CSS (which never quite matched), the hard-to-reproduce pieces
-// are cropped directly out of that source image and used as real <img> assets below — see
-// public/img/smooth-*.png. Only the border glow, layout, and live text are CSS. Own font
+// public/img/65fd5b21-a666-4fb2-8ae4-36071a6d2631.png. The wordmark ("Smooth Software") is a
+// bespoke hand-lettered neon script with no font/CSS equivalent (already tried — see git
+// history), so it stays a cropped image (public/img/smooth-heading.png). The badge and feature
+// icons were simple enough geometry (a glowing ring + a glyph/spokes) to redraw directly —
+// see FeatureIcon below, same trick already used for the badge and ribbon accents. Own font
 // stack, loaded on demand here so the main CV page never pays for fonts it doesn't use.
+type FeatureIconType = 'question' | 'wheel' | 'check' | 'dollar';
+
+// Redrawn neon-circle icons — glowing ring (drop-shadow(currentColor), same technique as the
+// ribbon accents below) around a glyph or, for the steering wheel, simple spoke geometry.
+// Colors reuse the page's existing palette (ribbon cyan/pink/orange, card glow red-orange)
+// rather than introducing new ones. Replaces public/img/smooth-icon-*.png.
+function FeatureIcon({ type }: { type: FeatureIconType }) {
+  const color = { question: '#ff5a3c', wheel: '#2de0e0', check: '#2de0e0', dollar: '#ff4fa8' }[type];
+  return (
+    <svg className="smooth-feature-icon" viewBox="0 0 100 100" fill="none" aria-hidden="true" style={{ color }}>
+      <circle cx="50" cy="50" r="42" stroke="currentColor" strokeWidth="5" />
+      {type === 'question' && (
+        <text x="50" y="68" textAnchor="middle" fontSize="52" fontWeight="700" fontFamily="'Fredoka', sans-serif" fill="currentColor">?</text>
+      )}
+      {type === 'dollar' && (
+        <text x="50" y="67" textAnchor="middle" fontSize="46" fontWeight="700" fontFamily="'Fredoka', sans-serif" fill="currentColor">$</text>
+      )}
+      {type === 'check' && (
+        <path d="M32,52 L45,65 L70,36" stroke="currentColor" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
+      )}
+      {type === 'wheel' && (
+        <>
+          <circle cx="50" cy="50" r="8" fill="currentColor" />
+          <path d="M50,50 L50,20 M50,50 L26,65 M50,50 L74,65" stroke="currentColor" strokeWidth="6" strokeLinecap="round" />
+        </>
+      )}
+    </svg>
+  );
+}
 function useSmoothFonts() {
   useEffect(() => {
     if (document.querySelector(`link[href="${FONT_HREF}"]`)) return;
@@ -116,11 +146,11 @@ function useSmoothFonts() {
   }, []);
 }
 
-const FEATURES = [
-  { icon: '/img/smooth-icon-question.png', text: "Don't know your Claudes from your codes?" },
-  { icon: '/img/smooth-icon-wheel.png', text: 'Need someone to steer the development and design?' },
-  { icon: '/img/smooth-icon-check.png', text: 'AI-engineered and human-tested for assurance' },
-  { icon: '/img/smooth-icon-dollar.png', text: 'Fixed scope, straight rates — no surprise invoices' },
+const FEATURES: { icon: FeatureIconType; text: string }[] = [
+  { icon: 'question', text: "Don't know your Claudes from your codes?" },
+  { icon: 'wheel', text: 'Need someone to steer the development and design?' },
+  { icon: 'check', text: 'AI-engineered and human-tested for assurance' },
+  { icon: 'dollar', text: 'Fixed scope, straight rates — no surprise invoices' },
 ];
 
 export default function SmoothSoftware() {
@@ -166,7 +196,7 @@ export default function SmoothSoftware() {
             <div className="smooth-features">
               {FEATURES.map(f => (
                 <div key={f.text} className="smooth-feature">
-                  <img className="smooth-feature-icon" src={f.icon} alt="" />
+                  <FeatureIcon type={f.icon} />
                   <h3 className="smooth-feature-text">{f.text}</h3>
                 </div>
               ))}

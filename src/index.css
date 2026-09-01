@@ -64,23 +64,34 @@ nav {
     color: var(--chalk); text-decoration: none;
 }
 .nav-logo:hover { color: var(--accent2); }
+.nav-right { display: flex; gap: 1.25rem; align-items: center; }
 .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
 .nav-links a {
     font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.14em;
     text-transform: uppercase; color: var(--mist); text-decoration: none; transition: color 0.2s;
 }
 .nav-links a:hover { color: var(--chalk); }
-.nav-app-link { display: inline-flex; align-items: center; height: 32px; box-sizing: border-box; color: var(--accent2) !important; border: 1px solid var(--steel); padding: 0 0.9rem !important; white-space: nowrap; flex-shrink: 0; }
+.nav-app-link {
+    display: inline-flex; align-items: center; height: 32px; box-sizing: border-box;
+    font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+    text-decoration: none; color: var(--accent2) !important; border: 1px solid var(--steel);
+    padding: 0 0.9rem !important; white-space: nowrap; flex-shrink: 0; transition: border-color 0.2s;
+}
 .nav-app-link:hover { border-color: var(--accent2) !important; }
+.nav-cv-btn {
+    background: #c2410c; color: #fff !important; font-weight: 700;
+    border-color: transparent;
+}
+.nav-cv-btn:hover { background: #a3380a; border-color: transparent; }
 
 .nav-hamburger {
     display: none; flex-direction: column; justify-content: center; gap: 5px;
     width: 28px; min-width: 0; height: 28px; background: none; border: none; cursor: pointer; padding: 2px;
 }
-.nav-hamburger span { display: block; width: 100%; height: 1.5px; background: var(--mist); transition: transform 0.3s, opacity 0.3s; }
-.nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-hamburger span { display: block; width: 100%; height: 2.5px; background: var(--mist); transition: transform 0.3s, opacity 0.3s; }
+.nav-hamburger.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
 .nav-hamburger.open span:nth-child(2) { opacity: 0; }
-.nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
 
 .nav-drawer {
     display: none; flex-direction: column;
@@ -393,8 +404,48 @@ section { padding: 7rem 0; }
 .timeline-dur-fill.animated { width: var(--dur-pct); }
 .timeline-dur-label { font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.1em; color: var(--steel); margin-top: 0.35rem; text-align: right; }
 
+/* ── SMALL PROJECTS ──────────────────────────────────────────── */
+/* Compact card grid, deliberately smaller/plainer than .work-grid's photo
+   tiles below it — no imagery, just title/description/tags, so the section
+   reads as a quick "also built recently" scan rather than competing with
+   Selected projects for visual weight. */
+.small-projects-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+}
+.small-project-card {
+    display: block; position: relative;
+    background: var(--navy); border: 1px solid var(--slate);
+    border-radius: 4px; padding: 1.4rem 1.5rem;
+    text-decoration: none; color: inherit;
+    transition: border-color 0.2s, transform 0.2s;
+}
+.small-project-card-link { cursor: pointer; }
+.small-project-card-link:hover { border-color: var(--accent2); transform: translateY(-2px); }
+.small-project-title { font-family: var(--serif); font-size: 1.05rem; font-weight: 400; color: var(--chalk); margin-bottom: 0.5rem; padding-right: 1.4rem; }
+.small-project-desc { font-size: 0.82rem; line-height: 1.6; color: var(--mist); margin: 0 0 0.9rem; }
+.small-project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.small-project-arrow { position: absolute; top: 1.3rem; right: 1.4rem; color: var(--accent2); font-size: 0.9rem; }
+
 /* ── WORK ────────────────────────────────────────────────────── */
-#work { background: var(--navy); border-top: 1px solid var(--slate); }
+/* Same pale-blue-on-pale-blue treatment as #ai/#ask below — identical var
+   values, so this section and AI read as one consistent light-theme family
+   rather than two different blues. Photo-tile overlay elements
+   (.work-item-title/.work-tag/.work-item-link/.work-item-info gradient,
+   .work-item-credit below) stay hardcoded light-on-dark-photo regardless,
+   since they sit on top of images rather than the section's flat background. */
+#work {
+    background: var(--navy); border-top: 1px solid #cddcf0; border-bottom: 1px solid #cddcf0;
+    --ink: #eef4fb; --navy: #dce8f7; --slate: #cddcf0; --steel: #7c93b8;
+    --mist: #445269; --silver: #1f2937; --chalk: #10131c;
+    --accent: #2f5bb0; --accent2: #1d63d6; --error: #c23b3b;
+}
+/* .work-summation-tags (Frontend/Backend pills) sit directly on the section's
+   flat background like .ai-tag does, so they get the same light pill
+   treatment. .section-stack's "This site was built with" pills share .work-tag
+   too but are left as-is per prior instruction — flagging again that they may
+   read lower-contrast on this lighter background. */
+.work-summation-tags .work-tag { color: #1d4ed8; background: rgba(47,91,176,0.1); border: 1px solid rgba(47,91,176,0.35); }
 .work-grid { display: flex; flex-direction: column; gap: 1.5px; background: var(--slate); border: 1px solid var(--slate); }
 .work-row { display: grid; gap: 1.5px; background: var(--slate); grid-auto-rows: 330px; }
 .work-grid-data { display: grid; grid-template-columns: repeat(100, 1fr); gap: 1.5px; background: var(--slate); }
@@ -433,8 +484,11 @@ section { padding: 7rem 0; }
 .work-item-links { position: absolute; top: 1.4rem; left: 1.4rem; display: flex; gap: 0.6rem; flex-wrap: wrap; z-index: 2; }
 .work-item-link { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: #e8ecf4; text-decoration: none; border: 1px solid #2a3a5c; padding: 0.25rem 0.65rem; background: rgba(13,21,38,0.3); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); transition: color 0.2s, border-color 0.2s; }
 .work-item-link:hover { color: #e8ecf4; border-color: #5a8aee; }
-.work-item-credit { position: absolute; top: 0.3rem; right: 0.4rem; z-index: 2; font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.06em; color: var(--mist); text-decoration: none; transition: color 0.2s; }
-.work-item:hover .work-item-credit { color: var(--chalk); }
+/* Hardcoded rather than var(--mist)/var(--chalk): this sits directly over the
+   (always-darkened) photo, not on #work's flat background, so it needs light
+   text regardless of #work's pale-blue-on-pale-blue theme above. */
+.work-item-credit { position: absolute; top: 0.3rem; right: 0.4rem; z-index: 2; font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.06em; color: #c5cedf; text-decoration: none; transition: color 0.2s; }
+.work-item:hover .work-item-credit { color: #e8ecf4; }
 .work-item-link-btn { cursor: pointer; }
 
 .slideshow-overlay {
@@ -459,18 +513,26 @@ section { padding: 7rem 0; }
 .slideshow-counter { position: absolute; bottom: 1.8rem; left: 50%; transform: translateX(-50%); font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.08em; color: var(--mist); }
 
 /* ── AI ───────────────────────────────────────────────────────── */
+/* Pale-blue-on-pale-blue — a fixed light card rather than a re-tint of the
+   site's own dark/light toggle, so it reads the same in either theme. The
+   section background matches --ink (the same pale blue already used for the
+   ai-ask/ai-discuss input fields), with --navy (the .ai-ask/.ai-reflection/
+   .info-card box backgrounds) a shade darker so the boxes still read as
+   distinct panels rather than blending into the page. Every text/border
+   variable this section's components reference (--chalk, --mist, --silver,
+   --steel, --ink, plus --navy/--slate/--accent/--accent2) is overridden here
+   so nothing falls back to the surrounding dark-navy or light-lavender theme
+   values. */
 #ai, #ask {
-    background: #0e1c34; border-top: 1px solid #24406e; border-bottom: 1px solid #24406e;
-    --navy: #112448; --slate: #1f3d6e; --accent: #4a90e2; --accent2: #7ab8ff;
-}
-:root[data-theme="light"] #ai, :root[data-theme="light"] #ask {
-    background: #e4edfb; border-top: 1px solid #b9d0f0; border-bottom: 1px solid #b9d0f0;
-    --navy: #eef4fd; --slate: #c3d7f3; --accent: #2f5bb0; --accent2: #1d63d6;
+    background: var(--ink); border-top: 1px solid #cddcf0; border-bottom: 1px solid #cddcf0;
+    --ink: #eef4fb; --navy: #dce8f7; --slate: #cddcf0; --steel: #7c93b8;
+    --mist: #445269; --silver: #1f2937; --chalk: #10131c;
+    --accent: #2f5bb0; --accent2: #1d63d6; --error: #c23b3b;
 }
 #ask { padding: 2.1rem 0; }
 /* AI threads reuse .info-card-grid/.info-card-* (see ACHIEVEMENTS above)
    — only its tag color identity is section-specific. */
-.ai-tag { color: #fff; background: rgba(19,15,34,0.45); border: 1px solid rgba(143,111,240,0.25); }
+.ai-tag { color: #1d4ed8; background: rgba(47,91,176,0.1); border: 1px solid rgba(47,91,176,0.35); }
 .ai-ask { margin-top: 1.5px; background: var(--navy); border: 1px solid var(--slate); padding: 1.6rem 1.8rem; }
 .ai-ask-form { display: flex; gap: 0.7rem; }
 .ai-ask-input { flex: 1; min-width: 0; background: var(--ink); border: 1px solid var(--slate); color: var(--chalk); font-family: var(--sans); font-size: 0.85rem; padding: 0.65rem 0.9rem; }
@@ -670,9 +732,11 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
 
 /* ── NAV COLLAPSE (≤1000px) ──────────────────────────────────────
    Separate from the tablet/mobile breakpoints below: the full nav-links
-   row (8 links + CV button) starts overlapping/wrapping around ~960px,
-   well before the 768px mobile layout kicks in, so the hamburger has to
-   take over earlier than the rest of the responsive layout. ─────── */
+   row (7 section links) starts overlapping/wrapping around ~960px, well
+   before the 768px mobile layout kicks in, so the hamburger has to take
+   over earlier than the rest of the responsive layout. The CV button
+   lives outside .nav-links (in .nav-right) so it stays visible through
+   this collapse instead of disappearing with the rest of the links. ── */
 @media (max-width: 1000px) {
     .nav-links { display: none; }
     .nav-hamburger { display: flex; }

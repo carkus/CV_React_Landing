@@ -1,109 +1,64 @@
 # Mark Scicluna
-Senior software engineer with 10+ years professional experience.  
-Commercial, in-house, and educational development across web, iOS, Android, cross-platform, and spatial computing (visionOS, XR).  
 
----
-[https://mscicluna.com](https://mscicluna.com)  
-[(+61) 0408 513 913](tel:+61408513913)
-[dicarkus@hotmail.com](mailto:dicarkus@hotmail.com)  
-[https://github.com/carkus](https://github.com/carkus)  
-[linkedin.com/in/mark-scicluna-b907809](https://www.linkedin.com/in/mark-scicluna-b907809/)
----
+[(+61) 0408 513 913](tel:+61408513913), [dicarkus@hotmail.com](mailto:dicarkus@hotmail.com), [LinkedIn](https://www.linkedin.com/in/mark-scicluna-b907809/), [GitHub](https://github.com/carkus), [https://mscicluna.com](https://mscicluna.com)
 
-# SKILLS
-## Highly Skilled  
-Flutter • SwiftUI/UIKit • visionOS • JavaScript • React • HTML • CSS • RESTful APIs
-## Mobile  
-Flutter • SwiftUI/UIKit • Kotlin • React Native • Redux/State
-## AR / VR
-visionOS • XR
-## Web
-JavaScript • React / Vue • HTML • CSS • TypeScript • Blazor / ASP.NET Core • Node.js
-## AI
-Claude & Gemini APIs • Claude Code • LLM/PDDL Planning • Agentic Orchestration • RAG • MCP • LangChain / LangGraph • LlamaIndex • Schema-Constrained Generation
-## Language
-Swift • Objective C • Python • C# • Kotlin • Java
-## Data
-PostgreSQL • MongoDB • SQL • NoSQL
-## State
-Redux • Provider
-## DevOps & Tooling
-Docker • Git • CI/CD (Jenkins) • systemd • Linux
-## Other
-.NET • UIKit • TDD (Flutter_test, jest, xUnit)
+# SUMMARY
+Senior software engineer with 10+ years of experience across cross-platform application development, UI architecture, and middleware systems. Proven track record delivering production releases across iOS, Android, web, and spatial computing platforms, and managing build and release pipelines end-to-end. Currently focused on AI-driven development — orchestrating multiple LLM APIs, agentic workflows, MCP tools and RAG pipelines, with context specialised behaviour and guardrails. Brought to you in React, TypeScript, Swift, Flutter, Kotlin, LangChain and LlamaIndex. Eager to bring deep technical expertise and AI integration capability to a forward-thinking organisation.
 
-===
-# EDUCATION
+# WORK EXPERIENCE
 
-**Master of Computer Science**  
-RMIT University — 2018
+**Senior AI Developer (Freelance)**
+_2025 – Present_
+- Spearheaded increasingly AI-focused initiatives, addressing client requirements and personal projects.
+- Utilised multiple AI APIs, integrating personality-infusion via JSON for characterised task execution.
+- Engineered meta-agents enabling user-defined toolsets driven by stated goals.
 
-For my Master's project I demonstrated a technique for partial re-planning in exogenous (unexpected) events, plan repair
-Master's Thesis : 'Search efficiency in robotic task planning'
-
----
-# EXPERIENCE
-## 2025 — [mscicluna.com](https://mscicluna.com)
-
-**Senior Developer, Owner**
-Increasingly very AI-focused work, both for meeting the requirements of clients and fun.  
-Have utilised multiple AI APIs, often with personality-infusion (via JSON) for characterised approaches to tasks.  
-Likewise, implementation of meta-agents where the user instructs the agents toolset based on goals.  
-  
-**Technologies**  
+_Technologies_
 .NET • React/React Native (Vite, Expo) • TypeScript • Python • Claude & Gemini APIs • RAG
 
----
-## 2017–2026 — ZOME (Rhizomenet)
+**Senior Application Developer (Middleware & UI), ZOME (Rhizomenet)**
+_2017 – 2026_
+- Executed cross-platform development for production releases of the ZOME mobile and spatial platform.
+- Focused on UI architecture, state management, middleware development, and UI adaptations across multiple platforms.
+- Managed build and release pipelines for App Store and Google Play submissions.
+- Delivered a cross-platform application spanning significant variation in both design and language requirements.
+- Shipped to [iOS — App Store](https://itunes.apple.com/us/app/zome/id1382123356?ls=1&mt=8), [Android — Google Play](https://play.google.com/store/apps/details?id=com.zomecorp.zome), visionOS (Apple Vision Pro launch partner), and Android XR (Samsung Galaxy XR launch).
 
-**Senior Application Developer (Middleware & UI)**
-Cross-platform development for production releases of the ZOME mobile and spatial platform.
-Work focused on UI architecture, state management, middleware development, and UI adaptations across multiple platforms.
-Managed build and release pipelines for App Store and Google Play submissions.
-Successfully built, shipped, maintained a cross-platform significantly varied in both design and language skills
-
-Platforms shipped:
-- [iOS - App Store](https://itunes.apple.com/us/app/zome/id1382123356?ls=1&mt=8)
-- [Android - Google Play](https://play.google.com/store/apps/details?id=com.zomecorp.zome)  
-- VisionOS - Apple Vision Pro launch partner
-- Android XR - Samsung Galaxy XR launch
-
-**Technologies**  
+_Technologies_
 Flutter • SwiftUI/UIKit • Kotlin • Node.js • React • Vue • Java • MVVM
 
----
-## 2007–2014 — RMIT University
+**Senior Application Developer (UI), RMIT University**
+_2007 – 2014_
+- Developed and designed e-learning applications and their supporting middleware systems.
+- Oversaw front-end architecture, software maintenance, and adaptation of educational platforms and digital content.
 
-**Senior Application Developer (UI)**
-
-Development and design of e-learning applications and supporting middleware systems. Responsibilities included front-end architecture, software maintenance, and adaptation of educational platforms and digital content.
-
-**Technologies**  
+_Technologies_
 .NET • React • AngularJS • MVC
+
+# EDUCATION
+
+**RMIT University, Master of Computer Science, Computer Science**
+- Demonstrated a technique for partial re-planning in response to exogenous (unexpected) events, focusing on plan repair.
+- Master's Thesis: 'Search efficiency in robotic task planning'.
+
+# SKILLS
+SwiftUI/UIKit • Flutter • JavaScript • React • HTML • CSS • RESTful APIs • Kotlin • React Native • Redux/State • XR • Vue • TypeScript • Blazor/ASP.NET Core • Node.js • Claude & Gemini APIs • Claude Code • LLM/PDDL Planning • Agentic Orchestration • RAG • MCP • LangChain/LangGraph • LlamaIndex • Schema-Constrained Generation • Swift • Objective C • Python • C# • Java • PostgreSQL • MongoDB • SQL • NoSQL • Redux • Provider • Docker • Git • CI/CD (Jenkins) • systemd • Linux • .NET • UIKit • TDD (Flutter_test, jest, xUnit)
 
 # PROJECTS
 
 ## ZOME International Development & Promotion
-
 **Los Angeles — 2022**
 Development support and platform promotion during international engagement and launch preparation for the ZOME platform.
 
 ## International Collaboration
-
-**Wearable UI**
+**Hussein Chalayan - Wearable UI**
 Adapted designs by internationally renowned fashion designer [Hussein Chalayan](https://en.wikipedia.org/wiki/Hussein_Chalayan) into interactive digital fashion — wearable interfaces.
 
 ---
 # REFERENCES
 
-[Theodore Wohng](/references)  
-Managing Director  
-Rhizomenet Pty. Ltd.  
-+61 (0)432 655 110  
-[theodorewohng@gmail.com](mailto:theodorewohng@gmail.com)  
+Theodore Wohng :: [theodorewohng@gmail.com](mailto:theodorewohng@gmail.com)
+Managing Director, Rhizomenet Pty. Ltd. :: +61 (0)432 655 110
 
-[Lou Weis](/references)  
-Creative Director  
-Broached Commissions  
-+61 (0)406 500 031  
-[lou@broachedcommissions.com](mailto:lou@broachedcommissions.com)
+Lou Weis :: [lou@broachedcommissions.com](mailto:lou@broachedcommissions.com)
+Creative Director, Broached Commissions :: +61 (0)406 500 031

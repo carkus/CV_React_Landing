@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ThemeToggle from '../components/ThemeToggle';
-import { useDocumentMeta } from '../hooks/useDocumentMeta';
+import { useDocumentMeta } from '../seo';
 
 export default function Profile() {
   const [theoExpanded, setTheoExpanded] = useState(false);
