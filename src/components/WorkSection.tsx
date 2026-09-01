@@ -13,42 +13,6 @@ const FALLBACK: WorkItem[] = [
   { title: 'MarkdownForms.Api', tags: ['.NET Core', 'Markdown', 'PDF Generation', 'Claude API'], imageUrl: 'https://images.unsplash.com/photo-1555066931-4365d14431b9?w=600&q=80', imageAlt: 'Code editor', description: 'A .NET API that renders and processes dynamic form schemas defined in Markdown — PDF export with AcroForm generation and AI-assisted field population.', featured: false, links: [] },
 ];
 
-type RowKind = 'wide-narrow' | 'narrow-wide' | 'three-equal';
-interface Row { items: WorkItem[]; kind: RowKind; isFirst: boolean; }
-
-function buildRows(items: WorkItem[]): Row[] {
-  const rows: Row[] = [];
-  const n = items.length;
-  if (n === 0) return rows;
-
-  const endOfPairs = n % 2 === 1 && n >= 3 ? n - 3 : n % 2 === 0 ? n : 0;
-  let wideFirst = true;
-  let isFirst   = true;
-
-  for (let i = 0; i < endOfPairs; i += 2) {
-    rows.push({ items: items.slice(i, i + 2), kind: wideFirst ? 'wide-narrow' : 'narrow-wide', isFirst });
-    wideFirst = !wideFirst;
-    isFirst   = false;
-  }
-  if (endOfPairs < n) {
-    const rest = items.slice(endOfPairs);
-    rows.push({ items: rest, kind: rest.length === 3 ? 'three-equal' : 'wide-narrow', isFirst });
-  }
-  return rows;
-}
-
-function itemClass(row: Row, idx: number): string {
-  if (row.kind === 'three-equal') return 'work-item work-item-equal';
-  if (row.kind === 'wide-narrow') return idx === 0 ? (row.isFirst ? 'work-item work-item-featured' : 'work-item work-item-wide') : 'work-item work-item-narrow';
-  return idx === 0 ? 'work-item work-item-narrow' : 'work-item work-item-wide';
-}
-
-function rowClass(kind: RowKind): string {
-  if (kind === 'wide-narrow') return 'work-row work-row-wn';
-  if (kind === 'narrow-wide') return 'work-row work-row-nw';
-  return 'work-row work-row-eq';
-}
-
 function SlideshowOverlay({ images, alt, startIndex, onClose }: { images: string[]; alt: string; startIndex: number; onClose: () => void }) {
   const [index, setIndex] = useState(startIndex);
 
@@ -93,38 +57,43 @@ function SlideshowOverlay({ images, alt, startIndex, onClose }: { images: string
   );
 }
 
-function WorkItemCard({ item, className, style }: { item: WorkItem; className: string; style?: React.CSSProperties }) {
+// Flat, split-layout card — image on the left, content stacked on the right
+// (description, title, links, tags), matching .small-project-card's plainer
+// aesthetic instead of the old full-bleed photo tile with slide-up overlay.
+function WorkItemCard({ item }: { item: WorkItem }) {
   const [slideshowOpen, setSlideshowOpen] = useState(false);
   const hasSlideshow = !!item.slideshowImages && item.slideshowImages.length > 0;
   const imgPos = resolveImgPos(item.imageOffset, item.imageOffsetY, item.imagePosition);
 
   return (
-    <div className={className} style={style}>
-      <img
-        src={item.imageUrl}
-        alt={item.imageAlt}
-        style={imgPos ? { '--img-pos': imgPos } as React.CSSProperties : undefined}
-      />
-      <div className="work-item-info">
+    <div className="work-item">
+      <div className="work-item-media">
+        <img
+          src={item.imageUrl}
+          alt={item.imageAlt}
+          style={imgPos ? { '--img-pos': imgPos } as React.CSSProperties : undefined}
+        />
+        {item.credit && (
+          <a href={item.credit.url} target="_blank" rel="noopener noreferrer" className="work-item-credit">© {item.credit.name}</a>
+        )}
+      </div>
+      <div className="work-item-body">
         <p className="work-item-desc">{item.description}</p>
         <div className="work-item-title">{item.title}</div>
+        {(item.links.length > 0 || hasSlideshow) && (
+          <div className="work-item-links">
+            {item.links.map(l => <a key={l.url} href={l.url} target="_blank" rel="noopener noreferrer" className="work-item-link">{l.label}</a>)}
+            {hasSlideshow && (
+              <button type="button" className="work-item-link work-item-link-btn" onClick={() => setSlideshowOpen(true)}>
+                Slideshow ↗
+              </button>
+            )}
+          </div>
+        )}
         <div className="work-item-tag">
           {item.tags.map(t => <span key={t} className="skill-box work-tag">{t}</span>)}
         </div>
       </div>
-      {(item.links.length > 0 || hasSlideshow) && (
-        <div className="work-item-links">
-          {item.links.map(l => <a key={l.url} href={l.url} target="_blank" rel="noopener noreferrer" className="work-item-link">{l.label}</a>)}
-          {hasSlideshow && (
-            <button type="button" className="work-item-link work-item-link-btn" onClick={() => setSlideshowOpen(true)}>
-              Slideshow ↗
-            </button>
-          )}
-        </div>
-      )}
-      {item.credit && (
-        <a href={item.credit.url} target="_blank" rel="noopener noreferrer" className="work-item-credit">Image © {item.credit.name}</a>
-      )}
       {hasSlideshow && slideshowOpen && (
         <SlideshowOverlay images={item.slideshowImages!} alt={item.imageAlt} startIndex={0} onClose={() => setSlideshowOpen(false)} />
       )}
@@ -141,8 +110,6 @@ export default function WorkSection() {
       .then((data: WorkItem[]) => { if (data?.length) setItems(data); })
       .catch(() => {});
   }, []);
-
-  const hasDataWidths = items.some(i => i.width !== undefined);
 
   return (
     <section id="work">
@@ -182,26 +149,14 @@ export default function WorkSection() {
           <span className="skill-box work-tag">Vite</span>
         </div>
         <div className="reveal reveal-delay-3">
-          {hasDataWidths ? (
-            <div className="work-grid-data">
-              {items.map(item => (
-                <Fragment key={item.title}>
-                  {item.subsection && <div className="work-subsection-header">{item.subsection}</div>}
-                  <WorkItemCard item={item} className="work-item" style={{ '--w': item.width ?? 33, '--h': item.height ?? 100 } as React.CSSProperties} />
-                </Fragment>
-              ))}
-            </div>
-          ) : (
-            <div className="work-grid">
-              {buildRows(items).map((row, ri) => (
-                <div key={ri} className={rowClass(row.kind)}>
-                  {row.items.map((item, ii) => (
-                    <WorkItemCard key={item.title} item={item} className={itemClass(row, ii)} />
-                  ))}
-                </div>
-              ))}
-            </div>
-          )}
+          <div className="work-grid">
+            {items.map(item => (
+              <Fragment key={item.title}>
+                {item.subsection && <div className="work-subsection-header">{item.subsection}</div>}
+                <WorkItemCard item={item} />
+              </Fragment>
+            ))}
+          </div>
         </div>
       </div>
     </section>
