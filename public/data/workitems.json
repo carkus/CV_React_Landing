@@ -9,7 +9,9 @@
         "description": "Self-scaffolding agent platform — describe a task in plain language and it builds a purpose-built agent (role, tools, implementation) via the Claude API.",
         "featured": false,
         "width": 33,
-        "links": []
+        "links": [
+          { "label": "Open AI Agent", "url": "https://agent.carkus.com" }
+        ]
       },
       {
         "title": "Auth Login",
@@ -17,9 +19,7 @@
         "description": "Multi-tenant shared auth server — registration, login, token refresh, email verification, and password reset, auto-provisioning a siteId per consuming project.",
         "featured": false,
         "width": 34,
-        "links": [
-          { "label": "Open Auth Login", "url": "https://auth.carkus.com" }
-        ]
+        "links": []
       },
       {
         "title": "Markdown Viewer",
@@ -53,6 +53,7 @@
         "imageAlt": "Smooth Software",
         "description": "Smooth Software builds websites, apps, and admin tools fast, at straight rates. You get clean code, clear communication, and a product you will use and love",
         "featured": true,
+        "heroImageOffset": 10,
         "width": 60,
         "links": [
           { "label": "Open Smooth Software", "url": "https://smoothsoftware.carkus.com" }
@@ -77,7 +78,7 @@
         "imageAlt": "AI Forms - PDF Builder",
         "imagePosition": "calc(50% - 50px) center",
         "heroImagePosition": "80% center",
-        "description": "Drag-and-drop PDF editor with AI form generation — describe a form in plain text and an agentic LangGraph/LlamaIndex pipeline generates the fields, layout, and pre-filled values via structured prompt engineering and smart field extraction.",
+        "description": "Drag-and-drop PDF editor with AI form generation — describe a form in plain text and an agentic LangGraph/LlamaIndex pipeline generates the fields, layout, with pre-filled values.",
         "featured": true,
         "width": 40,
         "links": [
@@ -96,7 +97,7 @@
         "imageAlt": "ZOME platform",
         "imagePosition": "left center",
         "description": "ZOME is a spatial platform and messenger where you can plant your messages anywhere in the world, at any location and even points in time.",
-        "featured": true,
+        "featured": false,
         "heroExclude": true,
         "width": 50,
         "slideshowImages": ["/img/zome_phone1.png", "/img/zome_phone2.png", "/img/zome_phone3.png", "/img/zome_phone4.png", "/img/zome_phone5.png", "/img/zome_phone6.png", "/img/zome_phone7.png"],
@@ -156,7 +157,7 @@
         "imageUrl": "/img/jobfit_card_noblurb.png",
         "imageAlt": "Job interview handshake",
         "description": "Multi-provider AI tool that scores CVs against job descriptions, generates ATS compliant resumes, surfaces skill gaps, and drafts cover letters — exposes MCP tools for direct use from Claude.",
-        "featured": false,
+        "featured": true,
         "imageOffsetY": 5,
         "width": 60,
         "links": [

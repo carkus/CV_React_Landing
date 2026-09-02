@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import type { WorkItem } from '../types';
+import type { WorkGroup, WorkItem } from '../types';
 import { resolveImgPos } from '../utils/imagePosition';
 
 // CV generation moved server-side — the button calls JobFit's own CV generator directly
@@ -53,10 +53,13 @@ export default function HeroSection() {
 
     fetch('/data/workitems.json', { signal: controller.signal } )
       .then(r => r.json())
-      .then((data: WorkItem[]) => {
+      .then((data: WorkGroup[]) => {
+        // workitems.json is grouped by subsection — flatten before filtering,
+        // otherwise .featured is read off the group object (always
+        // undefined) and the hero silently falls back to FALLBACK.
         // Only featured projects rotate through the hero card, and only if
         // they have an image — heroExclude opts a featured item out anyway.
-        const featured = data.filter(i => i.featured && i.imageUrl && !i.heroExclude);
+        const featured = data.flatMap(g => g.items).filter(i => i.featured && i.imageUrl && !i.heroExclude);
         if (featured.length > 0) setItems(featured);
       })
       .catch((error) => {
@@ -179,10 +182,11 @@ export default function HeroSection() {
           <h1 className="hero-name">Mark<br /><em>Scicluna</em></h1>
           <p className="hero-title">Cross-Platform · Spatial Computing · AI Systems</p>
           <div className="hero-desc">
-            <p>Cross-platform and native development on mobile. React and Blazor on the web.</p>
+            <p>Cross-platform and native on mobile.</p>
+            <p>React and .NET on web.</p>
             <p>SwiftUI, Flutter, and Kotlin on device.</p>
-            <p>Production-grade AI systems: RAG search, structured outputs, and multi-provider fallback architecture to eliminate single points of failure.</p>
-            <p>Based in Melbourne. Over a decade of shipping real products.</p>
+            <p>Production-grade AI systems: RAG search, MCP, structured outputs, and multi-provider.</p>
+            <p>Based in Melbourne.</p>
           </div>
           <div className="hero-link-stack">
             <Link to="/profile" className="btn-ghost">Profile, References &amp; Media ↗</Link>
@@ -193,7 +197,7 @@ export default function HeroSection() {
           </div>
           <div className="hero-ctas">
             <a href="#work" className="btn-primary">View Work →</a>
-            <a href={CV_PDF_PATH} download className="btn-ghost">Download CV ↓</a>
+            <a href={CV_PDF_PATH} download className="btn-ghost">CV ↓</a>
           </div>
           <div className="hero-social">
             <a href="https://github.com/carkus" target="_blank" rel="noopener noreferrer" className="social-link">GitHub ↗</a>

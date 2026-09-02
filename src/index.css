@@ -209,7 +209,7 @@ nav {
     /* Matches #about's 1fr/1fr split below, so the two stacked sections
        read as sharing the same column rhythm instead of each picking its
        own ratio. */
-    display: grid; grid-template-columns: 1fr 1fr; align-items: stretch; gap: 3rem;
+    display: grid; grid-template-columns: 0.75fr 1.25fr; align-items: stretch; gap: 3rem;
 }
 .hero-eyebrow {
     font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.22em;
@@ -461,7 +461,11 @@ section { padding: 7rem 0; }
     gap: 1.25rem;
 }
 .small-project-card {
-    display: flex; flex-direction: column; height: 100%; position: relative;
+    /* No explicit height — same as .work-summation-col: let .work-grid's
+       default align-items:stretch equalize card heights per row. An
+       explicit height:100% here fights that stretch instead of following
+       it, so a row's shorter cards stopped matching their row-mates. */
+    display: flex; flex-direction: column; position: relative;
     background: var(--navy); border: 1px solid var(--slate);
     border-radius: var(--radius); padding: 1.4rem 1.5rem;
     text-decoration: none; color: inherit;
@@ -469,7 +473,18 @@ section { padding: 7rem 0; }
 }
 .small-project-card-link { cursor: pointer; }
 .small-project-card-link:hover { border-color: var(--accent2); transform: translateY(-2px); box-shadow: 0 12px 28px -10px color-mix(in srgb, var(--accent2) 35%, transparent); }
-.small-project-title { font-family: var(--serif); font-size: 1.05rem; font-weight: 400; color: var(--chalk); margin-bottom: 0.5rem; padding-right: 1.4rem; }
+/* Same pill treatment as .work-item-title on the photo tiles, verbatim —
+   dark translucent fill + blur reads fine here too since the card itself is
+   already a solid dark navy, not just legible-on-photo. */
+.small-project-title {
+    /* align-self overrides the flex-column card's default cross-axis
+       stretch — without it a flex item ignores display:inline-block and
+       fills the card's full width regardless. */
+    align-self: flex-start; display: inline-block; font-family: var(--serif); font-size: 1.05rem; font-weight: 400;
+    color: #fff; margin: 0 0 0.7rem; text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+    background: rgba(20,22,28,0.55); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
+    padding: 0.3rem 0.85rem; border-radius: 999px;
+}
 .small-project-desc { font-size: 0.82rem; line-height: 1.6; color: var(--mist); margin: 0 0 0.9rem; }
 /* Pushed to the bottom of the card regardless of how much room the
    title/description above it took up, so tag rows line up across a row of
