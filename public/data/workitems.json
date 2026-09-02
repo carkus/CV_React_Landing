@@ -1,155 +1,217 @@
 [
+  
   {
     "subsection": "Small Projects",
-    "title": "FPG Receipts",
-    "tags": ["React", "TypeScript", "ASP.NET Core"],
-    "imageUrl": "/img/fpg_logo.jpg",
-    "imageAlt": "FPG Receipts app",
-    "description": "Receipt generator built for the Fitzroy Public Gallery — line items, commission and GST calculation, and bank details, laid out live against a print-ready preview pane for one-click PDF export.",
-    "featured": false,
-    "width": 50,
-    "links": []
+    "items": [
+      {
+        "title": "AI Agent",
+        "tags": ["Claude API", "AWS Lambda", "Agentic"],
+        "description": "Self-scaffolding agent platform — describe a task in plain language and it builds a purpose-built agent (role, tools, implementation) via the Claude API.",
+        "featured": false,
+        "width": 33,
+        "links": []
+      },
+      {
+        "title": "Auth Login",
+        "tags": ["ASP.NET Core", "JWT", "Multi-tenant"],
+        "description": "Multi-tenant shared auth server — registration, login, token refresh, email verification, and password reset, auto-provisioning a siteId per consuming project.",
+        "featured": false,
+        "width": 34,
+        "links": [
+          { "label": "Open Auth Login", "url": "https://auth.carkus.com" }
+        ]
+      },
+      {
+        "title": "Markdown Viewer",
+        "tags": ["React", "react-markdown"],
+        "description": "Lightweight Markdown rendering utility with syntax-highlighted code blocks and GitHub-flavoured Markdown support.",
+        "featured": false,
+        "width": 33,
+        "links": []
+      }
+    ]
   },
   {
-    "title": "AI Forms - PDF Builder",
-    "tags": ["Blazor", "PDF Generation", "Agentic Pipeline", "Claude API", "Structured Prompting"],
-    "imageUrl": "/img/pdf_form.png",
-    "imageAlt": "AI Forms - PDF Builder",
-    "imagePosition": "calc(50% - 50px) center",
-    "heroImagePosition": "80% center",
-    "description": "Drag-and-drop PDF editor with AI form generation — describe a form in plain text and an agentic LangGraph/LlamaIndex pipeline generates the fields, layout, and pre-filled values via structured prompt engineering and smart field extraction.",
-    "featured": true,
-    "width": 50,
-    "links": [
-      { "label": "Open AI Forms - PDF Builder ↗", "url": "https://editor.carkus.com/form-editor" }
+    "subsection": "Recent Projects",
+    "items": [
+      {
+        "title": "FPG Receipts",
+        "tags": ["React", "TypeScript", "ASP.NET Core"],
+        "imageUrl": "/img/fpg_logo.jpg",
+        "imageAlt": "FPG Receipts app",
+        "description": "Receipt generator built for the Fitzroy Public Gallery — line items, commission and GST calculation, and bank details, laid out live against a print-ready preview pane for one-click PDF export.",
+        "featured": false,
+        "width": 40,
+        "links": [
+          { "label": "Open FPG Receipts Builder", "url": "https://carkus.com/fpg" }
+        ]
+      },
+      {
+        "title": "Smooth Software",
+        "tags": ["React", "TypeScript", "ASP.NET Core"],
+        "imageUrl": "/img/smooth_software_wide.png",
+        "imageAlt": "Smooth Software",
+        "description": "Smooth Software builds websites, apps, and admin tools fast, at straight rates. You get clean code, clear communication, and a product you will use and love",
+        "featured": true,
+        "width": 60,
+        "links": [
+          { "label": "Open Smooth Software", "url": "https://smoothsoftware.carkus.com" }
+        ]
+      },      
+      {
+        "title": "Scribbler 2026",
+        "tags": ["React", "TypeScript", "Express", "MySQL", "TipTap"],
+        "imageUrl": "/img/scribbler-2.png",
+        "imageAlt": "Scribbler",
+        "description": "Collaborative writing platform for organising work into Collections and Articles, allows suggestions and appraisal notifications, messaging — and distraction-free rich-text editing.",
+        "featured": true,
+        "width": 60,
+        "links": [
+          { "label": "Coming Soon", "url": "https://scribbler.carkus.com" }
+        ]
+      },
+      {
+        "title": "AI Forms - PDF Builder",
+        "tags": ["Blazor", "PDF Generation", "Agentic Pipeline", "Claude API", "Structured Prompting"],
+        "imageUrl": "/img/pdf_form.png",
+        "imageAlt": "AI Forms - PDF Builder",
+        "imagePosition": "calc(50% - 50px) center",
+        "heroImagePosition": "80% center",
+        "description": "Drag-and-drop PDF editor with AI form generation — describe a form in plain text and an agentic LangGraph/LlamaIndex pipeline generates the fields, layout, and pre-filled values via structured prompt engineering and smart field extraction.",
+        "featured": true,
+        "width": 40,
+        "links": [
+          { "label": "Open AI Forms - PDF Builder ↗", "url": "https://editor.carkus.com/form-editor" }
+        ]
+      }
     ]
   },
   {
     "subsection": "Mobile & AR/VR",
-    "title": "ZOME — Spatial Messenger  —  VisionOS & Android XR version",
-    "tags": ["Swift", "SwiftUI", "visionOS", "Android XR"],
-    "imageUrl": "/img/ZOME_vision_ui.png",
-    "imageAlt": "ZOME VisionOS",
-    "heroImagePosition": "50% center",
-    "description": "ZOME is a spatial platform and messenger where you can plant your messages anywhere in the world, at any location and even points in time.",
-    "featured": true,
-    "width": 60,
-    "slideshowImages": ["/img/zome_ar1.png", "/img/zome_ar2.png", "/img/zome_ar3.png", "/img/zome_ar4.png", "/img/zome_ar5.png", "/img/zome_ar6.png", "/img/zome_ar7.png"],
-    "links": [
-      { "label": "App Store ↗", "url": "https://itunes.apple.com/us/app/zome/id1382123356?ls=1&mt=8" },
-      { "label": "Play Store ↗", "url": "https://play.google.com/store/apps/details?id=com.zomecorp.zome" }
+    "items": [
+      {
+        "title": "ZOME: Spatial Messenger (Mobile)",
+        "tags": ["Cross-platform", "Flutter", "Swift", "Kotlin"],
+        "imageUrl": "/img/icon_crop_sq.png",
+        "imageAlt": "ZOME platform",
+        "imagePosition": "left center",
+        "description": "ZOME is a spatial platform and messenger where you can plant your messages anywhere in the world, at any location and even points in time.",
+        "featured": true,
+        "heroExclude": true,
+        "width": 50,
+        "slideshowImages": ["/img/zome_phone1.png", "/img/zome_phone2.png", "/img/zome_phone3.png", "/img/zome_phone4.png", "/img/zome_phone5.png", "/img/zome_phone6.png", "/img/zome_phone7.png"],
+        "links": [
+          { "label": "App Store ↗", "url": "https://itunes.apple.com/us/app/zome/id1382123356?ls=1&mt=8" },
+          { "label": "Play Store ↗", "url": "https://play.google.com/store/apps/details?id=com.zomecorp.zome" }
+        ]
+      },
+      {
+        "title": "ZOME: Spatial Messenger (VisionOS & XR)",
+        "tags": ["Swift", "SwiftUI", "visionOS", "Android XR"],
+        "imageUrl": "/img/ZOME_vision_ui.png",
+        "imageAlt": "ZOME VisionOS",
+        "heroImagePosition": "50% center",
+        "description": "ZOME is a spatial platform and messenger where you can plant your messages anywhere in the world, at any location and even points in time.",
+        "featured": true,
+        "width": 50,
+        "slideshowImages": ["/img/zome_ar1.png", "/img/zome_ar2.png", "/img/zome_ar3.png", "/img/zome_ar4.png", "/img/zome_ar5.png", "/img/zome_ar6.png", "/img/zome_ar7.png"],
+        "links": [
+          { "label": "App Store ↗", "url": "https://itunes.apple.com/us/app/zome/id1382123356?ls=1&mt=8" },
+          { "label": "Play Store ↗", "url": "https://play.google.com/store/apps/details?id=com.zomecorp.zome" }
+        ]
+      },
+      {
+        "title": "Spatial UI Components for VisionOS",
+        "tags": ["visionOS", "Android XR"],
+        "imageUrl": "/img/spatial_architect.png",
+        "imageAlt": "Spatial UI Components",
+        "description": "A library of reusable spatial UI components for Apple Vision Pro using RealityKit, SwiftUI.",
+        "featured": false,
+        "heroImageOffset": 80,
+        "width": 100,
+        "height": 90,
+        "links": []
+      }
     ]
-  },
-  {
-  "title": "ZOME — Mobile version",
-    "tags": ["Cross-platform", "Flutter", "Swift", "Kotlin"],
-    "imageUrl": "/img/icon_crop_sq.png",
-    "imageAlt": "ZOME platform",
-    "imagePosition": "left center",
-    "description": "ZOME is a spatial platform and messenger where you can plant your messages anywhere in the world, at any location and even points in time.",
-    "featured": true,
-    "heroExclude": true,
-    "width": 40,
-    "slideshowImages": ["/img/zome_phone1.png", "/img/zome_phone2.png", "/img/zome_phone3.png", "/img/zome_phone4.png", "/img/zome_phone5.png", "/img/zome_phone6.png", "/img/zome_phone7.png"],
-    "links": [
-      { "label": "App Store ↗", "url": "https://itunes.apple.com/us/app/zome/id1382123356?ls=1&mt=8" },
-      { "label": "Play Store ↗", "url": "https://play.google.com/store/apps/details?id=com.zomecorp.zome" }
-    ]
-  },
-  {
-    "subsection": "Social",
-    "title": "Scribbler 2026",
-    "tags": ["React", "TypeScript", "Express", "MySQL", "TipTap"],
-    "imageUrl": "/img/scribbler-2.png",
-    "imageAlt": "Scribbler",
-    "description": "Collaborative writing platform for organising work into Collections and Articles, allows suggestions and appraisal notifications, messaging — and distraction-free rich-text editing.",
-    "featured": true,
-    "width": 34,
-    "links": [
-      { "label": "Coming Soon", "url": "" }
-    ]
-    },
-  {
-    "title": "Spatial UI Components for VisionOS",
-    "tags": ["visionOS", "Android XR"],
-    "imageUrl": "/img/spatial_architect.png",
-    "imageAlt": "Spatial UI Components",
-    "description": "A library of reusable spatial UI components for Apple Vision Pro using RealityKit, SwiftUI.",
-    "featured": false,
-    "heroImageOffset": 80,
-    "width": 100,
-    "height": 90,
-    "links": []
   },
   {
     "subsection": "Frontend",
-    "title": "Chatty Prayers — AI Debates, and Counsel",
-    "tags": ["Blazor", "Claude API", "Gemini API"],
-    "imageUrl": "/img/chatty_prayers.png",
-    "imageAlt": "Chatty Prayers",
-    "heroImagePosition": "50% center",
-    "description": "Personality-driven AI platform with one-on-one chat, confidant reflection, and structured multi-participant debate — built with Blazor and a RAG pipeline over the Claude and Gemini APIs, with conversation and dialogue persistence powering multi-personality, multi-participant exchanges.",
-    "featured": true,
-    "width": 45,
-    "links": [
-      { "label": "Open Chatty Prayers ↗", "url": "https://moot.carkus.com" }
+    "items": [
+      {
+        "title": "Chatty Prayers — AI Debates, and Counsel",
+        "tags": ["Blazor", "Claude API", "Gemini API"],
+        "imageUrl": "/img/chatty_prayers.png",
+        "imageAlt": "Chatty Prayers",
+        "heroImagePosition": "50% center",
+        "description": "Personality-driven AI platform with one-on-one chat, confidant reflection, and structured multi-participant debate — built with Blazor and a RAG pipeline over the Claude and Gemini APIs, with conversation and dialogue persistence powering multi-personality, multi-participant exchanges.",
+        "featured": true,
+        "width": 40,
+        "links": [
+          { "label": "Open Chatty Prayers ↗", "url": "https://moot.carkus.com" }
+        ]
+      },
+      {
+        "title": "JobFit™ — AI Job Match Analyser",
+        "tags": ["TypeScript", ".NET", "MCP", "Structured Output", "Multi-AI Providers"],
+        "imageUrl": "/img/jobfit_card_noblurb.png",
+        "imageAlt": "Job interview handshake",
+        "description": "Multi-provider AI tool that scores CVs against job descriptions, generates ATS compliant resumes, surfaces skill gaps, and drafts cover letters — exposes MCP tools for direct use from Claude.",
+        "featured": false,
+        "imageOffsetY": 5,
+        "width": 60,
+        "links": [
+          { "label": "Open JobFit ↗", "url": "https://jobfit.carkus.com" }
+        ],
+        "_credit": { "name": "Mina Rad", "url": "https://unsplash.com/@miinrad" }
+      },
+      {
+        "title": "Panic Stations",
+        "tags": ["React Native", "Expo", "TypeScript", "Zustand", "Game Dev"],
+        "imageUrl": "/img/image_a83945ea.png",
+        "imageAlt": "Panic Stations",
+        "description": "Turn-based sci-fi roguelike RPG built with React Native and Expo — procedurally generated space stations, tap-to-move pathfinding, and fog-of-war exploration.",
+        "featured": false,
+        "heroExclude": true,
+        "imageOffsetY": 20,
+        "width": 50,
+        "links": []
+      },
+      {
+        "title": "Search in Robotic Task Planning",
+        "tags": ["AI Research", "Robotics Task Planning"],
+        "imageUrl": "https://images.unsplash.com/photo-1647427060118-4911c9821b82?w=600&q=80",
+        "imageAlt": "Robotics research",
+        "description": "Academic research into heuristic search and efficiency for algorithms applied to autonomous robotic task planning.",
+        "featured": true,
+        "width": 50,
+        "links": []
+      }
     ]
   },
   {
-    "title": "JobFit™ — AI Job Match Analyser",
-    "tags": ["TypeScript", ".NET", "MCP", "Claude API", "Gemini API", "Structured Output", "Multi-provider"],
-    "imageUrl": "/img/jobfit_card_noblurb.png",
-    "imageAlt": "Job interview handshake",
-    "description": "Multi-provider AI tool that scores CVs against job descriptions, generates ATS compliant resumes, surfaces skill gaps, and drafts cover letters — exposes MCP tools for direct use from Claude.",
-    "featured": false,
-    "imageOffsetY": 20,
-    "width": 55,
-    "links": [
-      { "label": "Open JobFit ↗", "url": "https://jobfit.carkus.com" }
-    ],
-    "_credit": { "name": "Mina Rad", "url": "https://unsplash.com/@miinrad" }
-  },
-  {
-    "title": "Panic Stations",
-    "tags": ["React Native", "Expo", "TypeScript", "Zustand", "Game Dev"],
-    "imageUrl": "/img/image_a83945ea.png",
-    "imageAlt": "Panic Stations",
-    "description": "Turn-based sci-fi roguelike RPG built with React Native and Expo — procedurally generated space stations, tap-to-move pathfinding, and fog-of-war exploration.",
-    "featured": false,
-    "heroExclude": true,
-    "width": 50,
-    "links": []
-  },
-  {
-    "title": "Search in Robotic Task Planning",
-    "tags": ["AI Research", "Robotics Task Planning"],
-    "imageUrl": "https://images.unsplash.com/photo-1647427060118-4911c9821b82?w=600&q=80",
-    "imageAlt": "Robotics research",
-    "description": "Academic research into heuristic search and efficiency for algorithms applied to autonomous robotic task planning.",
-    "featured": true,
-    "width": 50,
-    "links": []
-  },
-  {
     "subsection": "AI & Backend",
-    "title": "ChattyPrayers.Api",
-    "tags": ["ASP.NET Core", "Claude API", "Gemini API", "Ollama", "RAG"],
-    "imageUrl": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&q=80",
-    "imageAlt": "Server infrastructure",
-    "description": "ASP.NET Core API powering streaming chat, multi-participant AI debate, SVG generation, and RAG-based conversation search via Ollama embeddings.",
-    "featured": false,
-    "width": 40,
-    "links": []
-  },
-  {
-    "title": "MarkdownForms.Api",
-    "tags": [".NET Core", "Markdown", "PDF Generation", "Claude API"],
-    "imageUrl": "/img/kelly-sikkema-6fIxFaOvwHQ-unsplash.jpg",
-    "imageAlt": "Code editor",
-    "description": "A .NET API that renders and processes dynamic form schemas defined in Markdown — PDF export with AcroForm generation and AI-assisted field population.",
-    "featured": false,
-    "width": 60,
-    "links": [],
-    "credit": { "name": "Kelly Sikkema", "url": "https://unsplash.com/@kellysikkema" }
+    "items": [
+      {
+        "title": "ChattyPrayers.Api",
+        "tags": ["ASP.NET Core", "Claude API", "Gemini API", "Ollama", "RAG"],
+        "imageUrl": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&q=80",
+        "imageAlt": "Server infrastructure",
+        "description": "ASP.NET Core API powering streaming chat, multi-participant AI debate, SVG generation, and RAG-based conversation search via Ollama embeddings.",
+        "featured": false,
+        "width": 40,
+        "links": []
+      },
+      {
+        "title": "MarkdownForms.Api",
+        "tags": [".NET Core", "Markdown", "PDF Generation", "Claude API"],
+        "imageUrl": "/img/kelly-sikkema-6fIxFaOvwHQ-unsplash.jpg",
+        "imageAlt": "Code editor",
+        "description": "A .NET API that renders and processes dynamic form schemas defined in Markdown — PDF export with AcroForm generation and AI-assisted field population.",
+        "featured": false,
+        "width": 60,
+        "links": [],
+        "credit": { "name": "Kelly Sikkema", "url": "https://unsplash.com/@kellysikkema" }
+      }
+    ]
   }
 ]

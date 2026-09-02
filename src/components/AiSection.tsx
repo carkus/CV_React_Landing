@@ -10,7 +10,7 @@ const AI_THREADS: AiThread[] = [
   },
   {
     num: '02',
-    icon: '◐',
+    icon: '⌂',
     title: 'Local-First & Privacy',
     points: ['Local LLM as fallback or default, keeping sensitive data off the cloud'],
     tags: ['Ollama', 'Local LLM', 'Data Privacy'],

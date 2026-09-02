@@ -67,11 +67,15 @@ export default function ExpertiseSection() {
         <div className="expertise-scroll-area" id="expertiseScroll" ref={scrollRef}>
           {panels.map(p => (
             <div key={p.num} className="expertise-panel" data-num={p.num}>
-              <img src={p.img} alt={p.alt} style={{ width: '100%', height: 140, objectFit: 'cover', marginBottom: '1.5rem', filter: 'brightness(0.8)' }} />
-              <div className="expertise-panel-title">{p.title}</div>
-              <p className="expertise-panel-desc">{p.desc}</p>
-              <div className="expertise-tags">
-                {p.tags.map(t => <span key={t} className="skill-box etag">{t}</span>)}
+              <div className="expertise-panel-media">
+                <img src={p.img} alt={p.alt} />
+              </div>
+              <div className="expertise-panel-body">
+                <div className="expertise-panel-title">{p.title}</div>
+                <p className="expertise-panel-desc">{p.desc}</p>
+                <div className="expertise-tags">
+                  {p.tags.map(t => <span key={t} className="skill-box etag">{t}</span>)}
+                </div>
               </div>
             </div>
           ))}

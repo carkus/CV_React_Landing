@@ -11,8 +11,11 @@ export interface WorkCredit {
 export interface WorkItem {
   title: string;
   tags: string[];
-  imageUrl: string;
-  imageAlt: string;
+  /** Omit to render this entry as a flat, image-less "small project" card
+   *  (see PlainWorkItemCard in WorkSection.tsx) instead of the full-bleed
+   *  photo tile. */
+  imageUrl?: string;
+  imageAlt?: string;
   description: string;
   featured: boolean;
   links: WorkLink[];
@@ -47,10 +50,17 @@ export interface WorkItem {
   heroImageTransform?: string;
   width?: number;
   height?: number;
-  subsection?: string;
   slideshowImages?: string[];
   /** When true, this item is skipped by the hero rotation even if it has an imageUrl. */
   heroExclude?: boolean;
+}
+
+/** A named group of work items — the subsection heading wraps its own block
+ *  of content (its own heading + its own row-wrapping item grid) rather than
+ *  being one more entry injected into a shared row of items. */
+export interface WorkGroup {
+  subsection: string;
+  items: WorkItem[];
 }
 
 export interface Skill {

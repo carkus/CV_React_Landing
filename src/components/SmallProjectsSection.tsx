@@ -42,7 +42,6 @@ export default function SmallProjectsSection() {
   return (
     <section id="small-projects">
       <div className="section-inner">
-        <div className="section-eyebrow reveal">Also built recently</div>
         <h2 className="section-heading reveal reveal-delay-1">Small projects &amp; sites</h2>
         <div className="small-projects-grid reveal reveal-delay-2">
           {items.map(item => <SmallProjectCard key={item.title} item={item} />)}

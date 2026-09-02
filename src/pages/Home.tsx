@@ -4,7 +4,6 @@ import NavBar from '../components/NavBar';
 import HeroSection from '../components/HeroSection';
 import AboutSection from '../components/AboutSection';
 import SkillsSection from '../components/SkillsSection';
-import SmallProjectsSection from '../components/SmallProjectsSection';
 import WorkSection from '../components/WorkSection';
 import AiSection from '../components/AiSection';
 import AskSection from '../components/AskSection';
@@ -50,7 +49,6 @@ export default function Home() {
       <AskSection />
       <AiSection />
       <SkillsSection />
-      <SmallProjectsSection />
       <WorkSection />
       <ExpertiseSection />
       <TimelineSection />

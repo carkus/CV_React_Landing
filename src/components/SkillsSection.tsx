@@ -136,11 +136,36 @@ export default function SkillsSection() {
         <div className="section-eyebrow reveal">Skills</div>
         <h2 className="section-heading reveal reveal-delay-1">The toolkit</h2>
         <p className="section-intro reveal reveal-delay-2">I have worked regularly across a number of platforms, as the roles required. From building new systems to maintaining legacy code, which has given me broad exposure to cross-platform and native mobile development, and modern web frameworks. More recently, I've been focused on AI integration — revisiting my Master's work in automation through hands-on work with LLMs, both local and cloud-hosted, building RAG pipelines, agentic workflows, and structured output systems.</p>
-        <p className="section-sub reveal reveal-delay-3">All skills listed here reflect several years of hands-on professional use.</p>
+      
+        <div className="work-summation reveal reveal-delay-2">
+          <div className="work-summation-col">
+            <div className="work-summation-label">Frontend</div>
+            <ul className="work-summation-list">
+              <li>Cross-platform mobile, AI-integrated web, and spatial computing — shipped to App Store, Play Store, and Vision Pro</li>
+              <li>Native Swift/SwiftUI for iOS and visionOS, and React/Blazor for the web layer</li>
+              <li>Claude and Gemini APIs wired directly into the UI, backed by multi-provider LLM cascades, RAG pipelines, and MCP tool integrations for structured, context-aware AI features</li>
+            </ul>
+            <div className="work-summation-tags">
+              {['Cross-platform', 'Swift / SwiftUI', 'visionOS', 'React', 'Blazor', 'Claude API', 'Gemini API'].map(t => <span key={t} className="skill-box etag">{t}</span>)}
+            </div>
+          </div>
+          <div className="work-summation-divider" />
+          <div className="work-summation-col">
+            <div className="work-summation-label">Backend</div>
+            <ul className="work-summation-list">
+              <li>NodeJS or .NET backends, streaming AI over SSE</li>
+              <li>Multi-provider LLM orchestration with Ollama fallback, RAG via embedding search</li>
+              <li>Agentic document pipelines with LangGraph and LlamaIndex, plus PDF generation and MCP tool servers for Claude Code and Claude Desktop</li>
+              <li>Structured prompt engineering with validated, typed outputs</li>
+            </ul>
+            <div className="work-summation-tags">
+              {['Node JS', 'ASP.NET Core', 'Python', 'Ollama', 'RAG', 'PDF Generation', 'Multi-provider LLM'].map(t => <span key={t} className="skill-box etag">{t}</span>)}
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="section-inner section-inner--no-top">
-        <div className="skills-tier-label">High Proficiency</div>
         <div className="skills-board" id="skillsBoard" ref={boardRef}>
           {topGroups.map(group => (
             <div key={group.cat} className="skills-cat-row">
@@ -190,6 +215,7 @@ export default function SkillsSection() {
           </div>
         )}
       </div>
+      
     </section>
   );
 }
