@@ -157,7 +157,7 @@
         "imageUrl": "/img/jobfit_card_noblurb.png",
         "imageAlt": "Job interview handshake",
         "description": "Multi-provider AI tool that scores CVs against job descriptions, generates ATS compliant resumes, surfaces skill gaps, and drafts cover letters — exposes MCP tools for direct use from Claude.",
-        "featured": true,
+        "featured": false,
         "imageOffsetY": 5,
         "width": 60,
         "links": [
@@ -178,7 +178,7 @@
         "links": []
       },
       {
-        "title": "Search in Robotic Task Planning",
+        "title": "Research in AI Task Planning",
         "tags": ["AI Research", "Robotics Task Planning"],
         "imageUrl": "https://images.unsplash.com/photo-1647427060118-4911c9821b82?w=600&q=80",
         "imageAlt": "Robotics research",

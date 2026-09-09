@@ -98,14 +98,26 @@ nav {
     padding: 0 0.9rem !important; white-space: nowrap; flex-shrink: 0; transition: border-color 0.2s;
 }
 .nav-app-link:hover { border-color: var(--accent2) !important; }
-.nav-cv-btn {
-    background: linear-gradient(135deg, var(--accent-warm), var(--accent-warm2));
-    color: #fff !important; font-weight: 700;
+/* Download-CV accent — yellow, distinct from the site's other (orange/blue)
+   accents so the résumé download reads as its own kind of action wherever it
+   appears (nav bar, hero CTA row, mobile drawer). Compound selectors so this
+   reliably wins over .nav-app-link/.btn-ghost's own background/border/color
+   regardless of source order. */
+.nav-cv-btn,
+.nav-app-link.nav-cv-btn,
+.btn-ghost.nav-cv-btn {
+    background: linear-gradient(135deg, #fde047, #eab308);
+    color: #1a1207 !important; font-weight: 700;
     border-color: transparent;
-    box-shadow: 0 3px 14px -4px color-mix(in srgb, var(--accent-warm) 55%, transparent);
+    box-shadow: 0 3px 14px -4px color-mix(in srgb, #eab308 55%, transparent);
     transition: box-shadow 0.2s, transform 0.15s;
 }
-.nav-cv-btn:hover { background: linear-gradient(135deg, var(--accent-warm2), var(--accent-warm)); border-color: transparent; box-shadow: 0 6px 20px -4px color-mix(in srgb, var(--accent-warm) 70%, transparent); transform: translateY(-1px); }
+.nav-cv-btn:hover,
+.nav-app-link.nav-cv-btn:hover,
+.btn-ghost.nav-cv-btn:hover {
+    background: linear-gradient(135deg, #facc15, #ca8a04); border-color: transparent;
+    box-shadow: 0 6px 20px -4px color-mix(in srgb, #eab308 70%, transparent); transform: translateY(-1px);
+}
 
 .nav-hamburger {
     display: none; flex-direction: column; justify-content: center; gap: 5px;
@@ -300,9 +312,22 @@ nav {
     font-family: var(--serif); font-weight: 400; font-size: 1.1rem; line-height: 1.5;
     color: var(--silver); margin-top: 0.5rem; width: 100%;
 }
-.platform-links { position: absolute; top: 1.4rem; left: 1.4rem; display: flex; gap: 0.6rem; flex-wrap: wrap; z-index: 2; }
-.platform-link { font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.1em; text-transform: uppercase; color: #8a9ab8; text-decoration: none; border: 1px solid #8a9ab8; padding: 0.22rem 0.6rem; background: rgba(13,21,38,0.5); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); transition: color 0.2s, border-color 0.2s; }
-.platform-link:hover { color: #e8ecf4; border-color: #5a8aee; }
+/* Large round buttons, not the Work section's small inline icons — the
+   slideshow already owns whole-card taps for swipe/dot selection, so a
+   launch needs its own unambiguous, generously-sized tap target rather than
+   relying on a tap-anywhere-on-the-card gesture that fought the selector. */
+.platform-links { position: absolute; top: 1.4rem; left: 1.4rem; display: flex; gap: 0.7rem; z-index: 2; }
+.platform-link {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 2.75rem; height: 2.75rem; border-radius: 50%;
+    background: rgba(13,21,38,0.65); border: 1px solid rgba(255,255,255,0.25);
+    -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+    color: #fff; font-size: 1.1rem; text-decoration: none;
+    box-shadow: 0 4px 14px -4px rgba(0,0,0,0.6);
+    transition: background 0.2s, border-color 0.2s, transform 0.15s;
+}
+.platform-link:hover { background: var(--accent2, #5a8aee); border-color: var(--accent2, #5a8aee); transform: translateY(-2px); }
+.platform-link i { font-size: 1.35rem; }
 .platform-dots { position: absolute; top: 1.4rem; right: 1.4rem; display: flex; gap: 0.5rem; z-index: 2; }
 .platform-dot {
     /* box-sizing override is load-bearing: the site-wide border-box reset
@@ -473,16 +498,16 @@ section { padding: 7rem 0; }
 }
 .small-project-card-link { cursor: pointer; }
 .small-project-card-link:hover { border-color: var(--accent2); transform: translateY(-2px); box-shadow: 0 12px 28px -10px color-mix(in srgb, var(--accent2) 35%, transparent); }
-/* Same pill treatment as .work-item-title on the photo tiles, verbatim —
-   dark translucent fill + blur reads fine here too since the card itself is
-   already a solid dark navy, not just legible-on-photo. */
+/* These cards have no photo behind them (unlike .work-item-title's tiles),
+   so the pill reads as a light blue chip rather than a dark
+   legible-over-photo overlay. */
 .small-project-title {
     /* align-self overrides the flex-column card's default cross-axis
        stretch — without it a flex item ignores display:inline-block and
        fills the card's full width regardless. */
     align-self: flex-start; display: inline-block; font-family: var(--serif); font-size: 1.05rem; font-weight: 400;
-    color: #fff; margin: 0 0 0.7rem; text-shadow: 0 1px 4px rgba(0,0,0,0.5);
-    background: rgba(20,22,28,0.55); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
+    color: #1d4ed8; margin: 0 0 0.7rem;
+    background: rgba(47,91,176,0.12); border: 1px solid rgba(47,91,176,0.3);
     padding: 0.3rem 0.85rem; border-radius: 999px;
 }
 .small-project-desc { font-size: 0.82rem; line-height: 1.6; color: var(--mist); margin: 0 0 0.9rem; }
@@ -494,18 +519,22 @@ section { padding: 7rem 0; }
 .small-project-arrow { position: absolute; top: 1.3rem; right: 1.4rem; color: var(--accent2); font-size: 0.9rem; }
 
 /* ── WORK ────────────────────────────────────────────────────── */
-/* Same pale-blue-on-pale-blue treatment as #ai/#ask below — identical var
-   values, so this section and AI read as one consistent light-theme family
-   rather than two different blues. Photo-tile overlay elements
+/* Same pale-blue-on-pale-blue treatment #ai/#ask shares (see AI section
+   below) — a fixed light card regardless of the site's own dark/light
+   toggle. Photo-tile overlay elements
    (.work-item-title/.work-tag/.work-item-link/.work-item-info gradient,
    .work-item-credit below) stay hardcoded light-on-dark-photo regardless,
-   since they sit on top of images rather than the section's flat background. */
+   since they sit on top of images rather than the section's flat background.
+   Card/tag variables stay the pale blue palette so photo-less small-project
+   cards keep their look; only #work's own flat section background is
+   overridden below to plain white instead of --navy, same as #ai. */
 #work {
     background: var(--navy); border-top: 1px solid #cddcf0; border-bottom: 1px solid #cddcf0;
     --ink: #eef4fb; --navy: #dce8f7; --slate: #cddcf0; --steel: #7c93b8;
     --mist: #445269; --silver: #1f2937; --chalk: #10131c;
     --accent: #2f5bb0; --accent2: #1d63d6; --error: #c23b3b;
 }
+#work { background: #fff; }
 /* Each subsection is its own self-contained block — a heading followed by
    its own independent row-wrapping grid — rather than a header shoehorned in
    as one more flex item inside a single shared grid. That keeps one
@@ -605,22 +634,19 @@ section { padding: 7rem 0; }
 .slideshow-counter { position: absolute; bottom: 1.8rem; left: 50%; transform: translateX(-50%); font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.08em; color: var(--mist); }
 
 /* ── AI ───────────────────────────────────────────────────────── */
-/* Pale-blue-on-pale-blue — a fixed light card rather than a re-tint of the
-   site's own dark/light toggle, so it reads the same in either theme. The
-   section background matches --ink (the same pale blue already used for the
-   ai-ask/ai-discuss input fields), with --navy (the .ai-ask/.ai-reflection/
-   .info-card box backgrounds) a shade darker so the boxes still read as
-   distinct panels rather than blending into the page. Every text/border
-   variable this section's components reference (--chalk, --mist, --silver,
-   --steel, --ink, plus --navy/--slate/--accent/--accent2) is overridden here
-   so nothing falls back to the surrounding dark-navy or light-lavender theme
-   values. */
+/* Same pale-blue-on-pale-blue treatment as #work — a fixed light card
+   rather than a re-tint of the site's own dark/light toggle, so it reads
+   the same in either theme. Card/tag/icon variables (--navy, --slate, etc.)
+   stay shared between #ai and #ask so their info-cards, tags, and the Ask
+   AI box keep the identical panel palette; only #ai's own flat section
+   background is overridden below to plain white instead of --navy. */
 #ai, #ask {
-    background: var(--ink); border-top: 1px solid #cddcf0; border-bottom: 1px solid #cddcf0;
+    background: var(--navy); border-top: 1px solid #cddcf0; border-bottom: 1px solid #cddcf0;
     --ink: #eef4fb; --navy: #dce8f7; --slate: #cddcf0; --steel: #7c93b8;
     --mist: #445269; --silver: #1f2937; --chalk: #10131c;
     --accent: #2f5bb0; --accent2: #1d63d6; --error: #c23b3b;
 }
+#ai { background: #fff; }
 #ask { padding: 2.1rem 0; }
 /* AI threads reuse .info-card-grid/.info-card-* (see ACHIEVEMENTS above)
    — tag color identity is section-specific, and the icon badge is sized up
@@ -630,7 +656,17 @@ section { padding: 7rem 0; }
 /* These cards aren't clickable, so the shared .info-card hover tint (used
    elsewhere for Achievements) was just a false affordance here — disabled. */
 #ai .info-card:hover { background: var(--navy); }
+/* Titles darker and larger than the shared .info-card-title default —
+   scoped to #ai only so Achievements' cards are untouched. */
+#ai .info-card-title { color: #05070d; font-size: 1.2rem; }
 .ai-ask { margin-top: 1.5px; background: var(--navy); border: 1px solid var(--slate); padding: 1.6rem 1.8rem; }
+/* Once its scroll-reveal finishes, sit a touch darker than the plain
+   --navy panel so it reads as the section's focal box rather than blending
+   into the other reveal-animated panels around it. Mixed with --accent2
+   (not black) — --navy is such a pale, low-saturation blue that darkening
+   it toward black just reads as grey; mixing toward a saturated blue keeps
+   it unmistakably blue while still darker. */
+.ai-ask.visible { background: color-mix(in srgb, var(--navy) 80%, var(--accent2) 20%); }
 .ai-ask-form { display: flex; gap: 0.7rem; }
 .ai-ask-input { flex: 1; min-width: 0; background: var(--ink); border: 1px solid var(--slate); border-radius: var(--radius); color: var(--chalk); font-family: var(--sans); font-size: 0.85rem; padding: 0.65rem 0.9rem; transition: border-color 0.2s, box-shadow 0.2s; }
 .ai-ask-input:focus { outline: none; border-color: var(--accent2); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent2) 20%, transparent); }

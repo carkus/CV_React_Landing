@@ -1,13 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-// CV generation moved server-side — the button calls JobFit's own CV generator directly
-// (GET /api/cv/download, a fresh render on every click) instead of building a PDF
-// client-side or linking to a pre-baked static file. JobFit's dev server is hardcoded to
-// port 5173 (jobfit/Program.cs); mirrors the PORTFOLIO_API_BASE pattern already used in
-// AskSection.tsx/FooterSection.tsx. Update the prod URL once JobFit is actually deployed.
-const JOBFIT_API_BASE = import.meta.env.DEV ? 'http://localhost:5173' : 'https://jobfit.carkus.com';
-const CV_PDF_PATH = `${JOBFIT_API_BASE}/api/cv/download`;
+// Back to a static pre-baked PDF — JobFit's own CV generator (GET
+// /api/cv/download) now requires a profileId it has no default for, so the
+// public download link 500'd. Update this path whenever a fresher CV is
+// dropped into public/files/.
+const CV_PDF_PATH = '/files/mark_scicluna_cv_sep2026.pdf';
 
 export default function NavBar() {
   const [open, setOpen] = useState(false);
@@ -46,7 +44,7 @@ export default function NavBar() {
           <li><a href="#expertise">Expertise</a></li>
           <li><a href="#timeline">Timeline</a></li>
           <li><a href="#contact">Contact</a></li>
-          <li><a href={CV_PDF_PATH} download className="nav-app-link">↓ CV</a></li>
+          <li><a href={CV_PDF_PATH} download className="nav-app-link nav-cv-btn">↓ CV</a></li>
         </ul>
         <button className={`nav-hamburger${open ? ' open' : ''}`} onClick={() => setOpen(o => !o)} aria-label="Menu">
           <span /><span /><span />
@@ -60,7 +58,7 @@ export default function NavBar() {
         <a href="#expertise"    onClick={close}>Expertise</a>
         <a href="#timeline"     onClick={close}>Timeline</a>
         <a href="#contact"      onClick={close}>Contact</a>
-        <a href={CV_PDF_PATH} download style={{ color: 'var(--accent2)' }} onClick={close}>↓ CV</a>
+        <a href={CV_PDF_PATH} download style={{ color: '#eab308' }} onClick={close}>↓ CV</a>
         <div className="nav-drawer-divider">
           <span>Elsewhere</span>
         </div>

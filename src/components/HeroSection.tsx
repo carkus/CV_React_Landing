@@ -3,13 +3,11 @@ import { Link } from 'react-router-dom';
 import type { WorkGroup, WorkItem } from '../types';
 import { resolveImgPos } from '../utils/imagePosition';
 
-// CV generation moved server-side — the button calls JobFit's own CV generator directly
-// (GET /api/cv/download, a fresh render on every click) instead of building a PDF
-// client-side or linking to a pre-baked static file. JobFit's dev server is hardcoded to
-// port 5173 (jobfit/Program.cs); mirrors the PORTFOLIO_API_BASE pattern already used in
-// AskSection.tsx/FooterSection.tsx. Update the prod URL once JobFit is actually deployed.
-const JOBFIT_API_BASE = import.meta.env.DEV ? 'http://localhost:5173' : 'https://jobfit.carkus.com';
-const CV_PDF_PATH = `${JOBFIT_API_BASE}/api/cv/download`;
+// Back to a static pre-baked PDF — JobFit's own CV generator (GET
+// /api/cv/download) now requires a profileId it has no default for, so the
+// public download link 500'd. Update this path whenever a fresher CV is
+// dropped into public/files/.
+const CV_PDF_PATH = '/files/mark_scicluna_cv_sep2026.pdf';
 
 const FALLBACK: WorkItem[] = [
   {
@@ -34,6 +32,17 @@ const FALLBACK: WorkItem[] = [
     links: [],
   },
 ];
+
+// Same icon choice as WorkSection.tsx's LinkIcon — App Store/Play Store get
+// their platform glyph via devicon, anything else falls back to a plain
+// external-link arrow. Duplicated rather than imported since WorkSection
+// doesn't export it and the two sections already carry their own separate
+// FALLBACK data.
+function LinkIcon({ label }: { label: string }) {
+  if (/app store/i.test(label)) return <i className="devicon-apple-original" aria-hidden="true" />;
+  if (/play store/i.test(label)) return <i className="devicon-android-plain" aria-hidden="true" />;
+  return <span aria-hidden="true">↗</span>;
+}
 
 const DWELL_MS = 10000; // time each project sits fully visible before sliding on
 const SLIDE_MS = 1400;  // slide transition duration
@@ -114,7 +123,10 @@ export default function HeroSection() {
     dragRef.current = null;
     if (!drag || items.length <= 1) return;
     const deltaX = e.clientX - drag.startX;
-    // Small movement (or none) is a tap/click — let links underneath fire normally.
+    // Small movement (or none) is a tap/click — let links underneath fire
+    // normally. No whole-card launch-on-tap here: it fought the swipe/dot
+    // slide selector (a tap meant to browse the carousel kept opening the
+    // link instead), so launching is only via the round link buttons now.
     if (Math.abs(deltaX) < SWIPE_THRESHOLD_PX) return;
     triggerSlide(deltaX < 0 ? 'next' : 'prev');
   };
@@ -156,10 +168,12 @@ export default function HeroSection() {
         }}
       />
       <div className="platform-overlay" />
-      {item.links.length > 0 && (
+      {item.links.filter(l => !!l.url).length > 0 && (
         <div className="platform-links">
-          {item.links.map(l => (
-            <a key={l.url} href={l.url} target="_blank" rel="noopener noreferrer" className="platform-link">{l.label}</a>
+          {item.links.filter(l => !!l.url).map(l => (
+            <a key={l.url} href={l.url} target="_blank" rel="noopener noreferrer" className="platform-link" aria-label={l.label} title={l.label}>
+              <LinkIcon label={l.label} />
+            </a>
           ))}
         </div>
       )}
@@ -185,7 +199,7 @@ export default function HeroSection() {
             <p>Cross-platform and native on mobile.</p>
             <p>React and .NET on web.</p>
             <p>SwiftUI, Flutter, and Kotlin on device.</p>
-            <p>Production-grade AI systems: RAG search, MCP, structured outputs, and multi-provider.</p>
+            <p>Production-grade AI systems: Agentic RAG, MCP, structured outputs, and multi-provider.</p>
             <p>Based in Melbourne.</p>
           </div>
           <div className="hero-link-stack">
@@ -197,7 +211,7 @@ export default function HeroSection() {
           </div>
           <div className="hero-ctas">
             <a href="#work" className="btn-primary">View Work →</a>
-            <a href={CV_PDF_PATH} download className="btn-ghost">CV ↓</a>
+            <a href={CV_PDF_PATH} download className="btn-ghost nav-cv-btn">CV ↓</a>
           </div>
           <div className="hero-social">
             <a href="https://github.com/carkus" target="_blank" rel="noopener noreferrer" className="social-link">GitHub ↗</a>
