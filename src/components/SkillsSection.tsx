@@ -1,8 +1,28 @@
 import { useEffect, useRef, useState } from 'react';
 import type { Skill } from '../types';
 
-interface SkillsJsonGroup { pct: number; skills: { name: string; icon: string; pct: number }[]; }
+const PORTFOLIO_API_BASE = import.meta.env.DEV ? 'http://localhost:5131' : 'https://api.carkus.com';
+
+interface SkillsJsonGroup { pct: number; summary?: string; skills: { name: string; icon: string; pct: number; group?: string }[]; }
 type SkillsJson = Record<string, SkillsJsonGroup>;
+
+interface GithubLanguageCount { language: string; repoCount: number; }
+interface GithubLanguageStats { languages: GithubLanguageCount[]; activeRepoCount: number; months: number; }
+
+const LANGUAGE_ICONS: Record<string, string> = {
+  TypeScript: 'devicon-typescript-plain colored',
+  JavaScript: 'devicon-javascript-plain colored',
+  Python: 'devicon-python-plain colored',
+  'C#': 'devicon-csharp-plain colored',
+  Swift: 'devicon-swift-plain colored',
+  Kotlin: 'devicon-kotlin-plain colored',
+  Dart: 'devicon-flutter-plain colored',
+  HTML: 'devicon-html5-plain colored',
+  CSS: 'devicon-css3-plain colored',
+  Java: 'devicon-xcode-plain colored',
+  Ruby: 'devicon-ruby-plain colored',
+  Go: 'devicon-go-plain colored',
+};
 
 const FALLBACK_DATA: SkillsJson = {
   Mobile: { pct: 86, skills: [
@@ -22,14 +42,18 @@ const FALLBACK_DATA: SkillsJson = {
     { name: 'Blazor',     icon: 'devicon-blazor-plain colored',     pct: 84 },
   ] },
   AI: { pct: 80, skills: [
-    { name: 'Claude & Gemini APIs',          icon: '◆',                            pct: 86 },
-    { name: 'Agentic Orchestration',         icon: '◆',                            pct: 82 },
-    { name: 'RAG Pipelines',                 icon: '◆',                            pct: 82 },
-    { name: 'LangChain/LangGraph',           icon: '◆',                            pct: 78 },
-    { name: 'MCP Integration',               icon: '◆',                            pct: 78 },
-    { name: 'LlamaIndex',                    icon: '◆',                            pct: 76 },
-    { name: 'Schema-Constrained Generation', icon: 'devicon-python-plain colored', pct: 76 },
-    { name: 'LLM/PDDL Planning',             icon: '◆',                            pct: 80 },
+    { name: 'Self-Scaffolding Agents',       icon: '◆',                            pct: 84, group: 'Agentic Systems' },
+    { name: 'Master/Worker Delegation',      icon: '◆',                            pct: 82, group: 'Agentic Systems' },
+    { name: 'Self-Sequenced Planning',       icon: '◆',                            pct: 82, group: 'Agentic Systems' },
+    { name: 'LLM/PDDL Planning',             icon: '◆',                            pct: 80, group: 'Agentic Systems' },
+    { name: 'MCP Integration',               icon: '◆',                            pct: 78, group: 'Tools & Structured Output' },
+    { name: 'Schema-Constrained Generation', icon: 'devicon-python-plain colored', pct: 76, group: 'Tools & Structured Output' },
+    { name: 'LangChain/LangGraph',           icon: '◆',                            pct: 78, group: 'Tools & Structured Output' },
+    { name: 'RAG Pipelines',                 icon: '◆',                            pct: 82, group: 'Retrieval' },
+    { name: 'LlamaIndex',                    icon: '◆',                            pct: 76, group: 'Retrieval' },
+    { name: 'Claude & Gemini APIs',          icon: '◆',                            pct: 86, group: 'Models & Providers' },
+    { name: 'Token Usage & Latency Tracking', icon: '◆',                           pct: 80, group: 'Observability' },
+    { name: 'Cost Tracking',                 icon: '◆',                            pct: 78, group: 'Observability' },
   ] },
   Language: { pct: 81, skills: [
     { name: 'Swift / SwiftUI', icon: 'devicon-swift-plain colored',      pct: 92 },
@@ -53,18 +77,29 @@ const FALLBACK_DATA: SkillsJson = {
   ] },
 };
 
-interface CategoryGroup { cat: string; pct: number; skills: Skill[]; }
+interface CategoryGroup { cat: string; pct: number; summary?: string; skills: Skill[]; }
 
 function buildCategoryGroups(data: SkillsJson): CategoryGroup[] {
   return Object.entries(data)
     .map(([cat, group]) => ({
       cat,
       pct: group.pct,
+      summary: group.summary,
       skills: [...group.skills]
         .sort((a, b) => b.pct - a.pct)
-        .map(s => ({ name: s.name, cat, icon: s.icon, pct: s.pct })),
+        .map(s => ({ name: s.name, cat, icon: s.icon, pct: s.pct, group: s.group })),
     }))
     .sort((a, b) => b.pct - a.pct);
+}
+
+// Splits a category's skills into named subgroups, in order of first
+// appearance in the JSON (not by pct), so the data controls which subgroup
+// leads. Ungrouped skills fall into a single unnamed bucket.
+function buildSubgroups(cat: string, data: SkillsJson, skills: Skill[]): { name: string; skills: Skill[] }[] {
+  const order = [...new Set((data[cat]?.skills ?? []).map(s => s.group ?? ''))];
+  return order
+    .map(name => ({ name, skills: skills.filter(s => (s.group ?? '') === name) }))
+    .filter(g => g.skills.length > 0);
 }
 
 function SkillIcon({ icon }: { icon: string }) {
@@ -84,12 +119,20 @@ function SkillTag({ s }: { s: Skill }) {
 
 export default function SkillsSection() {
   const [data, setData] = useState<SkillsJson>(FALLBACK_DATA);
+  const [githubStats, setGithubStats] = useState<GithubLanguageStats | null>(null);
   const boardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     fetch('/data/skills.json')
       .then(r => r.json())
       .then((json: SkillsJson) => { if (json && Object.keys(json).length) setData(json); })
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    fetch(`${PORTFOLIO_API_BASE}/v1/portfolio/github-languages?months=3`)
+      .then(r => r.ok ? r.json() : null)
+      .then((json: GithubLanguageStats | null) => { if (json?.languages?.length) setGithubStats(json); })
       .catch(() => {});
   }, []);
 
@@ -193,8 +236,16 @@ export default function SkillsSection() {
         {aiGroup && (
           <div className="skills-other-box">
             <div className="skills-col-header">AI</div>
-            <div className="skills-other">
-              {aiGroup.skills.map(s => <SkillTag key={s.name} s={s} />)}
+            {aiGroup.summary && <p className="skills-summary">{aiGroup.summary}</p>}
+            <div className="skills-subgroups">
+              {buildSubgroups(aiGroup.cat, data, aiGroup.skills).map(sub => (
+                <div key={sub.name} className="skills-subgroup">
+                  {sub.name && <div className="skills-subgroup-label">{sub.name}</div>}
+                  <div className="skills-other">
+                    {sub.skills.map(s => <SkillTag key={s.name} s={s} />)}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         )}
@@ -211,6 +262,19 @@ export default function SkillsSection() {
             <div className="skills-col-header">Other Skills</div>
             <div className="skills-other">
               {otherSkills.map(s => <SkillTag key={s.name} s={s} />)}
+            </div>
+          </div>
+        )}
+        {githubStats && (
+          <div className="skills-other-box">
+            <div className="skills-col-header">Active on GitHub · Last {githubStats.months} Months</div>
+            <div className="skills-other">
+              {githubStats.languages.map(l => (
+                <span key={l.language} className="skill-box etag">
+                  <span className="etag-icon"><SkillIcon icon={LANGUAGE_ICONS[l.language] ?? '◆'} /></span>
+                  {l.language} · {l.repoCount} {l.repoCount === 1 ? 'repo' : 'repos'}
+                </span>
+              ))}
             </div>
           </div>
         )}

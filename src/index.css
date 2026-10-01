@@ -418,6 +418,7 @@ section { padding: 7rem 0; }
 .info-card-list li:last-child { margin-bottom: 0; }
 .info-card-list li::marker { color: var(--accent2); }
 .info-card-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: auto; padding-top: 0.9rem; position: relative; z-index: 1; }
+.info-card--wide { grid-column: 1 / -1; }
 @media (max-width: 720px) { .info-card-grid { grid-template-columns: 1fr; } }
 
 /* ── SKILLS ──────────────────────────────────────────────────── */
@@ -429,6 +430,12 @@ section { padding: 7rem 0; }
 .skills-other-box { margin-top: 1rem; border: 1px solid var(--slate); background: var(--ink); }
 .skills-other { display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 1.1rem 1.5rem; }
 .skills-col-header { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent2); padding: 0.75rem 1.5rem; border-bottom: 1px solid var(--slate); background: var(--ink); }
+.skills-summary { margin: 0; padding: 1.1rem 1.5rem 0; color: var(--silver); font-size: 0.92rem; line-height: 1.6; max-width: 70ch; }
+.skills-subgroups { display: grid; grid-template-columns: 1fr; }
+.skills-subgroup + .skills-subgroup { border-top: 1px dashed var(--slate); }
+.skills-subgroup .skills-other { padding-top: 0.4rem; }
+.skills-subgroup-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mist); padding: 0.9rem 1.5rem 0; }
+.skills-subgroup:first-child .skills-subgroup-label { color: var(--accent); }
 /* Each skill is its own little "shield" now — icon crest on top, title,
    stars pinned to the bottom — instead of the old two-column ticker row. */
 .skill-row {
@@ -570,19 +577,20 @@ section { padding: 7rem 0; }
 .work-item:hover { border-color: var(--accent2); transform: translateY(-2px); box-shadow: 0 12px 28px -10px color-mix(in srgb, var(--accent2) 35%, transparent); }
 .work-item > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: var(--img-pos, center); filter: grayscale(15%) brightness(0.85); transition: filter 0.4s, transform 0.5s; }
 .work-item:hover > img { filter: grayscale(0%) brightness(0.55); transform: scale(1.04); }
-.work-item-top-bar { position: absolute; top: 0; left: 0; right: 0; z-index: 2; display: flex; align-items: flex-start; justify-content: space-between; gap: 0.8rem; padding: 0.9rem 1rem; background: linear-gradient(to bottom, rgba(5,8,15,0.65), transparent); }
-/* Titles sit over a photo whose brightness varies a lot shot to shot — the
-   scrim gradient alone isn't always enough contrast, so back the text with
-   its own translucent gray pill. */
+.work-item-top-bar { position: absolute; top: 0; left: 0; right: 0; z-index: 2; display: flex; align-items: flex-start; justify-content: space-between; gap: 0.8rem; padding: 0.9rem 1rem; }
+/* Titles sit over a photo whose brightness varies a lot shot to shot —
+   no scrim gradient behind the whole bar any more, so the text carries its
+   own translucent gray pill for contrast instead. */
 .work-item-title { font-family: var(--serif); font-size: 1.05rem; font-weight: 400; color: #fff; margin: 0; text-shadow: 0 1px 4px rgba(0,0,0,0.5); background: rgba(20,22,28,0.55); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); padding: 0.3rem 0.85rem; border-radius: 999px; }
 .work-item-icons { display: flex; gap: 0.6rem; flex-shrink: 0; }
 .work-item-overlay { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; padding: 1.2rem 1.2rem 3rem; background: linear-gradient(to top, rgba(5,8,15,0.92), rgba(5,8,15,0.75) 60%, transparent); transform: translateY(100%); transition: transform 0.35s ease; }
 .work-item:hover .work-item-overlay { transform: translateY(0); }
 .work-item-desc { font-size: 0.8rem; line-height: 1.55; color: #fff; margin: 0; }
 /* Tag footer stays visible at all times (unlike the description overlay it
-   sits above), so it needs its own scrim rather than relying on the
-   overlay's — z-index above the overlay so it reads on top when both show. */
-.work-item-footer { position: absolute; left: 0; right: 0; bottom: 0; z-index: 3; display: flex; flex-wrap: wrap; gap: 0.35rem; padding: 0.7rem 1rem; background: linear-gradient(to top, rgba(5,8,15,0.85), rgba(5,8,15,0.4) 80%, transparent); }
+   sits above) — no scrim of its own any more, each .work-tag chip carries
+   its own translucent background instead. z-index above the overlay so it
+   reads on top when both show. */
+.work-item-footer { position: absolute; left: 0; right: 0; bottom: 0; z-index: 3; display: flex; flex-wrap: wrap; gap: 0.35rem; padding: 0.7rem 1rem; }
 /* ── TAG / TECH BOX (shared base) ────────────────────────────────
    One canonical little "tech chip" used everywhere (Skills, Achievements,
    AI, Expertise, Work, Timeline): font, size, padding, and shape live here;

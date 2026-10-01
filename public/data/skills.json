@@ -29,15 +29,23 @@
   },
   "AI": {
     "pct": 80,
+    "summary": "Agentic systems that build their own workforce — a master agent decomposes a goal, sequences its own plan of dependent subtasks, then bootstraps and deploys purpose-built worker agents for each one, with self-evaluation feeding back into which models get used.",
     "skills": [
-      { "name": "Claude & Gemini APIs",           "icon": "◆",                             "pct": 86 },
-      { "name": "Agentic Orchestration",          "icon": "◆",                             "pct": 82 },
-      { "name": "RAG Pipelines",                  "icon": "◆",                             "pct": 82 },
-      { "name": "LangChain/LangGraph",            "icon": "◆",                             "pct": 78 },
-      { "name": "MCP Integration",                "icon": "◆",                             "pct": 78 },
-      { "name": "LlamaIndex",                     "icon": "◆",                             "pct": 76 },
-      { "name": "Schema-Constrained Generation",  "icon": "devicon-python-plain colored",  "pct": 76 },
-      { "name": "LLM/PDDL Planning",              "icon": "◆",                             "pct": 80 }
+      { "name": "Self-Scaffolding Agents",          "icon": "◆",                             "pct": 84, "group": "Agentic Systems" },
+      { "name": "Master/Worker Delegation",         "icon": "◆",                             "pct": 82, "group": "Agentic Systems" },
+      { "name": "Self-Sequenced Planning",          "icon": "◆",                             "pct": 82, "group": "Agentic Systems" },
+      { "name": "Agent Orchestration",              "icon": "◆",                             "pct": 82, "group": "Agentic Systems" },
+      { "name": "LLM/PDDL Planning",                "icon": "◆",                             "pct": 80, "group": "Agentic Systems" },
+      { "name": "Self-Evaluation & Model Selection", "icon": "◆",                            "pct": 78, "group": "Agentic Systems" },
+      { "name": "MCP Integration",                  "icon": "◆",                             "pct": 78, "group": "Tools & Structured Output" },
+      { "name": "Schema-Constrained Generation",    "icon": "devicon-python-plain colored",  "pct": 76, "group": "Tools & Structured Output" },
+      { "name": "LangChain/LangGraph",              "icon": "◆",                             "pct": 78, "group": "Tools & Structured Output" },
+      { "name": "RAG Pipelines",                    "icon": "◆",                             "pct": 82, "group": "Retrieval" },
+      { "name": "LlamaIndex",                       "icon": "◆",                             "pct": 76, "group": "Retrieval" },
+      { "name": "Claude & Gemini APIs",             "icon": "◆",                             "pct": 86, "group": "Models & Providers" },
+      { "name": "Local LLMs",                       "icon": "◆",                             "pct": 82, "group": "Models & Providers" },
+      { "name": "Token Usage & Latency Tracking",   "icon": "◆",                             "pct": 80, "group": "Observability" },
+      { "name": "Cost Tracking",                    "icon": "◆",                             "pct": 78, "group": "Observability" }
     ]
   },
   "Language": {

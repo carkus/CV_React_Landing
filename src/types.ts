@@ -68,6 +68,7 @@ export interface Skill {
   cat: string;
   icon: string;
   pct: number;
+  group?: string;
 }
 
 export interface ExpertisePanel {

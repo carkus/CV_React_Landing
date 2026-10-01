@@ -4,13 +4,14 @@
     "subsection": "Small Projects",
     "items": [
       {
-        "title": "AI Agent",
-        "tags": ["Claude API", "AWS Lambda", "Agentic"],
-        "description": "Self-scaffolding agent platform — describe a task in plain language and it builds a purpose-built agent (role, tools, implementation) via the Claude API.",
-        "featured": false,
-        "width": 33,
+        "title": "Agent One - Realtime Agent Workers",
+        "tags": ["Local LLMs", "Ollama", "AWS Lambda", "Agentic"],
+        "imageUrl": "/img/AgentOne_logo.jpg",
+        "description": "Self-scaffolding and self-evaluating agent platform — describe a task in plain language and it builds purpose-built agents, assigns a role, accesses MCP tools, via Ollama locally or through Gemini. Checks its own responses and learns which models perform best.",
+        "featured": true,
+        "width": 50,
         "links": [
-          { "label": "Open AI Agent", "url": "https://agent.carkus.com" }
+          { "label": "Open Agent One", "url": "https://agent.carkus.com" }
         ]
       },
       {
@@ -18,7 +19,7 @@
         "tags": ["ASP.NET Core", "JWT", "Multi-tenant"],
         "description": "Multi-tenant shared auth server — registration, login, token refresh, email verification, and password reset, auto-provisioning a siteId per consuming project.",
         "featured": false,
-        "width": 34,
+        "width": 25,
         "links": []
       },
       {
@@ -26,7 +27,7 @@
         "tags": ["React", "react-markdown"],
         "description": "Lightweight Markdown rendering utility with syntax-highlighted code blocks and GitHub-flavoured Markdown support.",
         "featured": false,
-        "width": 33,
+        "width": 25,
         "links": []
       }
     ]
