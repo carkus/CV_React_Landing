@@ -16,8 +16,19 @@ export interface DisciplineProject {
   tags: string[];
   imageUrl?: string;
   imageAlt?: string;
-  /** CSS object-position for the case-study image crop. */
+  /** Horizontal crop offset for the case-study image, 0–100 (percent from
+   *  the left) — same convention as WorkItem.imageOffset. Takes precedence
+   *  over imagePosition when set. */
+  imageOffset?: number;
+  /** Vertical crop offset, 0–100 (percent from the top) — 0 shows the top of
+   *  the image, 100 the bottom. Takes precedence over imagePosition when set. */
+  imageOffsetY?: number;
+  /** Raw CSS object-position fallback for the case-study image crop. */
   imagePosition?: string;
+  /** Zoom factor for the case-study image, e.g. 1.2 for 20% larger — scales
+   *  around the offset/position focal point, so it zooms into the part of the
+   *  image the offsets already frame. Defaults to 1 (no zoom). */
+  imageScale?: number;
   slideshowImages?: string[];
   links: DisciplineLink[];
 }
@@ -120,7 +131,7 @@ export const DISCIPLINES: Record<DisciplineKey, Discipline> = {
         tags: ['React', 'TypeScript', 'ASP.NET Core', 'Mailgun'],
         imageUrl: '/img/smooth_software_wide.png',
         imageAlt: 'Smooth Software',
-        imagePosition: '10% center',
+        imageOffset: 10,
         links: [{ label: 'Open Smooth Software', url: 'https://smoothsoftware.carkus.com' }],
       },
       {
@@ -207,7 +218,7 @@ export const DISCIPLINES: Record<DisciplineKey, Discipline> = {
         tags: ['.NET', 'TypeScript', 'MCP', 'Structured Output', 'Multi-provider'],
         imageUrl: '/img/jobfit_card_noblurb.png',
         imageAlt: 'JobFit',
-        imagePosition: 'center 5%',
+        imageOffsetY: 5,
         links: [{ label: 'Open JobFit', url: 'https://jobfit.carkus.com' }],
       },
       {
@@ -325,6 +336,8 @@ export const DISCIPLINES: Record<DisciplineKey, Discipline> = {
         tags: ['Flutter', 'Swift', 'Kotlin', 'Cross-platform'],
         imageUrl: '/img/zome_banner_mobile_no_button.png',
         imageAlt: 'ZOME mobile',
+        imageOffset: -150,
+        imageScale: 1.3,
         slideshowImages: ['/img/zome_phone1.png', '/img/zome_phone2.png', '/img/zome_phone3.png', '/img/zome_phone4.png', '/img/zome_phone5.png', '/img/zome_phone6.png', '/img/zome_phone7.png'],
         links: [
           { label: 'App Store', url: 'https://itunes.apple.com/us/app/zome/id1382123356?ls=1&mt=8' },
@@ -356,7 +369,7 @@ export const DISCIPLINES: Record<DisciplineKey, Discipline> = {
         tags: ['React Native', 'Expo', 'TypeScript', 'Zustand', 'Game Dev'],
         imageUrl: '/img/image_a83945ea.png',
         imageAlt: 'Panic Stations',
-        imagePosition: 'center 20%',
+        imageOffsetY: 20,
         links: [],
       },
     ],

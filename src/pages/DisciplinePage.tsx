@@ -3,6 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 import ThemeToggle from '../components/ThemeToggle';
 import { SlideshowOverlay } from '../components/WorkSection';
 import { useDocumentMeta } from '../seo';
+import { resolveImgPos } from '../utils/imagePosition';
 import { DISCIPLINES, DISCIPLINE_ORDER } from '../data/disciplines';
 import type { DisciplineKey, DisciplineProject } from '../data/disciplines';
 
@@ -17,6 +18,11 @@ function ProjectCase({ project, index }: { project: DisciplineProject; index: nu
   const [slideshowOpen, setSlideshowOpen] = useState(false);
   const hasSlideshow = !!project.slideshowImages?.length;
   const openLinks = project.links.filter(l => !!l.url);
+  const imgPos = resolveImgPos(project.imageOffset, project.imageOffsetY, project.imagePosition);
+  const imgStyle = {
+    ...(imgPos ? { '--img-pos': imgPos } : {}),
+    ...(project.imageScale != null ? { '--img-scale': project.imageScale } : {}),
+  } as React.CSSProperties;
 
   return (
     <article className={`dp-case${project.imageUrl ? '' : ' dp-case--plain'}`}>
@@ -26,7 +32,7 @@ function ProjectCase({ project, index }: { project: DisciplineProject; index: nu
             src={project.imageUrl}
             alt={project.imageAlt ?? project.title}
             loading="lazy"
-            style={project.imagePosition ? { objectPosition: project.imagePosition } : undefined}
+            style={imgStyle}
           />
           {hasSlideshow && (
             <button type="button" className="dp-case-gallery" onClick={() => setSlideshowOpen(true)}>

@@ -309,8 +309,10 @@ nav {
 /* Multi-stop fade (was a flat 0%→60% linear) so the dark reaches further up
    the card and holds more opacity near the bottom — needed now that
    .platform-desc can run several unclamped lines and still needs to read
-   clearly over an arbitrary photo. */
-.platform-overlay { position: absolute; inset: 0; background: linear-gradient(to top, var(--navy) 0%, rgba(13,21,38,0.88) 22%, rgba(13,21,38,0.55) 45%, rgba(13,21,38,0.15) 68%, transparent 82%); }
+   clearly over an arbitrary photo. Every stop is derived from --navy (not a
+   hardcoded dark rgba) so the fade follows the theme: dark-to-clear behind
+   light text in dark mode, light-to-clear behind dark text in light mode. */
+.platform-overlay { position: absolute; inset: 0; background: linear-gradient(to top, var(--navy) 0%, color-mix(in srgb, var(--navy) 88%, transparent) 22%, color-mix(in srgb, var(--navy) 55%, transparent) 45%, color-mix(in srgb, var(--navy) 15%, transparent) 68%, transparent 82%); }
 .platform-label { position: absolute; bottom: 1.6rem; left: 1.6rem; right: 1.6rem; z-index: 2; -webkit-user-select: none; user-select: none; }
 .platform-label span { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--mist); }
 .platform-label p { font-family: var(--serif); font-size: 1.3rem; color: var(--chalk); margin-top: 0.3rem; }
@@ -350,6 +352,10 @@ nav {
     transition: background-color 0.3s, transform 0.3s;
 }
 .platform-dot:hover { background-color: rgba(255,255,255,0.6); }
+/* Light theme: white dots vanish against light photos/overlay — use the
+   theme's dark text colour instead, at the same two opacity levels. */
+:root[data-theme="light"] .platform-dot:not(.active) { background-color: color-mix(in srgb, var(--chalk) 35%, transparent); }
+:root[data-theme="light"] .platform-dot:not(.active):hover { background-color: color-mix(in srgb, var(--chalk) 60%, transparent); }
 .platform-dot.active { background-color: var(--accent2, #5a8aee); transform: scale(1.5); }
 @media (prefers-reduced-motion: reduce) {
     .platform-track { transition: none !important; }
@@ -1013,8 +1019,10 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
 .dp-case:nth-child(even) { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); }
 .dp-case:nth-child(even) .dp-case-media { order: 2; }
 .dp-case--plain, .dp-case--plain:nth-child(even) { grid-template-columns: 1fr; }
-.dp-case-media { position: relative; min-height: 320px; background: var(--slate); }
-.dp-case-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.dp-case-media { position: relative; min-height: 320px; background: var(--slate); overflow: hidden; }
+/* transform-origin follows the crop focal point so imageScale zooms into the
+   same part of the image the offsets frame, rather than the dead centre. */
+.dp-case-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: var(--img-pos, center); transform: scale(var(--img-scale, 1)); transform-origin: var(--img-pos, center); }
 .dp-case-gallery {
     position: absolute; left: 1rem; bottom: 1rem;
     font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase;

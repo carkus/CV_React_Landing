@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import ThemeToggle from './ThemeToggle';
 
 // Back to a static pre-baked PDF — JobFit's own CV generator (GET
 // /api/cv/download) now requires a profileId it has no default for, so the
@@ -36,24 +37,27 @@ export default function NavBar() {
     <nav ref={navRef}>
       <div className="nav-inner">
         <Link to="/" className="nav-logo">Mark Scicluna</Link>
-        <ul className="nav-links">
-          <li><a href="#about">About</a></li>
-          <li><a href="#ask">Ask AI</a></li>
-          <li><a href="#skills">Skills</a></li>
-          <li><a href="#work">Work</a></li>
-          <li><a href="#expertise">Expertise</a></li>
-          <li><a href="#timeline">Timeline</a></li>
-          <li><a href="#contact">Contact</a></li>
-          <li className="nav-disciplines">
-            <Link to="/web">Web</Link>
-            <Link to="/ai">AI</Link>
-            <Link to="/mobile">Mobile</Link>
-          </li>
-          <li><a href={CV_PDF_PATH} download className="nav-app-link nav-cv-btn">↓ CV</a></li>
-        </ul>
-        <button className={`nav-hamburger${open ? ' open' : ''}`} onClick={() => setOpen(o => !o)} aria-label="Menu">
-          <span /><span /><span />
-        </button>
+        <div className="nav-right">
+          <ul className="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#ask">Ask AI</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#work">Work</a></li>
+            <li><a href="#expertise">Expertise</a></li>
+            <li><a href="#timeline">Timeline</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li className="nav-disciplines">
+              <Link to="/web">Web</Link>
+              <Link to="/ai">AI</Link>
+              <Link to="/mobile">Mobile</Link>
+            </li>
+            <li><a href={CV_PDF_PATH} download className="nav-app-link nav-cv-btn">↓ CV</a></li>
+          </ul>
+          <ThemeToggle />
+          <button className={`nav-hamburger${open ? ' open' : ''}`} onClick={() => setOpen(o => !o)} aria-label="Menu">
+            <span /><span /><span />
+          </button>
+        </div>
       </div>
       <div className={`nav-drawer${open ? ' open' : ''}`}>
         <a href="#about"        onClick={close}>About</a>
