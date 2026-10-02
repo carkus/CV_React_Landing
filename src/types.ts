@@ -61,6 +61,9 @@ export interface WorkItem {
 export interface WorkGroup {
   subsection: string;
   items: WorkItem[];
+  /** Deep-dive page this group links to ('web' | 'ai' | 'mobile'). When set,
+   *  an "Explore … in depth" button renders under the group's grid. */
+  discipline?: 'web' | 'ai' | 'mobile';
 }
 
 export interface Skill {

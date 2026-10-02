@@ -34,6 +34,7 @@
   },
   {
     "subsection": "Recent Projects",
+    "discipline": "web",
     "items": [
       {
         "title": "FPG Receipts",
@@ -90,6 +91,7 @@
   },
   {
     "subsection": "Mobile & AR/VR",
+    "discipline": "mobile",
     "items": [
       {
         "title": "ZOME: Spatial Messenger (Mobile)",
@@ -138,6 +140,7 @@
   },
   {
     "subsection": "Frontend",
+    "discipline": "ai",
     "items": [
       {
         "title": "Chatty Prayers — AI Debates, and Counsel",
@@ -192,6 +195,7 @@
   },
   {
     "subsection": "AI & Backend",
+    "discipline": "ai",
     "items": [
       {
         "title": "ChattyPrayers.Api",

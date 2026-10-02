@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { Link } from 'react-router-dom';
 import type { WorkGroup, WorkItem } from '../types';
 import { resolveImgPos } from '../utils/imagePosition';
+import { DISCIPLINES } from '../data/disciplines';
 
 const FALLBACK: WorkGroup[] = [
   {
     subsection: 'Frontend',
+    discipline: 'web',
     items: [
       { title: 'ZOME — Cross-platform product suite', tags: ['Cross-platform', 'Swift', 'Kotlin', 'visionOS'], imageUrl: 'https://images.unsplash.com/photo-1759661990336-51bd4b951fea?w=900&q=80', imageAlt: 'ZOME platform', description: 'End-to-end product suite spanning iOS, Android, and Apple Vision Pro — built cross-platform with native platform SDKs.', featured: true, links: [{ label: 'App Store ↗', url: 'https://itunes.apple.com/us/app/zome/id1382123356?ls=1&mt=8' }, { label: 'Play Store ↗', url: 'https://play.google.com/store/apps/details?id=com.zomecorp.zome' }] },
       { title: 'Chatty Prayers', tags: ['Blazor', 'C#', 'AI'], imageUrl: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&q=80', imageAlt: 'Chatty Prayers', description: 'AI-assisted prayer and devotional web app built with Blazor WebAssembly.', featured: false, links: [] },
@@ -16,6 +19,7 @@ const FALLBACK: WorkGroup[] = [
   },
   {
     subsection: 'Backend',
+    discipline: 'ai',
     items: [
       { title: 'ChattyPrayers.Api', tags: ['ASP.NET Core', 'Claude API', 'Gemini API', 'Ollama', 'RAG'], imageUrl: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&q=80', imageAlt: 'Server infrastructure', description: 'ASP.NET Core API powering streaming chat, multi-participant AI debate, SVG generation, and RAG-based conversation search via Ollama embeddings.', featured: false, links: [] },
       { title: 'MarkdownForms.Api', tags: ['.NET Core', 'Markdown', 'PDF Generation', 'Claude API'], imageUrl: 'https://images.unsplash.com/photo-1555066931-4365d14431b9?w=600&q=80', imageAlt: 'Code editor', description: 'A .NET API that renders and processes dynamic form schemas defined in Markdown — PDF export with AcroForm generation and AI-assisted field population.', featured: false, links: [] },
@@ -191,6 +195,13 @@ export default function WorkSection() {
               <div className="work-grid">
                 {group.items.map(item => <WorkItemCard key={item.title} item={item} />)}
               </div>
+              {group.discipline && DISCIPLINES[group.discipline] && (
+                <div className="work-group-deep-link">
+                  <Link to={DISCIPLINES[group.discipline].path} className="btn-ghost">
+                    Explore {DISCIPLINES[group.discipline].heading} in depth →
+                  </Link>
+                </div>
+              )}
             </div>
           ))}
         </div>

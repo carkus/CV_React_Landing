@@ -987,6 +987,7 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
    tab switcher, principle cards and project case studies are new here. */
 .dp-inner { max-width: 1080px; margin: 0 auto; }
 .section-deep-link { margin-top: 2rem; }
+.work-group-deep-link { display: flex; justify-content: flex-end; margin: 1.2rem 0 1.6rem; }
 
 .dp-tabs { display: inline-flex; border: 1px solid var(--slate); border-radius: var(--radius); overflow: hidden; }
 .dp-tab {
