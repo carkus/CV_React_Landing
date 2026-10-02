@@ -90,6 +90,15 @@ nav {
     text-transform: uppercase; color: var(--mist); text-decoration: none; transition: color 0.2s;
 }
 .nav-links a:hover { color: var(--chalk); }
+/* Web / AI / Mobile deep-dive links — grouped in one outlined pill so they
+   read as routes to separate pages, not more in-page section anchors. */
+.nav-disciplines {
+    display: inline-flex; align-items: center; height: 32px;
+    border: 1px solid var(--steel); border-radius: var(--radius); overflow: hidden;
+}
+.nav-links .nav-disciplines a { padding: 0 0.75rem; height: 100%; display: inline-flex; align-items: center; color: var(--accent2); }
+.nav-links .nav-disciplines a + a { border-left: 1px solid var(--steel); }
+.nav-links .nav-disciplines a:hover { color: var(--chalk); background: color-mix(in srgb, var(--accent2) 14%, transparent); }
 .nav-app-link {
     display: inline-flex; align-items: center; height: 32px; box-sizing: border-box;
     font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
@@ -898,14 +907,14 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
 .pf-footer-back { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mist); text-decoration: none; transition: color 0.2s; }
 .pf-footer-back:hover { color: var(--chalk); }
 
-/* ── NAV COLLAPSE (≤1000px) ──────────────────────────────────────
+/* ── NAV COLLAPSE (≤1180px) ──────────────────────────────────────
    Separate from the tablet/mobile breakpoints below: the full nav-links
-   row (7 section links) starts overlapping/wrapping around ~960px, well
+   row (7 section links + the Web/AI/Mobile pill) starts overlapping/wrapping around ~1150px, well
    before the 768px mobile layout kicks in, so the hamburger has to take
    over earlier than the rest of the responsive layout. The CV button
    lives outside .nav-links (in .nav-right) so it stays visible through
    this collapse instead of disappearing with the rest of the links. ── */
-@media (max-width: 1000px) {
+@media (max-width: 1180px) {
     .nav-links { display: none; }
     .nav-hamburger { display: flex; }
 }
@@ -964,4 +973,83 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
     .expertise-panel-body { padding: 1.3rem 1.4rem 1.5rem; }
     .social-links { gap: 1.2rem; }
     .contact-email { font-size: 0.9rem; }
+}
+
+/* ── DISCIPLINE PAGES (/web, /ai, /mobile) ───────────────────── */
+/* Built on the Profile page's pf-* chrome (nav, header, sections, stats) so
+   the three deep dives read as siblings of /profile; only the wider column,
+   tab switcher, principle cards and project case studies are new here. */
+.dp-inner { max-width: 1080px; margin: 0 auto; }
+.section-deep-link { margin-top: 2rem; }
+
+.dp-tabs { display: inline-flex; border: 1px solid var(--slate); border-radius: var(--radius); overflow: hidden; }
+.dp-tab {
+    font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--mist); text-decoration: none; padding: 0.5rem 1.1rem; transition: color 0.2s, background 0.2s;
+}
+.dp-tab + .dp-tab { border-left: 1px solid var(--slate); }
+.dp-tab:hover { color: var(--chalk); }
+.dp-tab.active { color: #fff; background: linear-gradient(135deg, var(--accent), var(--accent2)); }
+
+.dp-header .pf-sub { margin-bottom: 3rem; }
+.dp-intro-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 4rem; align-items: start; }
+
+.dp-principles { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5px; background: var(--slate); border: 1px solid var(--slate); border-radius: var(--radius-lg); overflow: hidden; }
+.dp-principle { background: var(--ink); padding: 1.6rem 1.7rem; display: flex; flex-direction: column; gap: 0.7rem; }
+.dp-principle .info-card-icon { width: 40px; height: 40px; font-size: 1.15rem; border-radius: var(--radius); }
+.dp-principle-title { font-family: var(--serif); font-size: 1.2rem; color: var(--chalk); }
+.dp-principle-text { font-size: 0.85rem; line-height: 1.65; color: var(--mist); }
+.dp-stack { display: flex; flex-wrap: wrap; align-items: center; gap: 0.45rem; margin-top: 2rem; }
+.dp-stack-label { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--mist); margin-right: 0.6rem; }
+
+.dp-cases { display: flex; flex-direction: column; gap: 2.5rem; }
+.dp-case {
+    display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    background: var(--navy); border: 1px solid var(--slate); border-radius: var(--radius-lg); overflow: hidden;
+    transition: border-color 0.25s, box-shadow 0.25s;
+}
+.dp-case:hover { border-color: var(--steel); box-shadow: 0 24px 60px -30px var(--card-shadow-ambient); }
+/* Alternate the image side so a long list of case studies doesn't read as one column. */
+.dp-case:nth-child(even) { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); }
+.dp-case:nth-child(even) .dp-case-media { order: 2; }
+.dp-case--plain, .dp-case--plain:nth-child(even) { grid-template-columns: 1fr; }
+.dp-case-media { position: relative; min-height: 320px; background: var(--slate); }
+.dp-case-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.dp-case-gallery {
+    position: absolute; left: 1rem; bottom: 1rem;
+    font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #fff; background: rgba(10,13,20,0.6); border: 1px solid rgba(255,255,255,0.25);
+    -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+    border-radius: var(--radius); padding: 0.5rem 0.8rem; cursor: pointer; transition: border-color 0.2s;
+}
+.dp-case-gallery:hover { border-color: #fff; }
+.dp-case-body { padding: 2.2rem 2.4rem; display: flex; flex-direction: column; }
+.dp-case-meta { display: flex; align-items: center; gap: 0.7rem; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mist); margin-bottom: 0.8rem; }
+.dp-case-num { color: var(--accent2); }
+.dp-case-title { font-family: var(--serif); font-weight: 400; font-size: clamp(1.5rem, 2.4vw, 2rem); line-height: 1.15; color: var(--chalk); margin-bottom: 0.9rem; }
+.dp-case-summary { font-size: 0.95rem; line-height: 1.7; color: var(--silver); margin-bottom: 1.1rem; }
+.dp-case-highlights { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; margin-bottom: 1.4rem; }
+.dp-case-highlights li { position: relative; padding-left: 1.2rem; font-size: 0.85rem; line-height: 1.6; color: var(--mist); }
+.dp-case-highlights li::before { content: ''; position: absolute; left: 0; top: 0.62em; width: 0.5rem; height: 1px; background: var(--accent2); }
+.dp-case-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: auto; }
+.dp-case-links { display: flex; flex-wrap: wrap; gap: 0.6rem 1.4rem; margin-top: 1.3rem; padding-top: 1.1rem; border-top: 1px solid var(--slate); }
+.dp-case-link { display: inline-flex; align-items: center; gap: 0.45rem; font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent2); text-decoration: none; transition: color 0.2s; }
+.dp-case-link:hover { color: var(--chalk); }
+
+.dp-next-inner { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+.dp-next .pf-section-label { margin-bottom: 1rem; }
+.dp-next-link { font-family: var(--serif); font-weight: 300; font-size: clamp(2rem, 3.5vw, 3rem); color: var(--chalk); text-decoration: none; transition: color 0.2s; }
+.dp-next-link:hover { color: var(--accent2); }
+.dp-next-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+@media (max-width: 860px) {
+    .dp-intro-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .dp-case, .dp-case:nth-child(even) { grid-template-columns: 1fr; }
+    .dp-case:nth-child(even) .dp-case-media { order: 0; }
+    .dp-case-media { min-height: 220px; }
+}
+@media (max-width: 768px) {
+    .dp-tab { padding: 0.45rem 0.75rem; font-size: 0.62rem; }
+    .dp-case-body { padding: 1.6rem 1.4rem; }
+    .dp-cases { gap: 1.8rem; }
 }

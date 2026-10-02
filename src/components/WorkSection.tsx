@@ -23,7 +23,7 @@ const FALLBACK: WorkGroup[] = [
   },
 ];
 
-function SlideshowOverlay({ images, alt, startIndex, onClose }: { images: string[]; alt: string; startIndex: number; onClose: () => void }) {
+export function SlideshowOverlay({ images, alt, startIndex, onClose }: { images: string[]; alt: string; startIndex: number; onClose: () => void }) {
   const [index, setIndex] = useState(startIndex);
 
   useEffect(() => {

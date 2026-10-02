@@ -41,6 +41,18 @@ export default function Home() {
     return () => { obs.disconnect(); mutObs.disconnect(); };
   }, []);
 
+  // BrowserRouter keeps the previous page's scroll position, so coming back
+  // home from a sub-page would land mid-page — always start at the top,
+  // unless arriving via a link like /#contact, which the browser won't
+  // hash-scroll for a client-side navigation, so do that manually instead.
+  useEffect(() => {
+    if (window.location.hash) {
+      document.querySelector(window.location.hash)?.scrollIntoView();
+    } else {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+  }, []);
+
   return (
     <>
       <NavBar />

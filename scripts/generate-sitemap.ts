@@ -8,6 +8,9 @@ import { siteConfig } from '../src/seo';
 const routes = [
   { path: '/', changefreq: 'monthly' as const, priority: 1.0 },
   { path: '/profile', changefreq: 'monthly' as const, priority: 0.8 },
+  { path: '/web', changefreq: 'monthly' as const, priority: 0.7 },
+  { path: '/ai', changefreq: 'monthly' as const, priority: 0.7 },
+  { path: '/mobile', changefreq: 'monthly' as const, priority: 0.7 },
   { path: '/smooth-software', changefreq: 'monthly' as const, priority: 0.6 },
   // /notepad deliberately excluded — a live websocket utility page, not
   // content worth indexing; see robots disallow below.

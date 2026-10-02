@@ -44,6 +44,11 @@ export default function NavBar() {
           <li><a href="#expertise">Expertise</a></li>
           <li><a href="#timeline">Timeline</a></li>
           <li><a href="#contact">Contact</a></li>
+          <li className="nav-disciplines">
+            <Link to="/web">Web</Link>
+            <Link to="/ai">AI</Link>
+            <Link to="/mobile">Mobile</Link>
+          </li>
           <li><a href={CV_PDF_PATH} download className="nav-app-link nav-cv-btn">↓ CV</a></li>
         </ul>
         <button className={`nav-hamburger${open ? ' open' : ''}`} onClick={() => setOpen(o => !o)} aria-label="Menu">
@@ -59,6 +64,12 @@ export default function NavBar() {
         <a href="#timeline"     onClick={close}>Timeline</a>
         <a href="#contact"      onClick={close}>Contact</a>
         <a href={CV_PDF_PATH} download style={{ color: '#eab308' }} onClick={close}>↓ CV</a>
+        <div className="nav-drawer-divider">
+          <span>Deep dives</span>
+        </div>
+        <Link to="/web" onClick={close}>Web &amp; Backend</Link>
+        <Link to="/ai" onClick={close}>AI Systems</Link>
+        <Link to="/mobile" onClick={close}>Mobile &amp; Spatial</Link>
         <div className="nav-drawer-divider">
           <span>Elsewhere</span>
         </div>

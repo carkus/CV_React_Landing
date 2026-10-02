@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 interface AiThread { num: string; icon: string; title: string; points: string[]; tags: string[]; wide?: boolean; }
 
 const AI_THREADS: AiThread[] = [
@@ -9,7 +11,7 @@ const AI_THREADS: AiThread[] = [
       'A master agent decomposes a plain-language goal and sequences its own plan of dependent subtasks — nothing fixed in advance',
       'Purpose-built worker agents are bootstrapped per subtask — own role, tools, and MCP access — then deployed and coordinated by the master',
       'Self-evaluation checks every response, feeding pass rates back into which models get chosen next',
-      'Grounded in MSc heuristic search, now applied to LLM-assisted PDDL planning',
+      'Grounded in MSc heuristic search using PDDL robotics, now applied to LLM task-planning',
     ],
     tags: ['Self-Scaffolding Agents', 'Master/Worker Delegation', 'Self-Sequenced Planning', 'Self-Evaluation', 'MCP', 'Heuristic Search', 'PDDL'],
     wide: true,
@@ -68,6 +70,9 @@ export default function AiSection() {
               </div>
             </div>
           ))}
+        </div>
+        <div className="section-deep-link reveal reveal-delay-3">
+          <Link to="/ai" className="btn-ghost">Explore AI projects in depth →</Link>
         </div>
       </div>
     </section>
