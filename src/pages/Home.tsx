@@ -3,6 +3,7 @@ import { useDocumentMeta } from '../seo';
 import NavBar from '../components/NavBar';
 import HeroSection from '../components/HeroSection';
 import AboutSection from '../components/AboutSection';
+import BadgeRail from '../components/rails/BadgeRail';
 import SkillsSection from '../components/SkillsSection';
 import WorkSection from '../components/WorkSection';
 import AiSection from '../components/AiSection';
@@ -58,6 +59,7 @@ export default function Home() {
       <NavBar />
       <HeroSection />
       <AboutSection />
+      <BadgeRail railId="deep-dives" />
       <AskSection />
       <AiSection />
       <SkillsSection />

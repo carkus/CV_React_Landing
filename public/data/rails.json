@@ -1,0 +1,52 @@
+[
+  {
+    "id": "deep-dives",
+    "eyebrow": "Deep dives",
+    "heading": "Explore by discipline",
+    "badges": [
+      {
+        "type": "card",
+        "id": "web",
+        "size": "md",
+        "href": "/web",
+        "icon": "◧",
+        "eyebrow": "Web",
+        "title": "Web & Backend",
+        "text": "React, Blazor and .NET — collaborative editors, PDF builders, shared auth.",
+        "tags": ["React", "TypeScript", "ASP.NET Core"],
+        "cta": "Explore →"
+      },
+      {
+        "type": "card",
+        "id": "ai",
+        "size": "md",
+        "href": "/ai",
+        "icon": "✦",
+        "eyebrow": "AI",
+        "title": "AI Systems",
+        "text": "Self-scaffolding agents, MCP, provider cascades, RAG and structured output.",
+        "tags": ["Agentic", "MCP", "RAG"],
+        "cta": "Explore →"
+      },
+      {
+        "type": "card",
+        "id": "mobile",
+        "size": "md",
+        "href": "/mobile",
+        "icon": "◫",
+        "eyebrow": "Mobile",
+        "title": "Mobile & Spatial",
+        "text": "Eight years on ZOME across iOS, Android, Vision Pro and Android XR.",
+        "tags": ["SwiftUI", "Flutter", "visionOS"],
+        "cta": "Explore →"
+      },
+      {
+        "type": "html",
+        "id": "references",
+        "size": "sm",
+        "href": "/profile#references",
+        "html": "<div class=\"rail-html-stack\"><span class=\"rail-card-eyebrow\">Profile</span><strong class=\"rail-card-title\">References &amp; press</strong><p class=\"rail-card-text\">Reference letters, video and press coverage.</p><span class=\"rail-card-cta\">Read →</span></div>"
+      }
+    ]
+  }
+]

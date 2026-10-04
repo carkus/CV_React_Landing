@@ -104,3 +104,62 @@ export interface SmallProject {
   tags: string[];
   url?: string;
 }
+
+/* ── Badge rails ──────────────────────────────────────────────────
+   Data structure behind the horizontal swipe rails (BadgeRail.tsx). A rail
+   is a titled row of badges; each badge picks a renderer by its `type`, so
+   new kinds of badge are added by registering a renderer, not by changing
+   the rail. Sections of the site get converted to rails by expressing their
+   content as Rail data. */
+
+/** Preset badge widths — see .rail-badge--* in index.css. */
+export type BadgeSize = 'sm' | 'md' | 'lg' | 'xl';
+
+interface BadgeBase {
+  /** Stable React key; falls back to the title or index. */
+  id?: string;
+  size?: BadgeSize;
+  /** Exact width in px — overrides size. Capped to the viewport on phones. */
+  width?: number;
+  /** Makes the whole badge a link. Paths starting with '/' route in-app;
+   *  anything else opens in a new tab. */
+  href?: string;
+  /** Extra class names on the badge wrapper, for one-off styling. */
+  className?: string;
+}
+
+/** Free-form badge: its own HTML markup, rendered as-is. Only for content
+ *  from this site's own data files — it is injected without sanitising. */
+export interface HtmlBadge extends BadgeBase {
+  type: 'html';
+  html: string;
+}
+
+/** Structured badge: optional image or icon, eyebrow, title, text, tags. */
+export interface CardBadge extends BadgeBase {
+  type: 'card';
+  title: string;
+  eyebrow?: string;
+  text?: string;
+  tags?: string[];
+  /** Short glyph shown in a square chip when there's no image. */
+  icon?: string;
+  imageUrl?: string;
+  imageAlt?: string;
+  /** Same 0–100 crop offsets as WorkItem.imageOffset / imageOffsetY. */
+  imageOffset?: number;
+  imageOffsetY?: number;
+  /** Optional call-to-action label shown at the bottom, e.g. "Explore →". */
+  cta?: string;
+}
+
+export type Badge = HtmlBadge | CardBadge;
+
+export interface Rail {
+  /** Lookup key — a page places a rail with <BadgeRail railId="…" />. */
+  id: string;
+  eyebrow?: string;
+  heading?: string;
+  intro?: string;
+  badges: Badge[];
+}
