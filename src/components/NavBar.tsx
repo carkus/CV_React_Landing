@@ -43,7 +43,6 @@ export default function NavBar() {
             <li><a href="#ask">Ask AI</a></li>
             <li><a href="#skills">Skills</a></li>
             <li><a href="#work">Work</a></li>
-            <li><a href="#expertise">Expertise</a></li>
             <li><a href="#timeline">Timeline</a></li>
             <li><a href="#contact">Contact</a></li>
             <li className="nav-disciplines">
@@ -64,7 +63,6 @@ export default function NavBar() {
         <a href="#ask"          onClick={close}>Ask AI</a>
         <a href="#skills"       onClick={close}>Skills</a>
         <a href="#work"         onClick={close}>Work</a>
-        <a href="#expertise"    onClick={close}>Expertise</a>
         <a href="#timeline"     onClick={close}>Timeline</a>
         <a href="#contact"      onClick={close}>Contact</a>
         <a href={CV_PDF_PATH} download style={{ color: '#eab308' }} onClick={close}>↓ CV</a>

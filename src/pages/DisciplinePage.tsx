@@ -24,29 +24,36 @@ function ProjectCase({ project, index }: { project: DisciplineProject; index: nu
     ...(project.imageScale != null ? { '--img-scale': project.imageScale } : {}),
   } as React.CSSProperties;
 
+  // Typeset like a magazine column: heading full width, then the image floats
+  // in a fixed-ratio frame and the summary/highlights wrap around and under
+  // it — so long copy flows on instead of stretching (and over-cropping) the
+  // image. Tags/links clear the float and sit full width at the bottom.
   return (
     <article className={`dp-case${project.imageUrl ? '' : ' dp-case--plain'}`}>
-      {project.imageUrl && (
-        <div className="dp-case-media">
-          <img
-            src={project.imageUrl}
-            alt={project.imageAlt ?? project.title}
-            loading="lazy"
-            style={imgStyle}
-          />
-          {hasSlideshow && (
-            <button type="button" className="dp-case-gallery" onClick={() => setSlideshowOpen(true)}>
-              View gallery · {project.slideshowImages!.length}
-            </button>
-          )}
-        </div>
-      )}
       <div className="dp-case-body">
         <div className="dp-case-meta">
           <span className="dp-case-num">{String(index + 1).padStart(2, '0')}</span>
           {project.meta}
         </div>
         <h3 className="dp-case-title">{project.title}</h3>
+        {project.imageUrl && (
+          <figure
+            className="dp-case-media"
+            style={project.imageAspect ? { aspectRatio: project.imageAspect } : undefined}
+          >
+            <img
+              src={project.imageUrl}
+              alt={project.imageAlt ?? project.title}
+              loading="lazy"
+              style={imgStyle}
+            />
+            {hasSlideshow && (
+              <button type="button" className="dp-case-gallery" onClick={() => setSlideshowOpen(true)}>
+                View gallery · {project.slideshowImages!.length}
+              </button>
+            )}
+          </figure>
+        )}
         <p className="dp-case-summary">{project.summary}</p>
         <ul className="dp-case-highlights">
           {project.highlights.map(h => <li key={h}>{h}</li>)}

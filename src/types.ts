@@ -153,7 +153,33 @@ export interface CardBadge extends BadgeBase {
   cta?: string;
 }
 
-export type Badge = HtmlBadge | CardBadge;
+/** Project tile modelled on the Work grid's photo tiles: full-bleed image,
+ *  title, description, tags, store/launch link icons, and an optional
+ *  screenshot gallery. Uses `links` rather than `href` (the tile holds
+ *  several links, so the tile itself can't also be one). */
+export interface WorkBadge extends Omit<BadgeBase, 'href'> {
+  type: 'work';
+  title: string;
+  description?: string;
+  tags?: string[];
+  imageUrl: string;
+  imageAlt?: string;
+  imageOffset?: number;
+  imageOffsetY?: number;
+  /** Zoom factor, e.g. 1.2 — scales around the offset focal point. */
+  imageScale?: number;
+  links?: WorkLink[];
+  slideshowImages?: string[];
+  /** Short mono label above the title, e.g. "Personal · 2026". */
+  eyebrow?: string;
+}
+
+export type Badge = HtmlBadge | CardBadge | WorkBadge;
+
+/** 'row' — badges at their own widths, left-aligned, swipe freely.
+ *  'slideshow' — one badge at a time, centred and snapped, with a sliver of
+ *  the neighbours showing either side, plus dots. */
+export type RailLayout = 'row' | 'slideshow';
 
 export interface Rail {
   /** Lookup key — a page places a rail with <BadgeRail railId="…" />. */
@@ -161,5 +187,13 @@ export interface Rail {
   eyebrow?: string;
   heading?: string;
   intro?: string;
+  /** Defaults to 'row'. */
+  layout?: RailLayout;
+  /** Slideshow only: how much of each neighbour peeks in, as a percent of
+   *  the rail's width per side. Defaults to 8. */
+  peek?: number;
+  /** Badge height in px (slideshow slides, and work badges in a row).
+   *  Defaults to 420 for slideshows, 340 for rows. */
+  height?: number;
   badges: Badge[];
 }

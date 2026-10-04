@@ -1011,16 +1011,19 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
 
 .dp-cases { display: flex; flex-direction: column; gap: 2.5rem; }
 .dp-case {
-    display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
     background: var(--navy); border: 1px solid var(--slate); border-radius: var(--radius-lg); overflow: hidden;
     transition: border-color 0.25s, box-shadow 0.25s;
 }
 .dp-case:hover { border-color: var(--steel); box-shadow: 0 24px 60px -30px var(--card-shadow-ambient); }
+/* The image is a float with a fixed-ratio frame (override per project via
+   imageAspect); text wraps beside it and runs full width once past it. */
+.dp-case-media {
+    float: left; width: min(46%, 460px); aspect-ratio: 4 / 3;
+    margin: 0.35rem 2.2rem 1.2rem 0;
+    position: relative; background: var(--slate); overflow: hidden; border-radius: var(--radius);
+}
 /* Alternate the image side so a long list of case studies doesn't read as one column. */
-.dp-case:nth-child(even) { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); }
-.dp-case:nth-child(even) .dp-case-media { order: 2; }
-.dp-case--plain, .dp-case--plain:nth-child(even) { grid-template-columns: 1fr; }
-.dp-case-media { position: relative; min-height: 320px; background: var(--slate); overflow: hidden; }
+.dp-case:nth-child(even) .dp-case-media { float: right; margin: 0.35rem 0 1.2rem 2.2rem; }
 /* transform-origin follows the crop focal point so imageScale zooms into the
    same part of the image the offsets frame, rather than the dead centre. */
 .dp-case-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: var(--img-pos, center); transform: scale(var(--img-scale, 1)); transform-origin: var(--img-pos, center); }
@@ -1032,15 +1035,19 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
     border-radius: var(--radius); padding: 0.5rem 0.8rem; cursor: pointer; transition: border-color 0.2s;
 }
 .dp-case-gallery:hover { border-color: #fff; }
-.dp-case-body { padding: 2.2rem 2.4rem; display: flex; flex-direction: column; }
+/* flow-root contains the float so the card always wraps the image. */
+.dp-case-body { padding: 2.2rem 2.4rem; display: flow-root; }
 .dp-case-meta { display: flex; align-items: center; gap: 0.7rem; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mist); margin-bottom: 0.8rem; }
 .dp-case-num { color: var(--accent2); }
 .dp-case-title { font-family: var(--serif); font-weight: 400; font-size: clamp(1.5rem, 2.4vw, 2rem); line-height: 1.15; color: var(--chalk); margin-bottom: 0.9rem; }
 .dp-case-summary { font-size: 0.95rem; line-height: 1.7; color: var(--silver); margin-bottom: 1.1rem; }
-.dp-case-highlights { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; margin-bottom: 1.4rem; }
-.dp-case-highlights li { position: relative; padding-left: 1.2rem; font-size: 0.85rem; line-height: 1.6; color: var(--mist); }
+.dp-case-highlights { list-style: none; margin-bottom: 1.4rem; }
+/* flow-root makes each item sit beside the float rather than slide under it —
+   otherwise its padding and dash would be hidden behind the image. */
+.dp-case-highlights li { display: flow-root; position: relative; padding-left: 1.2rem; font-size: 0.85rem; line-height: 1.6; color: var(--mist); }
+.dp-case-highlights li + li { margin-top: 0.55rem; }
 .dp-case-highlights li::before { content: ''; position: absolute; left: 0; top: 0.62em; width: 0.5rem; height: 1px; background: var(--accent2); }
-.dp-case-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: auto; }
+.dp-case-tags { clear: both; display: flex; flex-wrap: wrap; gap: 0.4rem; padding-top: 0.4rem; }
 .dp-case-links { display: flex; flex-wrap: wrap; gap: 0.6rem 1.4rem; margin-top: 1.3rem; padding-top: 1.1rem; border-top: 1px solid var(--slate); }
 .dp-case-link { display: inline-flex; align-items: center; gap: 0.45rem; font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent2); text-decoration: none; transition: color 0.2s; }
 .dp-case-link:hover { color: var(--chalk); }
@@ -1053,9 +1060,8 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
 
 @media (max-width: 860px) {
     .dp-intro-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-    .dp-case, .dp-case:nth-child(even) { grid-template-columns: 1fr; }
-    .dp-case:nth-child(even) .dp-case-media { order: 0; }
-    .dp-case-media { min-height: 220px; }
+    /* Too narrow to wrap text beside an image — stack it full width. */
+    .dp-case-media, .dp-case:nth-child(even) .dp-case-media { float: none; width: 100%; margin: 0.2rem 0 1.4rem; }
 }
 @media (max-width: 768px) {
     .dp-tab { padding: 0.45rem 0.75rem; font-size: 0.62rem; }
@@ -1122,7 +1128,68 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
 .rail-html { padding: 1.4rem 1.5rem; flex: 1; display: flex; flex-direction: column; }
 .rail-html-stack { display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
 
+/* Slideshow variant: one slide at a time, centred, with --peek of each
+   neighbour visible either side (the track's inline padding is that peek). */
+.rail-block { min-width: 0; width: 100%; }
+.swipe-rail--slideshow .swipe-rail-track {
+    padding-inline: var(--peek, 8%); margin: 0;
+    -webkit-mask-image: none; mask-image: none;
+}
+.swipe-rail--slideshow .swipe-rail-track > * {
+    flex: 0 0 100%; height: var(--slide-h, 420px); scroll-snap-align: center;
+    opacity: 0.45; transform: scale(0.95);
+    transition: opacity 0.35s ease, transform 0.35s ease, border-color 0.25s;
+}
+.swipe-rail--slideshow .swipe-rail-track > .is-active { opacity: 1; transform: none; }
+.swipe-rail--slideshow .swipe-rail-controls { justify-content: center; align-items: center; gap: 1rem; }
+.swipe-rail-dots { display: flex; gap: 0.45rem; }
+.swipe-rail-dot {
+    width: 8px; height: 8px; padding: 0; border-radius: 50%; border: none; cursor: pointer;
+    background: var(--steel); transition: background 0.2s, transform 0.2s;
+}
+.swipe-rail-dot:hover { background: var(--mist); }
+.swipe-rail-dot.active { background: var(--accent2); transform: scale(1.3); }
+
+/* work badges — photo tile with a permanent dark scrim. The scrim and text
+   are deliberately theme-independent (white on dark) since they sit on a
+   photo, same as the Work grid's tiles. */
+.rail-badge--work { min-height: var(--slide-h, 340px); background: var(--slate); }
+.rail-work-img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    object-position: var(--img-pos, center); transform: scale(var(--img-scale, 1));
+    transform-origin: var(--img-pos, center); user-select: none;
+}
+.rail-work-scrim {
+    position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(to top, rgba(8,11,18,0.92) 0%, rgba(8,11,18,0.6) 38%, rgba(8,11,18,0) 70%),
+                linear-gradient(to bottom, rgba(8,11,18,0.45) 0%, rgba(8,11,18,0) 22%);
+}
+.rail-work-icons { position: absolute; top: 1rem; right: 1.1rem; display: flex; align-items: center; gap: 0.9rem; z-index: 1; }
+.rail-work-gallery {
+    font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #fff; background: rgba(10,13,20,0.5); border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 999px; padding: 0.35rem 0.75rem; cursor: pointer; transition: border-color 0.2s, background 0.2s;
+}
+.rail-work-gallery:hover { border-color: var(--accent2); background: rgba(10,13,20,0.75); }
+.rail-work-body {
+    position: relative; margin-top: auto; padding: 1.4rem 1.6rem 1.5rem;
+    display: flex; flex-direction: column; gap: 0.5rem; color: #fff;
+}
+.rail-work-eyebrow { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: #8fb0ff; }
+.rail-work-title { font-family: var(--serif); font-size: 1.7rem; line-height: 1.15; }
+.rail-work-desc {
+    font-size: 0.86rem; line-height: 1.6; color: rgba(255,255,255,0.82); max-width: 62ch;
+    display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+.rail-work-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.2rem; }
+.work-slideshow-rail { margin-bottom: 2.5rem; }
+
 @media (max-width: 768px) {
     .rail-section { padding: 3rem 0; }
     .swipe-rail-controls { display: none; }
+    /* Dots still matter on touch — they're the only position indicator. */
+    .swipe-rail--slideshow .swipe-rail-controls { display: flex; }
+    .swipe-rail--slideshow .swipe-rail-btn { display: none; }
+    .rail-work-title { font-size: 1.35rem; }
+    .rail-work-desc { -webkit-line-clamp: 2; line-clamp: 2; }
 }

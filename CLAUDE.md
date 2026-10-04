@@ -41,7 +41,7 @@ This is a React 19 + TypeScript personal CV/portfolio site for Mark Scicluna, co
 
 **Hero rotating card:** `HeroSection.tsx` filters `workitems.json` for `featured: true` items and cycles through them on an 8-second interval with a 700 ms opacity fade (controlled by a `visible` boolean state).
 
-**Expertise drag-scroll:** `ExpertiseSection.tsx` attaches raw `mousedown/mousemove/mouseup/mouseleave` listeners to the scroll container ref — same logic as the original Blazor `initDragScroll` JS function.
+**Expertise drag-scroll:** `ExpertiseSection.tsx` (no longer rendered on Home — file kept) attaches raw `mousedown/mousemove/mouseup/mouseleave` listeners to the scroll container ref — same logic as the original Blazor `initDragScroll` JS function.
 
 **Static assets:** `public/img/` for local project images, `public/files/` for the CV PDF and visionOS MOV video. Image paths in `workitems.json` that begin with `img/` are served from `public/img/`.
 

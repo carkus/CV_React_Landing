@@ -2,13 +2,23 @@ import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import SwipeRail from './SwipeRail';
+import { LinkIcon, SlideshowOverlay } from '../WorkSection';
 import { resolveImgPos } from '../../utils/imagePosition';
-import type { Badge, CardBadge, HtmlBadge, Rail } from '../../types';
+import type { Badge, CardBadge, HtmlBadge, Rail, WorkBadge } from '../../types';
 
-// Data-driven layer over SwipeRail: looks a rail up by id in
-// /data/rails.json and renders each badge with the renderer registered for
-// its `type`. To add a new kind of badge: add its interface to the Badge
-// union in types.ts, then add a renderer to RENDERERS below.
+// Data-driven layer over SwipeRail.
+//
+//   <RailBlock railId="featured-work" />   — loads that rail from /data/rails.json
+//   <RailBlock rail={{ id, layout, badges }} />  — renders inline data
+//
+// RailBlock has no section chrome and fills whatever box it's put in (a grid
+// cell, a column, a card), so it can be dropped anywhere on any page.
+// BadgeRail (default export) wraps one in a full home-page section with the
+// rail's eyebrow/heading/intro.
+//
+// Each badge is drawn by the renderer registered for its `type`. To add a
+// new kind of badge: add its interface to the Badge union in types.ts, then
+// add a renderer to RENDERERS below.
 
 /** Used until rails.json loads, and if it fails or lacks a rail. */
 const FALLBACK: Rail[] = [
@@ -29,9 +39,27 @@ let railsPromise: Promise<Rail[]> | null = null;
 function loadRails(): Promise<Rail[]> {
   railsPromise ??= fetch('/data/rails.json')
     .then(r => (r.ok ? r.json() : []))
+    .then(data => (Array.isArray(data) ? data : []))
     .catch(() => []);
   return railsPromise;
 }
+
+/** The rail with this id — fallback copy first, rails.json once loaded. */
+function useRail(railId: string | undefined): Rail | undefined {
+  const [rail, setRail] = useState<Rail | undefined>(() => FALLBACK.find(r => r.id === railId));
+  useEffect(() => {
+    if (!railId) return;
+    let cancelled = false;
+    loadRails().then(rails => {
+      const found = rails.find(r => r.id === railId);
+      if (!cancelled && found?.badges?.length) setRail(found);
+    });
+    return () => { cancelled = true; };
+  }, [railId]);
+  return rail;
+}
+
+/* ── Renderers ─────────────────────────────────────────────────── */
 
 function CardBadgeView({ badge }: { badge: CardBadge }) {
   const imgPos = resolveImgPos(badge.imageOffset, badge.imageOffsetY, undefined);
@@ -69,9 +97,64 @@ function HtmlBadgeView({ badge }: { badge: HtmlBadge }) {
   return <div className="rail-html" dangerouslySetInnerHTML={{ __html: badge.html }} />;
 }
 
+// Same anatomy as the Work grid's photo tile, except the description is
+// always visible (a slideshow slide is big enough to carry it) rather than
+// hover-only.
+function WorkBadgeView({ badge }: { badge: WorkBadge }) {
+  const [galleryOpen, setGalleryOpen] = useState(false);
+  const imgPos = resolveImgPos(badge.imageOffset, badge.imageOffsetY, undefined);
+  const openLinks = (badge.links ?? []).filter(l => !!l.url);
+  const hasGallery = !!badge.slideshowImages?.length;
+
+  return (
+    <>
+      <img
+        className="rail-work-img"
+        src={badge.imageUrl}
+        alt={badge.imageAlt ?? badge.title}
+        loading="lazy"
+        draggable={false}
+        style={{
+          ...(imgPos ? { '--img-pos': imgPos } : {}),
+          ...(badge.imageScale != null ? { '--img-scale': badge.imageScale } : {}),
+        } as React.CSSProperties}
+      />
+      <div className="rail-work-scrim" />
+      {(openLinks.length > 0 || hasGallery) && (
+        <div className="rail-work-icons">
+          {openLinks.map(l => (
+            <a key={l.url} href={l.url} target="_blank" rel="noopener noreferrer" className="work-item-icon-link" aria-label={l.label} title={l.label} draggable={false}>
+              <LinkIcon label={l.label} />
+            </a>
+          ))}
+          {hasGallery && (
+            <button type="button" className="rail-work-gallery" onClick={() => setGalleryOpen(true)}>
+              Gallery · {badge.slideshowImages!.length}
+            </button>
+          )}
+        </div>
+      )}
+      <div className="rail-work-body">
+        {badge.eyebrow && <div className="rail-work-eyebrow">{badge.eyebrow}</div>}
+        <div className="rail-work-title">{badge.title}</div>
+        {badge.description && <p className="rail-work-desc">{badge.description}</p>}
+        {badge.tags && badge.tags.length > 0 && (
+          <div className="rail-work-tags">
+            {badge.tags.map(t => <span key={t} className="skill-box work-tag">{t}</span>)}
+          </div>
+        )}
+      </div>
+      {hasGallery && galleryOpen && (
+        <SlideshowOverlay images={badge.slideshowImages!} alt={badge.imageAlt ?? badge.title} startIndex={0} onClose={() => setGalleryOpen(false)} />
+      )}
+    </>
+  );
+}
+
 const RENDERERS: { [K in Badge['type']]: (badge: Extract<Badge, { type: K }>) => ReactNode } = {
   card: badge => <CardBadgeView badge={badge} />,
   html: badge => <HtmlBadgeView badge={badge} />,
+  work: badge => <WorkBadgeView badge={badge} />,
 };
 
 function renderBadge(badge: Badge): ReactNode {
@@ -79,41 +162,47 @@ function renderBadge(badge: Badge): ReactNode {
   return render ? render(badge) : null;
 }
 
-function BadgeShell({ badge }: { badge: Badge }) {
-  const className = `rail-badge rail-badge--${badge.type} rail-badge--${badge.size ?? 'md'}${badge.href ? ' rail-badge--link' : ''}${badge.className ? ` ${badge.className}` : ''}`;
-  const style = badge.width ? { '--badge-w': `${badge.width}px` } as React.CSSProperties : undefined;
-  const content = renderBadge(badge);
-
-  if (!badge.href) return <div className={className} style={style}>{content}</div>;
-  if (badge.href.startsWith('/')) return <Link to={badge.href} className={className} style={style} draggable={false}>{content}</Link>;
-  return <a href={badge.href} target="_blank" rel="noopener noreferrer" className={className} style={style} draggable={false}>{content}</a>;
+function badgeKey(badge: Badge, i: number): string {
+  return badge.id ?? ('title' in badge ? badge.title : undefined) ?? String(i);
 }
 
-/** Renders a rail's badges in a SwipeRail with no section chrome — for
- *  embedding inside an existing section. */
-export function BadgeRailRow({ rail }: { rail: Rail }) {
+function BadgeShell({ badge }: { badge: Badge }) {
+  const className = `rail-badge rail-badge--${badge.type} rail-badge--${badge.size ?? 'md'}${'href' in badge && badge.href ? ' rail-badge--link' : ''}${badge.className ? ` ${badge.className}` : ''}`;
+  const style = badge.width ? { '--badge-w': `${badge.width}px` } as React.CSSProperties : undefined;
+  const content = renderBadge(badge);
+  const href = 'href' in badge ? badge.href : undefined;
+
+  if (!href) return <div className={className} style={style}>{content}</div>;
+  if (href.startsWith('/')) return <Link to={href} className={className} style={style} draggable={false}>{content}</Link>;
+  return <a href={href} target="_blank" rel="noopener noreferrer" className={className} style={style} draggable={false}>{content}</a>;
+}
+
+/* ── Public components ─────────────────────────────────────────── */
+
+/** Drop-in rail: give it a railId (from rails.json) or inline rail data. No
+ *  section chrome — it fills the box it's placed in. */
+export function RailBlock({ railId, rail: inline, className }: { railId?: string; rail?: Rail; className?: string }) {
+  const loaded = useRail(inline ? undefined : railId);
+  const rail = inline ?? loaded;
+  if (!rail || !rail.badges.length) return null;
+
   return (
-    <SwipeRail label={rail.heading ?? rail.eyebrow ?? rail.id}>
-      {rail.badges.map((b, i) => (
-        <BadgeShell key={b.id ?? (b.type === 'card' ? b.title : undefined) ?? i} badge={b} />
-      ))}
-    </SwipeRail>
+    <div className={`rail-block${className ? ` ${className}` : ''}`}>
+      <SwipeRail
+        label={rail.heading ?? rail.eyebrow ?? rail.id}
+        variant={rail.layout ?? 'row'}
+        peek={rail.peek}
+        height={rail.height}
+      >
+        {rail.badges.map((b, i) => <BadgeShell key={badgeKey(b, i)} badge={b} />)}
+      </SwipeRail>
+    </div>
   );
 }
 
-/** A full home-page section for the rail with this id from rails.json. */
+/** A full home-page section around the rail with this id from rails.json. */
 export default function BadgeRail({ railId, sectionId }: { railId: string; sectionId?: string }) {
-  const [rail, setRail] = useState<Rail | undefined>(() => FALLBACK.find(r => r.id === railId));
-
-  useEffect(() => {
-    let cancelled = false;
-    loadRails().then(rails => {
-      const found = Array.isArray(rails) ? rails.find(r => r.id === railId) : undefined;
-      if (!cancelled && found?.badges?.length) setRail(found);
-    });
-    return () => { cancelled = true; };
-  }, [railId]);
-
+  const rail = useRail(railId);
   if (!rail) return null;
 
   return (
@@ -122,7 +211,7 @@ export default function BadgeRail({ railId, sectionId }: { railId: string; secti
         {rail.eyebrow && <div className="section-eyebrow reveal">{rail.eyebrow}</div>}
         {rail.heading && <h2 className="section-heading reveal reveal-delay-1">{rail.heading}</h2>}
         {rail.intro && <p className="section-intro reveal reveal-delay-2">{rail.intro}</p>}
-        <BadgeRailRow rail={rail} />
+        <RailBlock rail={rail} />
       </div>
     </section>
   );

@@ -29,6 +29,10 @@ export interface DisciplineProject {
    *  around the offset/position focal point, so it zooms into the part of the
    *  image the offsets already frame. Defaults to 1 (no zoom). */
   imageScale?: number;
+  /** Frame shape of the case-study image, as a CSS aspect-ratio such as
+   *  "16/9" or "1". The text wraps around this frame, so the image keeps its
+   *  shape however long the write-up gets. Defaults to "4/3". */
+  imageAspect?: string;
   slideshowImages?: string[];
   links: DisciplineLink[];
 }

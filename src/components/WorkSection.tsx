@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import type { WorkGroup, WorkItem } from '../types';
 import { resolveImgPos } from '../utils/imagePosition';
 import { DISCIPLINES } from '../data/disciplines';
+import { RailBlock } from './rails/BadgeRail';
 
 const FALLBACK: WorkGroup[] = [
   {
@@ -75,7 +76,7 @@ export function SlideshowOverlay({ images, alt, startIndex, onClose }: { images:
 // generic bullet for everything — App Store/Play Store get their platform
 // glyph via devicon (already loaded site-wide), anything else falls back to
 // a plain external-link arrow.
-function LinkIcon({ label }: { label: string }) {
+export function LinkIcon({ label }: { label: string }) {
   if (/app store/i.test(label)) return <i className="devicon-apple-original" aria-hidden="true" />;
   if (/play store/i.test(label)) return <i className="devicon-android-plain" aria-hidden="true" />;
   return <span aria-hidden="true">↗</span>;
@@ -188,6 +189,7 @@ export default function WorkSection() {
     <section id="work">
       <div className="section-inner">
         <h2 className="section-heading reveal reveal-delay-1">Selected projects</h2>
+        <RailBlock railId="featured-work" className="work-slideshow-rail reveal reveal-delay-2" />
         <div className="reveal reveal-delay-3">
           {groups.map(group => (
             <div key={group.subsection} className="work-group">

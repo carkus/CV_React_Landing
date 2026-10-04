@@ -13,7 +13,11 @@
         "eyebrow": "Web",
         "title": "Web & Backend",
         "text": "React, Blazor and .NET — collaborative editors, PDF builders, shared auth.",
-        "tags": ["React", "TypeScript", "ASP.NET Core"],
+        "tags": [
+          "React",
+          "TypeScript",
+          "ASP.NET Core"
+        ],
         "cta": "Explore →"
       },
       {
@@ -25,7 +29,11 @@
         "eyebrow": "AI",
         "title": "AI Systems",
         "text": "Self-scaffolding agents, MCP, provider cascades, RAG and structured output.",
-        "tags": ["Agentic", "MCP", "RAG"],
+        "tags": [
+          "Agentic",
+          "MCP",
+          "RAG"
+        ],
         "cta": "Explore →"
       },
       {
@@ -37,7 +45,11 @@
         "eyebrow": "Mobile",
         "title": "Mobile & Spatial",
         "text": "Eight years on ZOME across iOS, Android, Vision Pro and Android XR.",
-        "tags": ["SwiftUI", "Flutter", "visionOS"],
+        "tags": [
+          "SwiftUI",
+          "Flutter",
+          "visionOS"
+        ],
         "cta": "Explore →"
       },
       {
@@ -46,6 +58,132 @@
         "size": "sm",
         "href": "/profile#references",
         "html": "<div class=\"rail-html-stack\"><span class=\"rail-card-eyebrow\">Profile</span><strong class=\"rail-card-title\">References &amp; press</strong><p class=\"rail-card-text\">Reference letters, video and press coverage.</p><span class=\"rail-card-cta\">Read →</span></div>"
+      }
+    ]
+  },
+  {
+    "id": "featured-work",
+    "layout": "slideshow",
+    "peek": 8,
+    "height": 440,
+    "badges": [
+      {
+        "type": "work",
+        "id": "zome-xr",
+        "eyebrow": "Mobile & Spatial",
+        "title": "ZOME: Spatial Messenger (VisionOS & XR)",
+        "imageUrl": "/img/ZOME_vision_ui.png",
+        "imageAlt": "ZOME VisionOS",
+        "description": "A spatial platform and messenger where you can plant your messages anywhere in the world, at any location and even points in time.",
+        "tags": [
+          "Swift",
+          "SwiftUI",
+          "visionOS",
+          "Android XR"
+        ],
+        "slideshowImages": [
+          "/img/zome_ar1.png",
+          "/img/zome_ar2.png",
+          "/img/zome_ar3.png",
+          "/img/zome_ar4.png",
+          "/img/zome_ar5.png",
+          "/img/zome_ar6.png",
+          "/img/zome_ar7.png"
+        ],
+        "links": [
+          {
+            "label": "App Store ↗",
+            "url": "https://itunes.apple.com/us/app/zome/id1382123356?ls=1&mt=8"
+          },
+          {
+            "label": "Play Store ↗",
+            "url": "https://play.google.com/store/apps/details?id=com.zomecorp.zome"
+          }
+        ]
+      },
+      {
+        "type": "work",
+        "id": "agent-one",
+        "eyebrow": "AI Systems",
+        "title": "Agent One — Realtime Agent Workers",
+        "imageUrl": "/img/AgentOne_logo.jpg",
+        "imageAlt": "Agent One",
+        "description": "Self-scaffolding and self-evaluating agent platform — describe a task in plain language and it builds purpose-built agents, assigns a role and accesses MCP tools, via Ollama locally or through Gemini.",
+        "tags": [
+          "Local LLMs",
+          "Ollama",
+          "AWS Lambda",
+          "Agentic"
+        ],
+        "links": [
+          {
+            "label": "Open Agent One",
+            "url": "https://agent.carkus.com"
+          }
+        ]
+      },
+      {
+        "type": "work",
+        "id": "chatty-prayers",
+        "eyebrow": "AI Systems",
+        "title": "Chatty Prayers — AI Debates, and Counsel",
+        "imageUrl": "/img/chatty_prayers.png",
+        "imageAlt": "Chatty Prayers",
+        "description": "Personality-driven AI platform with one-on-one chat, confidant reflection and structured multi-participant debate — Blazor and a RAG pipeline over the Claude and Gemini APIs.",
+        "tags": [
+          "Blazor",
+          "Claude API",
+          "Gemini API"
+        ],
+        "links": [
+          {
+            "label": "Open Chatty Prayers ↗",
+            "url": "https://moot.carkus.com"
+          }
+        ]
+      },
+      {
+        "type": "work",
+        "id": "ai-forms",
+        "eyebrow": "AI Systems",
+        "title": "AI Forms — PDF Builder",
+        "imageUrl": "/img/pdf_form.png",
+        "imageAlt": "AI Forms - PDF Builder",
+        "description": "Drag-and-drop PDF editor with AI form generation — describe a form in plain text and an agentic pipeline generates the fields and layout, with pre-filled values.",
+        "tags": [
+          "Blazor",
+          "PDF Generation",
+          "Agentic Pipeline",
+          "Claude API"
+        ],
+        "links": [
+          {
+            "label": "Open AI Forms ↗",
+            "url": "https://editor.carkus.com/form-editor"
+          }
+        ]
+      },
+      {
+        "type": "work",
+        "id": "scribbler",
+        "eyebrow": "Web & Backend",
+        "title": "Scribbler 2026",
+        "imageUrl": "/img/scribbler-2.png",
+        "imageAlt": "Scribbler",
+        "description": "Collaborative writing platform organising work into Collections and Articles, with suggestions, appraisal notifications, messaging and distraction-free rich-text editing.",
+        "tags": [
+          "React",
+          "TypeScript",
+          "Express",
+          "MySQL",
+          "TipTap"
+        ],
+        "links": [
+          {
+            "label": "Coming Soon",
+            "url": "https://scribbler.carkus.com"
+          }
+        ]
       }
     ]
   }

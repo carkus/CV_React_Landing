@@ -8,7 +8,6 @@ import SkillsSection from '../components/SkillsSection';
 import WorkSection from '../components/WorkSection';
 import AiSection from '../components/AiSection';
 import AskSection from '../components/AskSection';
-import ExpertiseSection from '../components/ExpertiseSection';
 import TimelineSection from '../components/TimelineSection';
 import ContactSection from '../components/ContactSection';
 import FooterSection from '../components/FooterSection';
@@ -64,7 +63,6 @@ export default function Home() {
       <AiSection />
       <SkillsSection />
       <WorkSection />
-      <ExpertiseSection />
       <TimelineSection />
       <ContactSection />
       <FooterSection />
