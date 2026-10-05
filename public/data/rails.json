@@ -62,10 +62,125 @@
     ]
   },
   {
+    "id": "ai-threads",
+    "eyebrow": "AI",
+    "heading": "AI work across fields",
+    "intro": "Agentic systems that build their own workforce — a master agent decomposes a goal, sequences its own plan of dependent subtasks, then bootstraps and deploys purpose-built worker agents for each one, with self-evaluation feeding back into which models get used.",
+    "layout": "slideshow",
+    "peek": 10,
+    "perView": 2,
+    "loop": true,
+    "tone": "pale",
+    "cta": {
+      "label": "Explore AI projects in depth →",
+      "href": "/ai"
+    },
+    "align": "start",
+    "badges": [
+      {
+        "type": "card",
+        "id": "agentic",
+        "eyebrow": "01",
+        "icon": "✦",
+        "title": "Agentic Systems & Planning",
+        "points": [
+          "A master agent breaks a goal into its own sequenced plan of dependent subtasks",
+          "Builds and deploys a purpose-built worker per subtask — own role, tools, MCP access",
+          "Self-evaluation scores each response and steers future model choice",
+          "Rooted in MSc heuristic search and PDDL planning"
+        ],
+        "tags": [
+          "Self-Scaffolding Agents",
+          "Master/Worker Delegation",
+          "Self-Sequenced Planning",
+          "Self-Evaluation",
+          "MCP",
+          "Heuristic Search",
+          "PDDL"
+        ]
+      },
+      {
+        "type": "card",
+        "id": "orchestration",
+        "eyebrow": "02",
+        "icon": "⇄",
+        "title": "Provider Orchestration & Resilience",
+        "points": [
+          "Fallback chain across Claude, Gemini and Ollama on errors, rate limits or bad keys",
+          "Correction-prompt retry on malformed output before failing over",
+          "Parallel multi-provider ensembles, with every fallback logged"
+        ],
+        "tags": [
+          "Fallback Chains",
+          "Retry-on-Malformed",
+          "Parallel Ensembles",
+          "Cost Tiering"
+        ]
+      },
+      {
+        "type": "card",
+        "id": "local-first",
+        "eyebrow": "03",
+        "icon": "⌂",
+        "title": "Local-First & Privacy",
+        "points": [
+          "Local LLM as fallback or default, keeping sensitive data off the cloud",
+          "Fully local agent bootstrapping and chat via Ollama for private development",
+          "Local model picks backed by measured pass rates, not assumptions"
+        ],
+        "tags": [
+          "Ollama",
+          "Local LLM",
+          "Data Privacy",
+          "Local Embeddings"
+        ]
+      },
+      {
+        "type": "card",
+        "id": "structured",
+        "eyebrow": "04",
+        "icon": "▤",
+        "title": "Structured Output & Prompt Discipline",
+        "points": [
+          "Typed, schema-validated outputs from reusable, per-task-tuned prompts",
+          "Concrete JSON examples in prompts — an exact target, not a field list",
+          "Generated tool code compile-checked before it ever runs"
+        ],
+        "tags": [
+          "Schema-first Prompting",
+          "Typed Outputs",
+          "Prompt Templates",
+          "Tool Schemas"
+        ]
+      },
+      {
+        "type": "card",
+        "id": "retrieval",
+        "eyebrow": "05",
+        "icon": "⌕",
+        "title": "Retrieval & Grounding",
+        "points": [
+          "Semantic search over my own data, chunked and pre-fetched as needed",
+          "Past successful runs retrieved as few-shot examples for new agents",
+          "Live context such as weather and news injected at generation time"
+        ],
+        "tags": [
+          "RAG",
+          "Embeddings",
+          "Context Injection",
+          "Few-shot Retrieval"
+        ]
+      }
+    ]
+  },
+  {
     "id": "featured-work",
     "layout": "slideshow",
-    "peek": 8,
+    "peek": 10,
     "height": 440,
+    "perView": 2,
+    "align": "start",
+    "loop": true,
     "badges": [
       {
         "type": "work",

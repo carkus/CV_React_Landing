@@ -18,7 +18,7 @@ function ProjectCase({ project, index }: { project: DisciplineProject; index: nu
   const [slideshowOpen, setSlideshowOpen] = useState(false);
   const hasSlideshow = !!project.slideshowImages?.length;
   const openLinks = project.links.filter(l => !!l.url);
-  const imgPos = resolveImgPos(project.imageOffset, project.imageOffsetY, project.imagePosition);
+  const imgPos = resolveImgPos(project.imageOffsetX, project.imageOffsetY, project.imagePosition);
   const imgStyle = {
     ...(imgPos ? { '--img-pos': imgPos } : {}),
     ...(project.imageScale != null ? { '--img-scale': project.imageScale } : {}),

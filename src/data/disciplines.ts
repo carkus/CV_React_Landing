@@ -16,12 +16,10 @@ export interface DisciplineProject {
   tags: string[];
   imageUrl?: string;
   imageAlt?: string;
-  /** Horizontal crop offset for the case-study image, 0–100 (percent from
-   *  the left) — same convention as WorkItem.imageOffset. Takes precedence
-   *  over imagePosition when set. */
-  imageOffset?: number;
-  /** Vertical crop offset, 0–100 (percent from the top) — 0 shows the top of
-   *  the image, 100 the bottom. Takes precedence over imagePosition when set. */
+  /** Pixel nudges for the case-study image from its imagePosition anchor
+   *  (default centre) — same convention as WorkItem.imageOffsetX / imageOffsetY.
+   *  Positive X moves the image right, positive Y moves it down. */
+  imageOffsetX?: number;
   imageOffsetY?: number;
   /** Raw CSS object-position fallback for the case-study image crop. */
   imagePosition?: string;
@@ -33,6 +31,9 @@ export interface DisciplineProject {
    *  "16/9" or "1". The text wraps around this frame, so the image keeps its
    *  shape however long the write-up gets. Defaults to "4/3". */
   imageAspect?: string;
+  /** Gallery entries: images, video files (.mp4/.mov/.webm…) or YouTube/Vimeo
+   *  URLs — the viewer is picked per entry. A bare file name resolves to
+   *  /img/ (images) or /files/ (videos). See utils/media.ts. */
   slideshowImages?: string[];
   links: DisciplineLink[];
 }
@@ -135,7 +136,7 @@ export const DISCIPLINES: Record<DisciplineKey, Discipline> = {
         tags: ['React', 'TypeScript', 'ASP.NET Core', 'Mailgun'],
         imageUrl: '/img/smooth_software_wide.png',
         imageAlt: 'Smooth Software',
-        imageOffset: 10,
+        imagePosition: '10% center',
         links: [{ label: 'Open Smooth Software', url: 'https://smoothsoftware.carkus.com' }],
       },
       {
@@ -222,7 +223,7 @@ export const DISCIPLINES: Record<DisciplineKey, Discipline> = {
         tags: ['.NET', 'TypeScript', 'MCP', 'Structured Output', 'Multi-provider'],
         imageUrl: '/img/jobfit_card_noblurb.png',
         imageAlt: 'JobFit',
-        imageOffsetY: 5,
+        imagePosition: 'center 5%',
         links: [{ label: 'Open JobFit', url: 'https://jobfit.carkus.com' }],
       },
       {
@@ -340,7 +341,7 @@ export const DISCIPLINES: Record<DisciplineKey, Discipline> = {
         tags: ['Flutter', 'Swift', 'Kotlin', 'Cross-platform'],
         imageUrl: '/img/zome_banner_mobile_no_button.png',
         imageAlt: 'ZOME mobile',
-        imageOffset: -150,
+        imagePosition: 'left center',
         imageScale: 1.3,
         slideshowImages: ['/img/zome_phone1.png', '/img/zome_phone2.png', '/img/zome_phone3.png', '/img/zome_phone4.png', '/img/zome_phone5.png', '/img/zome_phone6.png', '/img/zome_phone7.png'],
         links: [
@@ -373,7 +374,7 @@ export const DISCIPLINES: Record<DisciplineKey, Discipline> = {
         tags: ['React Native', 'Expo', 'TypeScript', 'Zustand', 'Game Dev'],
         imageUrl: '/img/image_a83945ea.png',
         imageAlt: 'Panic Stations',
-        imageOffsetY: 20,
+        imagePosition: 'center 20%',
         links: [],
       },
     ],

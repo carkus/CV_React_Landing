@@ -6,7 +6,6 @@ import AboutSection from '../components/AboutSection';
 import BadgeRail from '../components/rails/BadgeRail';
 import SkillsSection from '../components/SkillsSection';
 import WorkSection from '../components/WorkSection';
-import AiSection from '../components/AiSection';
 import AskSection from '../components/AskSection';
 import TimelineSection from '../components/TimelineSection';
 import ContactSection from '../components/ContactSection';
@@ -60,7 +59,7 @@ export default function Home() {
       <AboutSection />
       <BadgeRail railId="deep-dives" />
       <AskSection />
-      <AiSection />
+      <BadgeRail railId="ai-threads" sectionId="ai" />
       <SkillsSection />
       <WorkSection />
       <TimelineSection />

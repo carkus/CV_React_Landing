@@ -1,7 +1,7 @@
 [
-  
   {
-    "subsection": "Small Projects",
+    "subsection": "Recent Projects",
+    "discipline": "web",
     "items": [
       {
         "title": "Agent One - Realtime Agent Workers",
@@ -14,28 +14,6 @@
           { "label": "Open Agent One", "url": "https://agent.carkus.com" }
         ]
       },
-      {
-        "title": "Auth Login",
-        "tags": ["ASP.NET Core", "JWT", "Multi-tenant"],
-        "description": "Multi-tenant shared auth server — registration, login, token refresh, email verification, and password reset, auto-provisioning a siteId per consuming project.",
-        "featured": false,
-        "width": 25,
-        "links": []
-      },
-      {
-        "title": "Markdown Viewer",
-        "tags": ["React", "react-markdown"],
-        "description": "Lightweight Markdown rendering utility with syntax-highlighted code blocks and GitHub-flavoured Markdown support.",
-        "featured": false,
-        "width": 25,
-        "links": []
-      }
-    ]
-  },
-  {
-    "subsection": "Recent Projects",
-    "discipline": "web",
-    "items": [
       {
         "title": "FPG Receipts",
         "tags": ["React", "TypeScript", "ASP.NET Core"],
@@ -55,7 +33,7 @@
         "imageAlt": "Smooth Software",
         "description": "Smooth Software builds websites, apps, and admin tools fast, at straight rates. You get clean code, clear communication, and a product you will use and love",
         "featured": true,
-        "heroImageOffset": 10,
+        "heroImagePosition": "10% center",
         "width": 60,
         "links": [
           { "label": "Open Smooth Software", "url": "https://smoothsoftware.carkus.com" }
@@ -101,7 +79,7 @@
         "imagePosition": "left center",
         "description": "ZOME is a spatial platform and messenger where you can plant your messages anywhere in the world, at any location and even points in time.",
         "featured": false,
-        "heroExclude": true,
+        "heroExclude": false,
         "width": 50,
         "slideshowImages": ["/img/zome_phone1.png", "/img/zome_phone2.png", "/img/zome_phone3.png", "/img/zome_phone4.png", "/img/zome_phone5.png", "/img/zome_phone6.png", "/img/zome_phone7.png"],
         "links": [
@@ -131,7 +109,7 @@
         "imageAlt": "Spatial UI Components",
         "description": "A library of reusable spatial UI components for Apple Vision Pro using RealityKit, SwiftUI.",
         "featured": false,
-        "heroImageOffset": 80,
+        "heroImagePosition": "80% center",
         "width": 100,
         "height": 90,
         "links": []
@@ -162,7 +140,7 @@
         "imageAlt": "Job interview handshake",
         "description": "Multi-provider AI tool that scores CVs against job descriptions, generates ATS compliant resumes, surfaces skill gaps, and drafts cover letters — exposes MCP tools for direct use from Claude.",
         "featured": false,
-        "imageOffsetY": 5,
+        "imagePosition": "center 5%",
         "width": 60,
         "links": [
           { "label": "Open JobFit ↗", "url": "https://jobfit.carkus.com" }
@@ -177,12 +155,12 @@
         "description": "Turn-based sci-fi roguelike RPG built with React Native and Expo — procedurally generated space stations, tap-to-move pathfinding, and fog-of-war exploration.",
         "featured": false,
         "heroExclude": true,
-        "imageOffsetY": 20,
+        "imagePosition": "center 20%",
         "width": 50,
         "links": []
       },
       {
-        "title": "Research in AI Task Planning",
+        "title": "AI Task Planning - Agents and robotics",
         "tags": ["AI Research", "Robotics Task Planning"],
         "imageUrl": "https://images.unsplash.com/photo-1647427060118-4911c9821b82?w=600&q=80",
         "imageAlt": "Robotics research",
@@ -219,5 +197,26 @@
         "credit": { "name": "Kelly Sikkema", "url": "https://unsplash.com/@kellysikkema" }
       }
     ]
-  }
+  },
+  {
+    "subsection": "Small Projects",
+    "items": [
+      {
+        "title": "Auth Login",
+        "tags": ["ASP.NET Core", "JWT", "Multi-tenant"],
+        "description": "Multi-tenant shared auth server — registration, login, token refresh, email verification, and password reset, auto-provisioning a siteId per consuming project.",
+        "featured": false,
+        "width": 25,
+        "links": []
+      },
+      {
+        "title": "Markdown Viewer",
+        "tags": ["React", "react-markdown"],
+        "description": "Lightweight Markdown rendering utility with syntax-highlighted code blocks and GitHub-flavoured Markdown support.",
+        "featured": false,
+        "width": 25,
+        "links": []
+      }
+    ]
+  },
 ]

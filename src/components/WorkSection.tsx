@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
-import type { WorkGroup, WorkItem } from '../types';
-import { resolveImgPos } from '../utils/imagePosition';
+import type { Badge, Rail, WorkGroup, WorkItem } from '../types';
 import { DISCIPLINES } from '../data/disciplines';
 import { RailBlock } from './rails/BadgeRail';
+import { resolveMedia } from '../utils/media';
 
 const FALLBACK: WorkGroup[] = [
   {
@@ -34,6 +34,8 @@ export function SlideshowOverlay({ images, alt, startIndex, onClose }: { images:
   useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {
       if (e.key === 'Escape') onClose();
+      // A focused video uses the arrow keys to seek — leave them to it.
+      if (e.target instanceof HTMLVideoElement) return;
       if (e.key === 'ArrowRight') setIndex(i => (i + 1) % images.length);
       if (e.key === 'ArrowLeft') setIndex(i => (i - 1 + images.length) % images.length);
     }
@@ -47,21 +49,16 @@ export function SlideshowOverlay({ images, alt, startIndex, onClose }: { images:
       <button
         type="button"
         className="slideshow-nav slideshow-prev"
-        aria-label="Previous image"
+        aria-label="Previous item"
         onClick={e => { e.stopPropagation(); setIndex(i => (i - 1 + images.length) % images.length); }}
       >
         ‹
       </button>
-      <img
-        className="slideshow-image"
-        src={images[index]}
-        alt={`${alt} — ${index + 1} of ${images.length}`}
-        onClick={e => e.stopPropagation()}
-      />
+      <GalleryItem entry={images[index]} label={`${alt} — ${index + 1} of ${images.length}`} />
       <button
         type="button"
         className="slideshow-nav slideshow-next"
-        aria-label="Next image"
+        aria-label="Next item"
         onClick={e => { e.stopPropagation(); setIndex(i => (i + 1) % images.length); }}
       >
         ›
@@ -70,6 +67,42 @@ export function SlideshowOverlay({ images, alt, startIndex, onClose }: { images:
     </div>,
     document.body
   );
+}
+
+// One gallery entry, drawn with the viewer its file name/URL calls for (see
+// utils/media.ts). Keyed on the entry so switching slides unmounts the old
+// player, which stops any video that was playing.
+function GalleryItem({ entry, label }: { entry: string; label: string }) {
+  const media = resolveMedia(entry);
+  const stop = (e: React.MouseEvent) => e.stopPropagation();
+  if (media.kind === 'video') {
+    return (
+      <video
+        key={media.src}
+        className="slideshow-image slideshow-video"
+        src={`${media.src}#t=0.001`}
+        aria-label={label}
+        controls
+        playsInline
+        preload="metadata"
+        onClick={stop}
+      />
+    );
+  }
+  if (media.kind === 'embed') {
+    return (
+      <iframe
+        key={media.src}
+        className="slideshow-image slideshow-embed"
+        src={media.src}
+        title={label}
+        allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
+        allowFullScreen
+        onClick={stop}
+      />
+    );
+  }
+  return <img key={media.src} className="slideshow-image" src={media.src} alt={label} onClick={stop} />;
 }
 
 // Picks an icon that matches what a link actually opens, rather than a
@@ -82,97 +115,46 @@ export function LinkIcon({ label }: { label: string }) {
   return <span aria-hidden="true">↗</span>;
 }
 
-// Flat "small project" look — title/description/tags, no image — reused
-// as-is from the standalone Small Projects section so an entry can be
-// embedded straight into a Selected Projects row without inventing a new
-// style for it. Same --w-driven width-percentage sizing as the photo tiles
-// so it slots into .work-grid like any other item; height is left auto
-// rather than the tiles' fixed 300px, matching the small-project card's own
-// look (it stretches to match a row's tallest item only if it shares one).
-function PlainWorkItemCard({ item }: { item: WorkItem }) {
-  const openLinks = item.links.filter(l => !!l.url);
-  const primaryUrl = openLinks[0]?.url;
-  const style = { '--w': item.width ?? 34 } as React.CSSProperties;
-  const inner = (
-    <>
-      <div className="small-project-title">{item.title}</div>
-      <p className="small-project-desc">{item.description}</p>
-      <div className="small-project-tags">
-        {item.tags.map(t => <span key={t} className="skill-box work-tag">{t}</span>)}
-      </div>
-    </>
-  );
+// Each work group is shown as a slideshow rail, built from workitems.json so
+// the items keep one source of truth. Photo items become `work` badges;
+// image-less entries become plain `card` badges linking to their first URL.
+// Two prominent slides from the left, with the start of the next peeking in;
+// groups with more items than that loop endlessly.
+const SLIDES_PER_VIEW = 2;
 
-  return primaryUrl ? (
-    <a href={primaryUrl} target="_blank" rel="noopener noreferrer" className="small-project-card small-project-card-link" style={style}>
-      {inner}
-      <span className="small-project-arrow">↗</span>
-    </a>
-  ) : (
-    <div className="small-project-card" style={style}>{inner}</div>
-  );
+function toBadge(item: WorkItem): Badge {
+  const openLinks = item.links.filter(l => !!l.url);
+  if (!item.imageUrl) {
+    return { type: 'card', id: item.title, title: item.title, text: item.description, tags: item.tags, href: openLinks[0]?.url };
+  }
+  return {
+    type: 'work',
+    id: item.title,
+    title: item.title,
+    description: item.description,
+    tags: item.tags,
+    imageUrl: item.imageUrl,
+    imageAlt: item.imageAlt,
+    imageOffsetX: item.imageOffsetX,
+    imageOffsetY: item.imageOffsetY,
+    imagePosition: item.imagePosition,
+    links: openLinks,
+    slideshowImages: item.slideshowImages,
+  };
 }
 
-// Full-bleed photo tile, fixed height (not square) — image fills the entire
-// box, title + link icons pinned in a top scrim bar, description slides up
-// on hover only (no tap-to-pin — a click just opens the card's primary link
-// in a new tab, like clicking through a normal card), tags sit in their own
-// persistent footer. item.width is a literal CSS width percentage (34 for a
-// third of a 3-per-row row, 40/50/60 pairing up for 2-per-row) passed
-// through as the --w custom property .work-grid's flexbox layout consumes
-// directly. Items with no imageUrl render as a PlainWorkItemCard instead.
-function WorkItemCard({ item }: { item: WorkItem }) {
-  const [slideshowOpen, setSlideshowOpen] = useState(false);
-  if (!item.imageUrl) return <PlainWorkItemCard item={item} />;
-  const hasSlideshow = !!item.slideshowImages && item.slideshowImages.length > 0;
-  // A link like "Coming Soon" with an empty url is a label, not an open-able
-  // link — skip rendering its arrow icon.
-  const openLinks = item.links.filter(l => !!l.url);
-  const primaryUrl = openLinks[0]?.url;
-  const imgPos = resolveImgPos(item.imageOffset, item.imageOffsetY, item.imagePosition);
-
-  return (
-    <div
-      className={`work-item${primaryUrl ? '' : ' no-link'}`}
-      style={{ '--w': item.width ?? 34 } as React.CSSProperties}
-      onClick={() => { if (primaryUrl) window.open(primaryUrl, '_blank', 'noopener,noreferrer'); }}
-    >
-      <img
-        src={item.imageUrl}
-        alt={item.imageAlt}
-        style={imgPos ? { '--img-pos': imgPos } as React.CSSProperties : undefined}
-      />
-      {item.credit && (
-        <a href={item.credit.url} target="_blank" rel="noopener noreferrer" className="work-item-credit" onClick={e => e.stopPropagation()}>© {item.credit.name}</a>
-      )}
-      <div className="work-item-top-bar">
-        <div className="work-item-title">{item.title}</div>
-        {(openLinks.length > 0 || hasSlideshow) && (
-          <div className="work-item-icons">
-            {openLinks.map(l => (
-              <a key={l.url} href={l.url} target="_blank" rel="noopener noreferrer" className="work-item-icon-link" aria-label={l.label} title={l.label} onClick={e => e.stopPropagation()}>
-                <LinkIcon label={l.label} />
-              </a>
-            ))}
-            {hasSlideshow && (
-              <button type="button" className="work-item-icon-link" aria-label="View slideshow" title="Slideshow" onClick={e => { e.stopPropagation(); setSlideshowOpen(true); }}>
-                <span aria-hidden="true">↗</span>
-              </button>
-            )}
-          </div>
-        )}
-      </div>
-      <div className="work-item-overlay">
-        <p className="work-item-desc">{item.description}</p>
-      </div>
-      <div className="work-item-footer">
-        {item.tags.map(t => <span key={t} className="skill-box work-tag">{t}</span>)}
-      </div>
-      {hasSlideshow && slideshowOpen && (
-        <SlideshowOverlay images={item.slideshowImages!} alt={item.imageAlt ?? item.title} startIndex={0} onClose={() => setSlideshowOpen(false)} />
-      )}
-    </div>
-  );
+function groupRail(group: WorkGroup): Rail {
+  return {
+    id: `work-${group.subsection}`,
+    heading: group.subsection,
+    layout: 'slideshow',
+    perView: SLIDES_PER_VIEW,
+    align: 'start',
+    peek: 10,
+    loop: group.items.length > SLIDES_PER_VIEW,
+    height: 360,
+    badges: group.items.map(toBadge),
+  };
 }
 
 export default function WorkSection() {
@@ -194,9 +176,7 @@ export default function WorkSection() {
           {groups.map(group => (
             <div key={group.subsection} className="work-group">
               <div className="work-subsection-header">{group.subsection}</div>
-              <div className="work-grid">
-                {group.items.map(item => <WorkItemCard key={item.title} item={item} />)}
-              </div>
+              <RailBlock rail={groupRail(group)} className="work-group-rail" />
               {group.discipline && DISCIPLINES[group.discipline] && (
                 <div className="work-group-deep-link">
                   <Link to={DISCIPLINES[group.discipline].path} className="btn-ghost">

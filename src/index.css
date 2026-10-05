@@ -46,6 +46,10 @@
    the section being scrolled to. Applies to both native #hash navigation
    and scrollIntoView() calls. */
 html { scroll-behavior: smooth; scroll-padding-top: 4rem; }
+/* Every font-size in this file is rem-based, so bumping the root ~10%
+   enlarges text site-wide, at every screen size, in one place (rem spacing
+   grows with it). */
+html { font-size: 110%; }
 body { background: var(--ink); color: var(--chalk); font-family: var(--sans); overflow-x: hidden; }
 
 ::-webkit-scrollbar { width: 4px; }
@@ -360,7 +364,7 @@ nav {
 @media (prefers-reduced-motion: reduce) {
     .platform-track { transition: none !important; }
     .platform-card, .hero-eyebrow::before, .section-eyebrow::before, .work-summation-label::before,
-    .work-subsection-header::before, .pf-eyebrow::before, .pf-section-label::before,
+    .work-subsection-header::before, .section-deep-link .btn-ghost::before, .work-group-deep-link .btn-ghost::before, .pf-eyebrow::before, .pf-section-label::before,
     .hero-status-dot { animation: none !important; }
 }
 
@@ -549,14 +553,14 @@ section { padding: 7rem 0; }
    since they sit on top of images rather than the section's flat background.
    Card/tag variables stay the pale blue palette so photo-less small-project
    cards keep their look; only #work's own flat section background is
-   overridden below to plain white instead of --navy, same as #ai. */
+   overridden below to a pale grey-blue (#e8edf3) instead of --navy. */
 #work {
     background: var(--navy); border-top: 1px solid #cddcf0; border-bottom: 1px solid #cddcf0;
     --ink: #eef4fb; --navy: #dce8f7; --slate: #cddcf0; --steel: #7c93b8;
     --mist: #445269; --silver: #1f2937; --chalk: #10131c;
     --accent: #2f5bb0; --accent2: #1d63d6; --error: #c23b3b;
 }
-#work { background: #fff; }
+#work { background: color-mix(in srgb, #e8edf3 75%, #fff); }
 /* Each subsection is its own self-contained block — a heading followed by
    its own independent row-wrapping grid — rather than a header shoehorned in
    as one more flex item inside a single shared grid. That keeps one
@@ -648,6 +652,11 @@ section { padding: 7rem 0; }
     background: rgba(255,255,255,0.03);
     box-shadow: 0 20px 60px rgba(0,0,0,0.6);
 }
+/* Videos and embedded players get a 16:9 frame instead of the square image box. */
+.slideshow-video, .slideshow-embed {
+    width: min(calc(100vw - 12rem), 1100px, calc(85vh * 16 / 9));
+    height: auto; aspect-ratio: 16 / 9; border: 0; background: #000;
+}
 .slideshow-close { position: absolute; top: 1.5rem; right: 1.8rem; background: none; border: none; color: var(--chalk); font-size: 1.6rem; line-height: 1; cursor: pointer; padding: 0.4rem; }
 .slideshow-close:hover { color: var(--accent2); }
 .slideshow-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(20,30,50,0.5); border: 1px solid #2a3a5c; color: var(--chalk); font-size: 2rem; line-height: 1; width: 3rem; height: 3rem; border-radius: 50%; cursor: pointer; transition: color 0.2s, border-color 0.2s; }
@@ -657,31 +666,22 @@ section { padding: 7rem 0; }
 .slideshow-counter { position: absolute; bottom: 1.8rem; left: 50%; transform: translateX(-50%); font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.08em; color: var(--mist); }
 
 /* ── AI ───────────────────────────────────────────────────────── */
-/* Same pale-blue-on-pale-blue treatment as #work — a fixed light card
-   rather than a re-tint of the site's own dark/light toggle, so it reads
-   the same in either theme. Card/tag/icon variables (--navy, --slate, etc.)
-   stay shared between #ai and #ask so their info-cards, tags, and the Ask
-   AI box keep the identical panel palette; only #ai's own flat section
-   background is overridden below to plain white instead of --navy. */
-#ai, #ask {
+/* ── TONES ── a tone is just a set of the site's colour tokens, redefined on
+   a section. Everything inside (cards, tags, icons, rails, the Ask AI box)
+   reads those tokens, so a tone restyles all of it with no per-component
+   overrides. 'pale' is a fixed light-blue panel look rather than a re-tint
+   of the dark/light toggle, so it reads the same in either theme. Rails pick
+   one via `tone` in rails.json; #ask opts in directly. */
+#ask, .tone-pale {
     background: var(--navy); border-top: 1px solid #cddcf0; border-bottom: 1px solid #cddcf0;
     --ink: #eef4fb; --navy: #dce8f7; --slate: #cddcf0; --steel: #7c93b8;
     --mist: #445269; --silver: #1f2937; --chalk: #10131c;
     --accent: #2f5bb0; --accent2: #1d63d6; --error: #c23b3b;
+    --tag-fg: #1d4ed8; --tag-bg: rgba(47,91,176,0.1); --tag-border: rgba(47,91,176,0.35);
 }
-#ai { background: #fff; }
+/* Panels stay --navy; the section itself sits on white so they stand out. */
+.rail-section.tone-pale { background: #fff; }
 #ask { padding: 2.1rem 0; }
-/* AI threads reuse .info-card-grid/.info-card-* (see ACHIEVEMENTS above)
-   — tag color identity is section-specific, and the icon badge is sized up
-   with rounded corners here only, leaving Achievements' icons untouched. */
-.ai-tag { color: #1d4ed8; background: rgba(47,91,176,0.1); border: 1px solid rgba(47,91,176,0.35); }
-#ai .info-card-icon { width: 52px; height: 52px; font-size: 1.6rem; border-radius: var(--radius); }
-/* These cards aren't clickable, so the shared .info-card hover tint (used
-   elsewhere for Achievements) was just a false affordance here — disabled. */
-#ai .info-card:hover { background: var(--navy); }
-/* Titles darker and larger than the shared .info-card-title default —
-   scoped to #ai only so Achievements' cards are untouched. */
-#ai .info-card-title { color: #05070d; font-size: 1.2rem; }
 .ai-ask { margin-top: 1.5px; background: var(--navy); border: 1px solid var(--slate); padding: 1.6rem 1.8rem; }
 /* Once its scroll-reveal finishes, sit a touch darker than the plain
    --navy panel so it reads as the section's focal box rather than blending
@@ -759,6 +759,12 @@ section { padding: 7rem 0; }
 .etag-icon i { font-size: 0.625rem; }
 .etag-icon img { width: 10px; height: 10px; object-fit: contain; }
 .etag-icon span { font-size: 0.55rem; color: var(--accent2); line-height: 1; }
+/* Toolkit (#skills) tech tags run ~10% larger than tags elsewhere — text,
+   padding and inline icons all scaled together. */
+#skills .skill-box { font-size: 0.64rem; padding: 0.2rem 0.5rem; }
+#skills .etag-icon i { font-size: 0.69rem; }
+#skills .etag-icon img { width: 11px; height: 11px; }
+#skills .etag-icon span { font-size: 0.6rem; }
 .scroll-hint { display: flex; align-items: center; justify-content: flex-end; gap: 0.6rem; font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mist); max-width: 1280px; margin: 0 auto; padding: 1.4rem 3rem 0; animation: pulse 2s ease-in-out infinite; }
 @keyframes pulse { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }
 
@@ -988,6 +994,24 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
 .dp-inner { max-width: 1080px; margin: 0 auto; }
 .section-deep-link { margin-top: 2rem; }
 .work-group-deep-link { display: flex; justify-content: flex-end; margin: 1.2rem 0 1.6rem; }
+/* "Explore … in depth" buttons: a larger, clickable take on
+   .work-subsection-header — same accent mono caps and pulsing glow line,
+   framed as a button that fills with the accent on hover. */
+.section-deep-link .btn-ghost, .work-group-deep-link .btn-ghost {
+    gap: 0.9rem; padding: 0.85rem 1.5rem;
+    font-size: 0.8rem; letter-spacing: 0.22em; color: var(--accent2);
+    border-color: var(--accent);
+    background: color-mix(in srgb, var(--accent2) 6%, transparent);
+    transition: color 0.2s, background 0.2s, border-color 0.2s, transform 0.15s;
+}
+.section-deep-link .btn-ghost::before, .work-group-deep-link .btn-ghost::before {
+    content: ''; display: block; width: 2.2rem; height: 1px; background: currentColor;
+    box-shadow: 0 0 6px 1px color-mix(in srgb, var(--accent2) 70%, transparent);
+    animation: pulse 2.4s ease-in-out infinite;
+}
+.section-deep-link .btn-ghost:hover, .work-group-deep-link .btn-ghost:hover {
+    color: #fff; background: var(--accent2); border-color: var(--accent2); transform: translateY(-2px);
+}
 
 .dp-tabs { display: inline-flex; border: 1px solid var(--slate); border-radius: var(--radius); overflow: hidden; }
 .dp-tab {
@@ -1092,13 +1116,18 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
 .swipe-rail-track.dragging { scroll-snap-type: none; scroll-behavior: auto; cursor: grabbing; user-select: none; }
 .swipe-rail-track.dragging * { pointer-events: none; }
 .swipe-rail-controls { display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 0.4rem; }
+/* Same look as the photo-less small-project cards (#work .rail-badge--card):
+   --navy panel fill, dark-blue --accent border, brighter accent + lift on hover. */
 .swipe-rail-btn {
-    width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--steel);
-    background: transparent; color: var(--chalk); font-size: 1.3rem; line-height: 1; cursor: pointer;
-    transition: color 0.2s, border-color 0.2s, opacity 0.2s;
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 2.1rem; height: 2.1rem; border-radius: 50%; cursor: pointer;
+    background: var(--navy); color: var(--chalk);
+    border: 1px solid var(--accent);
+    transition: color 0.2s, border-color 0.2s, transform 0.2s, opacity 0.2s;
 }
-.swipe-rail-btn:hover:not(:disabled) { color: var(--accent2); border-color: var(--accent2); }
-.swipe-rail-btn:disabled { opacity: 0.3; cursor: default; }
+.swipe-rail-btn:hover:not(:disabled) { color: var(--accent2); border-color: var(--accent2); transform: translateY(-2px); }
+.swipe-rail-btn:focus-visible { outline: 2px solid var(--accent2); outline-offset: 2px; }
+.swipe-rail-btn:disabled { opacity: 0.35; cursor: default; }
 
 .rail-badge {
     --badge-w: 300px;
@@ -1114,6 +1143,10 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
 .rail-badge--xl { --badge-w: 520px; }
 .rail-badge--link { cursor: pointer; }
 .rail-badge--link:hover { border-color: var(--accent2); transform: translateY(-2px); box-shadow: 0 18px 40px -24px var(--card-shadow-ambient); }
+/* Photo-less small-project cards in the work rails: a stronger border so they
+   hold their edge against #work's pale grey-blue ground. */
+#work .rail-badge--card { border-color: color-mix(in srgb, var(--steel) 60%, transparent); }
+#work .rail-badge--card.rail-badge--link:hover { border-color: var(--accent2); }
 
 .rail-card-media { position: relative; height: 160px; background: var(--slate); flex-shrink: 0; }
 .rail-card-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: var(--img-pos, center); }
@@ -1123,6 +1156,14 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
 .rail-card-title { font-family: var(--serif); font-weight: 400; font-size: 1.35rem; line-height: 1.2; color: var(--chalk); }
 .rail-card-text { font-size: 0.85rem; line-height: 1.6; color: var(--mist); }
 .rail-card-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.3rem; }
+.rail-card-points { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; margin: 0.2rem 0 0.4rem; }
+.rail-card-points li { position: relative; padding-left: 1.2rem; font-size: 0.86rem; line-height: 1.6; color: var(--mist); }
+.rail-card-points li::before { content: ''; position: absolute; left: 0; top: 0.62em; width: 0.5rem; height: 1px; background: var(--accent2); }
+/* One tag style for every badge, coloured by tokens so a tone can restyle
+   it (.tone-pale sets them). Defaults match .etag. */
+.rail-tag { font-weight: 400; color: var(--tag-fg, var(--chalk)); background: var(--tag-bg, transparent); border: 1px solid var(--tag-border, var(--steel)); }
+/* On a photo scrim tags are always light-on-dark, whatever the tone. */
+.rail-tag--on-photo { color: #fff; background: rgba(10,13,20,0.45); border-color: rgba(90,138,238,0.2); }
 .rail-card-cta { margin-top: auto; padding-top: 0.6rem; font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent2); }
 /* html badges bring their own markup; give it the card's padding by default. */
 .rail-html { padding: 1.4rem 1.5rem; flex: 1; display: flex; flex-direction: column; }
@@ -1136,24 +1177,34 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
     -webkit-mask-image: none; mask-image: none;
 }
 .swipe-rail--slideshow .swipe-rail-track > * {
-    flex: 0 0 100%; height: var(--slide-h, 420px); scroll-snap-align: center;
+    /* Slides stretch to the tallest one, so text slides never clip; `height`
+       on the rail sets a floor (photo slides need one — see work badges). */
+    flex: 0 0 100%; min-height: var(--slide-h, 0px); scroll-snap-align: center;
     opacity: 0.45; transform: scale(0.95);
     transition: opacity 0.35s ease, transform 0.35s ease, border-color 0.25s;
 }
 .swipe-rail--slideshow .swipe-rail-track > .is-active { opacity: 1; transform: none; }
+/* A card is wide as a slide: icon in its own column, larger type. */
+.swipe-rail--slideshow .rail-badge--card { flex-direction: row; align-items: flex-start; }
+.swipe-rail--slideshow .rail-card-icon { margin: 2rem 0 0 2.2rem; width: 52px; height: 52px; font-size: 1.6rem; flex-shrink: 0; }
+.swipe-rail--slideshow .rail-card-body { padding: 1.9rem 2.2rem 2rem 1.6rem; gap: 0.6rem; align-self: stretch; }
+.swipe-rail--slideshow .rail-card-title { font-size: 1.6rem; }
+.swipe-rail--slideshow .rail-card-tags { margin-top: auto; padding-top: 0.6rem; }
 .swipe-rail--slideshow .swipe-rail-controls { justify-content: center; align-items: center; gap: 1rem; }
 .swipe-rail-dots { display: flex; gap: 0.45rem; }
 .swipe-rail-dot {
     width: 8px; height: 8px; padding: 0; border-radius: 50%; border: none; cursor: pointer;
-    background: var(--steel); transition: background 0.2s, transform 0.2s;
+    background: color-mix(in srgb, var(--steel) 35%, transparent); transition: background 0.2s, transform 0.2s;
 }
-.swipe-rail-dot:hover { background: var(--mist); }
-.swipe-rail-dot.active { background: var(--accent2); transform: scale(1.3); }
+/* Active dot takes the steel tone of the arrow/small-card borders rather
+   than the accent blue; inactive dots are a paler wash of the same. */
+.swipe-rail-dot:hover { background: color-mix(in srgb, var(--steel) 60%, transparent); }
+.swipe-rail-dot.active { background: var(--steel); transform: scale(1.3); }
 
 /* work badges — photo tile with a permanent dark scrim. The scrim and text
    are deliberately theme-independent (white on dark) since they sit on a
    photo, same as the Work grid's tiles. */
-.rail-badge--work { min-height: var(--slide-h, 340px); background: var(--slate); }
+.rail-badge--work { min-height: var(--slide-h, 420px); background: var(--slate); }
 .rail-work-img {
     position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
     object-position: var(--img-pos, center); transform: scale(var(--img-scale, 1));
@@ -1164,7 +1215,7 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
     background: linear-gradient(to top, rgba(8,11,18,0.92) 0%, rgba(8,11,18,0.6) 38%, rgba(8,11,18,0) 70%),
                 linear-gradient(to bottom, rgba(8,11,18,0.45) 0%, rgba(8,11,18,0) 22%);
 }
-.rail-work-icons { position: absolute; top: 1rem; right: 1.1rem; display: flex; align-items: center; gap: 0.9rem; z-index: 1; }
+.rail-work-icons { position: absolute; top: 1rem; right: 1.1rem; display: flex; align-items: center; gap: 0.7rem; z-index: 1; }
 .rail-work-gallery {
     font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase;
     color: #fff; background: rgba(10,13,20,0.5); border: 1px solid rgba(255,255,255,0.25);
@@ -1184,6 +1235,41 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
 .rail-work-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.2rem; }
 .work-slideshow-rail { margin-bottom: 2.5rem; }
 
+/* Multi-slide slideshow (rail `perView` > 1): each slide is 1/--per-view of
+   the track, gaps included, with no peek padding — the neighbours are already
+   fully in view. Cards stack (icon above body) at this width, and only lightly
+   dim the off-centre slides since they're meant to be read too. */
+.swipe-rail--multi .swipe-rail-track { padding-inline: 0; }
+.swipe-rail--multi .swipe-rail-track > * {
+    flex: 0 0 calc((100% - (var(--per-view) - 1) * 1rem) / var(--per-view));
+    opacity: 0.75; transform: scale(0.97);
+}
+.swipe-rail--multi .swipe-rail-track > .is-active { opacity: 1; transform: none; }
+.swipe-rail--multi .rail-badge--card { flex-direction: column; }
+.swipe-rail--multi .rail-card-icon { margin: 1.6rem 1.6rem 0; width: 44px; height: 44px; font-size: 1.3rem; }
+.swipe-rail--multi .rail-card-body { padding: 1.1rem 1.6rem 1.6rem; }
+.swipe-rail--multi .rail-card-title { font-size: 1.3rem; }
+/* !important beats the inline --per-view from the rail's data. */
+@media (max-width: 1024px) { .swipe-rail--multi { --per-view: 2 !important; } }
+@media (max-width: 768px) {
+    .swipe-rail--multi { --per-view: 1 !important; }
+    .swipe-rail--multi .swipe-rail-track { padding-inline: var(--peek, 8%); }
+}
+
+/* Start-aligned slideshow (rail `align: 'start'`): --per-view prominent
+   slides flush left, then --peek% of the next one on the right. Slides snap
+   to the left edge; the ones fully in view are .is-active, the peeking one is
+   dimmed. Opacity only — scaling would shift the flush left edge. */
+.swipe-rail--start .swipe-rail-track { padding-inline: 0; }
+.swipe-rail--start .swipe-rail-track > *,
+.swipe-rail--start.swipe-rail--multi .swipe-rail-track > * {
+    flex: 0 0 calc((100% - var(--peek, 10%) - var(--per-view, 1) * 1rem) / var(--per-view, 1));
+    scroll-snap-align: start; transform: none; opacity: 0.4;
+}
+.swipe-rail--start .swipe-rail-track > .is-active { opacity: 1; }
+@media (max-width: 1024px) { .swipe-rail--start { --per-view: 1 !important; } }
+@media (max-width: 768px) { .swipe-rail--start .swipe-rail-track { padding-inline: 0; } }
+
 @media (max-width: 768px) {
     .rail-section { padding: 3rem 0; }
     .swipe-rail-controls { display: none; }
@@ -1192,4 +1278,8 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
     .swipe-rail--slideshow .swipe-rail-btn { display: none; }
     .rail-work-title { font-size: 1.35rem; }
     .rail-work-desc { -webkit-line-clamp: 2; line-clamp: 2; }
+    .swipe-rail--slideshow .rail-badge--card { flex-direction: column; }
+    .swipe-rail--slideshow .rail-card-icon { margin: 1.4rem 1.4rem 0; width: 42px; height: 42px; font-size: 1.25rem; }
+    .swipe-rail--slideshow .rail-card-body { padding: 1rem 1.4rem 1.4rem; }
+    .swipe-rail--slideshow .rail-card-title { font-size: 1.3rem; }
 }

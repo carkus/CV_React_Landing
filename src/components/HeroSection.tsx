@@ -155,7 +155,7 @@ export default function HeroSection() {
       : idx;
 
   const renderSlide = (item: WorkItem) => {
-    const imgPos = resolveImgPos(item.heroImageOffset, item.heroImageOffsetY, item.heroImagePosition);
+    const imgPos = resolveImgPos(item.heroImageOffsetX, item.heroImageOffsetY, item.heroImagePosition);
     return (
     <>
       <img

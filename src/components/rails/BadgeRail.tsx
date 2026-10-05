@@ -5,6 +5,7 @@ import SwipeRail from './SwipeRail';
 import { LinkIcon, SlideshowOverlay } from '../WorkSection';
 import { resolveImgPos } from '../../utils/imagePosition';
 import type { Badge, CardBadge, HtmlBadge, Rail, WorkBadge } from '../../types';
+import bundledRails from '../../../public/data/rails.json';
 
 // Data-driven layer over SwipeRail.
 //
@@ -20,19 +21,12 @@ import type { Badge, CardBadge, HtmlBadge, Rail, WorkBadge } from '../../types';
 // new kind of badge: add its interface to the Badge union in types.ts, then
 // add a renderer to RENDERERS below.
 
-/** Used until rails.json loads, and if it fails or lacks a rail. */
-const FALLBACK: Rail[] = [
-  {
-    id: 'deep-dives',
-    eyebrow: 'Deep dives',
-    heading: 'Explore by discipline',
-    badges: [
-      { type: 'card', id: 'web', size: 'md', href: '/web', icon: '◧', eyebrow: 'Web', title: 'Web & Backend', text: 'React, Blazor and .NET — collaborative editors, PDF builders, shared auth.', cta: 'Explore →' },
-      { type: 'card', id: 'ai', size: 'md', href: '/ai', icon: '✦', eyebrow: 'AI', title: 'AI Systems', text: 'Self-scaffolding agents, MCP, provider cascades, RAG and structured output.', cta: 'Explore →' },
-      { type: 'card', id: 'mobile', size: 'md', href: '/mobile', icon: '◫', eyebrow: 'Mobile', title: 'Mobile & Spatial', text: 'Eight years on ZOME across iOS, Android, Vision Pro and Android XR.', cta: 'Explore →' },
-    ],
-  },
-];
+// The same file the fetch below loads, bundled in at build time. It renders
+// on first paint and stands in if the fetch fails, so there is one source of
+// truth for rail data rather than a hand-maintained copy. The fetch still
+// matters: re-deploying just public/data/rails.json updates the live site
+// without a rebuild.
+const FALLBACK = bundledRails as Rail[];
 
 // One shared request for every rail on the page.
 let railsPromise: Promise<Rail[]> | null = null;
@@ -62,7 +56,7 @@ function useRail(railId: string | undefined): Rail | undefined {
 /* ── Renderers ─────────────────────────────────────────────────── */
 
 function CardBadgeView({ badge }: { badge: CardBadge }) {
-  const imgPos = resolveImgPos(badge.imageOffset, badge.imageOffsetY, undefined);
+  const imgPos = resolveImgPos(badge.imageOffsetX, badge.imageOffsetY, undefined);
   return (
     <>
       {badge.imageUrl ? (
@@ -82,9 +76,14 @@ function CardBadgeView({ badge }: { badge: CardBadge }) {
         {badge.eyebrow && <div className="rail-card-eyebrow">{badge.eyebrow}</div>}
         <div className="rail-card-title">{badge.title}</div>
         {badge.text && <p className="rail-card-text">{badge.text}</p>}
+        {badge.points && badge.points.length > 0 && (
+          <ul className="rail-card-points">
+            {badge.points.map(p => <li key={p}>{p}</li>)}
+          </ul>
+        )}
         {badge.tags && badge.tags.length > 0 && (
           <div className="rail-card-tags">
-            {badge.tags.map(t => <span key={t} className="skill-box etag">{t}</span>)}
+            {badge.tags.map(t => <span key={t} className="skill-box rail-tag">{t}</span>)}
           </div>
         )}
         {badge.cta && <div className="rail-card-cta">{badge.cta}</div>}
@@ -102,7 +101,7 @@ function HtmlBadgeView({ badge }: { badge: HtmlBadge }) {
 // hover-only.
 function WorkBadgeView({ badge }: { badge: WorkBadge }) {
   const [galleryOpen, setGalleryOpen] = useState(false);
-  const imgPos = resolveImgPos(badge.imageOffset, badge.imageOffsetY, undefined);
+  const imgPos = resolveImgPos(badge.imageOffsetX, badge.imageOffsetY, badge.imagePosition);
   const openLinks = (badge.links ?? []).filter(l => !!l.url);
   const hasGallery = !!badge.slideshowImages?.length;
 
@@ -123,7 +122,7 @@ function WorkBadgeView({ badge }: { badge: WorkBadge }) {
       {(openLinks.length > 0 || hasGallery) && (
         <div className="rail-work-icons">
           {openLinks.map(l => (
-            <a key={l.url} href={l.url} target="_blank" rel="noopener noreferrer" className="work-item-icon-link" aria-label={l.label} title={l.label} draggable={false}>
+            <a key={l.url} href={l.url} target="_blank" rel="noopener noreferrer" className="platform-link" aria-label={l.label} title={l.label} draggable={false}>
               <LinkIcon label={l.label} />
             </a>
           ))}
@@ -140,7 +139,7 @@ function WorkBadgeView({ badge }: { badge: WorkBadge }) {
         {badge.description && <p className="rail-work-desc">{badge.description}</p>}
         {badge.tags && badge.tags.length > 0 && (
           <div className="rail-work-tags">
-            {badge.tags.map(t => <span key={t} className="skill-box work-tag">{t}</span>)}
+            {badge.tags.map(t => <span key={t} className="skill-box rail-tag rail-tag--on-photo">{t}</span>)}
           </div>
         )}
       </div>
@@ -192,6 +191,10 @@ export function RailBlock({ railId, rail: inline, className }: { railId?: string
         label={rail.heading ?? rail.eyebrow ?? rail.id}
         variant={rail.layout ?? 'row'}
         peek={rail.peek}
+        perView={rail.perView}
+        loop={rail.loop}
+        align={rail.align}
+        autoplayMs={(rail.autoplay ?? 5) * 1000}
         height={rail.height}
       >
         {rail.badges.map((b, i) => <BadgeShell key={badgeKey(b, i)} badge={b} />)}
@@ -200,18 +203,27 @@ export function RailBlock({ railId, rail: inline, className }: { railId?: string
   );
 }
 
-/** A full home-page section around the rail with this id from rails.json. */
+/** A full home-page section around the rail with this id from rails.json —
+ *  eyebrow, heading, intro, colour tone and CTA link all come from the data. */
 export default function BadgeRail({ railId, sectionId }: { railId: string; sectionId?: string }) {
   const rail = useRail(railId);
   if (!rail) return null;
+  const cta = rail.cta;
 
   return (
-    <section id={sectionId ?? `rail-${rail.id}`} className="rail-section">
+    <section id={sectionId ?? `rail-${rail.id}`} className={`rail-section tone-${rail.tone ?? 'default'}`}>
       <div className="section-inner">
         {rail.eyebrow && <div className="section-eyebrow reveal">{rail.eyebrow}</div>}
         {rail.heading && <h2 className="section-heading reveal reveal-delay-1">{rail.heading}</h2>}
         {rail.intro && <p className="section-intro reveal reveal-delay-2">{rail.intro}</p>}
-        <RailBlock rail={rail} />
+        <RailBlock rail={rail} className="reveal reveal-delay-2" />
+        {cta && (
+          <div className="section-deep-link reveal reveal-delay-3">
+            {cta.href.startsWith('/')
+              ? <Link to={cta.href} className="btn-ghost">{cta.label}</Link>
+              : <a href={cta.href} target="_blank" rel="noopener noreferrer" className="btn-ghost">{cta.label}</a>}
+          </div>
+        )}
       </div>
     </section>
   );

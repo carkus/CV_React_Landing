@@ -21,28 +21,16 @@ export interface WorkItem {
   links: WorkLink[];
   credit?: WorkCredit;
   imagePosition?: string;
-  /** Plain horizontal crop offset for the work-grid tile image, 0–100 (percent from
-   *  the left). Simpler alternative to imagePosition's raw CSS string — just a
-   *  number to nudge left/right. Takes precedence over imagePosition when both
-   *  are set. Mirrors heroImageOffset below, but for the grid tile instead of
-   *  the hero slide. */
-  imageOffset?: number;
-  /** Plain vertical crop offset for the work-grid tile image, 0–100 (percent from
-   *  the top). Vertical counterpart to imageOffset — 0 shows the top of the
-   *  image, 100 the bottom. Takes precedence over imagePosition when both are
-   *  set. Mirrors heroImageOffsetY below, but for the grid tile instead of the
-   *  hero slide. */
+  /** Pixel nudge for the work tile image, from its imagePosition anchor
+   *  (default centre). Positive moves the image right. */
+  imageOffsetX?: number;
+  /** Pixel nudge for the work tile image, from its imagePosition anchor
+   *  (default centre). Positive moves the image down. */
   imageOffsetY?: number;
   heroImagePosition?: string;
-  /** Plain horizontal crop offset for the hero slide image, 0–100 (percent from
-   *  the left). Simpler alternative to heroImagePosition's raw CSS string —
-   *  just a number to nudge left/right. Takes precedence over heroImagePosition
-   *  when both are set. */
-  heroImageOffset?: number;
-  /** Plain vertical crop offset for the hero slide image, 0–100 (percent from
-   *  the top). Vertical counterpart to heroImageOffset — 0 shows the top of the
-   *  image, 100 the bottom. Takes precedence over heroImagePosition when both
-   *  are set. */
+  /** Pixel nudges for the hero slide image, from its heroImagePosition anchor
+   *  (default centre). Positive X moves right, positive Y moves down. */
+  heroImageOffsetX?: number;
   heroImageOffsetY?: number;
   /** Raw CSS `transform` value (e.g. 'scale(1.15) translateY(-4%)') applied to
    *  the hero slide image, for fine-tuning framing/zoom beyond what
@@ -50,6 +38,9 @@ export interface WorkItem {
   heroImageTransform?: string;
   width?: number;
   height?: number;
+  /** Gallery entries: images, video files (.mp4/.mov/.webm…) or YouTube/Vimeo
+   *  URLs — the viewer is picked per entry. A bare file name resolves to
+   *  /img/ (images) or /files/ (videos). See utils/media.ts. */
   slideshowImages?: string[];
   /** When true, this item is skipped by the hero rotation even if it has an imageUrl. */
   heroExclude?: boolean;
@@ -146,9 +137,11 @@ export interface CardBadge extends BadgeBase {
   icon?: string;
   imageUrl?: string;
   imageAlt?: string;
-  /** Same 0–100 crop offsets as WorkItem.imageOffset / imageOffsetY. */
-  imageOffset?: number;
+  /** Pixel nudges from the image's centre, as WorkItem.imageOffsetX / imageOffsetY. */
+  imageOffsetX?: number;
   imageOffsetY?: number;
+  /** Bullet points under the text — dash-marked, like the case studies. */
+  points?: string[];
   /** Optional call-to-action label shown at the bottom, e.g. "Explore →". */
   cta?: string;
 }
@@ -164,11 +157,18 @@ export interface WorkBadge extends Omit<BadgeBase, 'href'> {
   tags?: string[];
   imageUrl: string;
   imageAlt?: string;
-  imageOffset?: number;
+  /** Pixel nudges from imagePosition, as WorkItem.imageOffsetX / imageOffsetY. */
+  imageOffsetX?: number;
   imageOffsetY?: number;
   /** Zoom factor, e.g. 1.2 — scales around the offset focal point. */
   imageScale?: number;
+  /** Raw CSS object-position — same as WorkItem.imagePosition; the 0–100
+   *  offsets above take precedence when set. */
+  imagePosition?: string;
   links?: WorkLink[];
+  /** Gallery entries: images, video files (.mp4/.mov/.webm…) or YouTube/Vimeo
+   *  URLs — the viewer is picked per entry. A bare file name resolves to
+   *  /img/ (images) or /files/ (videos). See utils/media.ts. */
   slideshowImages?: string[];
   /** Short mono label above the title, e.g. "Personal · 2026". */
   eyebrow?: string;
@@ -181,6 +181,12 @@ export type Badge = HtmlBadge | CardBadge | WorkBadge;
  *  the neighbours showing either side, plus dots. */
 export type RailLayout = 'row' | 'slideshow';
 
+/** Colour scheme for the section a rail sits in — a set of CSS custom
+ *  properties (see .tone-* in index.css), so every badge type picks it up
+ *  without per-section overrides. 'default' follows the site theme; 'pale'
+ *  is the fixed light-blue panel look used by the AI sections. */
+export type RailTone = 'default' | 'pale';
+
 export interface Rail {
   /** Lookup key — a page places a rail with <BadgeRail railId="…" />. */
   id: string;
@@ -192,8 +198,24 @@ export interface Rail {
   /** Slideshow only: how much of each neighbour peeks in, as a percent of
    *  the rail's width per side. Defaults to 8. */
   peek?: number;
-  /** Badge height in px (slideshow slides, and work badges in a row).
-   *  Defaults to 420 for slideshows, 340 for rows. */
+  /** Slideshow only: slides visible at once on desktop (each is 1/perView of
+   *  the rail's width; drops to one slide on phones). Defaults to 1. */
+  perView?: number;
+  /** Slideshow only: wrap around endlessly instead of stopping at the ends. */
+  loop?: boolean;
+  /** Slideshow only: 'center' (default) centres the active slide; 'start'
+   *  shows `perView` prominent slides from the left edge with `peek`% of the
+   *  next one on the right. */
+  align?: 'center' | 'start';
+  /** Slideshow only: seconds between automatic "next" steps while the rail
+   *  sits at the vertical centre of the screen. Defaults to 5; 0 disables. */
+  autoplay?: number;
+  /** Minimum badge height in px. Slideshow slides otherwise all stretch to
+   *  the tallest one; work (photo) badges default to 420. */
   height?: number;
+  /** Section colour scheme — BadgeRail sections only. Defaults to 'default'. */
+  tone?: RailTone;
+  /** Link button under the rail, e.g. { label: "Explore AI in depth →", href: "/ai" }. */
+  cta?: { label: string; href: string };
   badges: Badge[];
 }

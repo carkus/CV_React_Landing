@@ -43,6 +43,8 @@ This is a React 19 + TypeScript personal CV/portfolio site for Mark Scicluna, co
 
 **Expertise drag-scroll:** `ExpertiseSection.tsx` (no longer rendered on Home — file kept) attaches raw `mousedown/mousemove/mouseup/mouseleave` listeners to the scroll container ref — same logic as the original Blazor `initDragScroll` JS function.
 
+**Rails (the standard for new/converted sections):** `public/data/rails.json` holds every rail; types are `Rail`/`Badge` in `src/types.ts`. A rail carries its own section chrome (`eyebrow`, `heading`, `intro`, `cta`), `layout` (`row` | `slideshow`), and `tone` (`default` | `pale` — a set of colour tokens, `.tone-*` in `index.css`). Badges are a discriminated union on `type` (`card` | `html` | `work`), each drawn by one renderer in `RENDERERS` (`src/components/rails/BadgeRail.tsx`). Place a full section with `<BadgeRail railId="…" sectionId="…" />`, or a bare rail in any cell with `<RailBlock railId="…" />` / `<RailBlock rail={…} />`. The JSON is bundled as the first-paint fallback and re-fetched at runtime, so there's no hand-copied fallback to keep in sync. To convert a section: move its content into rails.json, use existing badge fields (add a field to a badge type rather than a new component), and style through tokens (`--tag-fg/--tag-bg/--tag-border`, the palette vars) rather than section-scoped overrides. The AI section (`#ai`) was the first conversion; `AiSection.tsx` no longer exists.
+
 **Static assets:** `public/img/` for local project images, `public/files/` for the CV PDF and visionOS MOV video. Image paths in `workitems.json` that begin with `img/` are served from `public/img/`.
 
 **Types:** `src/types.ts` — `WorkItem`, `WorkLink`, `WorkCredit`, `Skill`, `ExpertisePanel`, `TimelineEntry`.
