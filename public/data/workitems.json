@@ -35,6 +35,7 @@
         "featured": true,
         "heroImagePosition": "10% center",
         "width": 60,
+        "imageOffsetX": 100,
         "links": [
           { "label": "Open Smooth Software", "url": "https://smoothsoftware.carkus.com" }
         ]

@@ -3,6 +3,11 @@
     "id": "deep-dives",
     "eyebrow": "Deep dives",
     "heading": "Explore by discipline",
+    "layout": "slideshow",
+    "perView": 3,
+    "peek": 10,
+    "align": "start",
+    "loop": true,
     "badges": [
       {
         "type": "card",

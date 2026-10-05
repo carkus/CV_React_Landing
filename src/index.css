@@ -364,7 +364,7 @@ nav {
 @media (prefers-reduced-motion: reduce) {
     .platform-track { transition: none !important; }
     .platform-card, .hero-eyebrow::before, .section-eyebrow::before, .work-summation-label::before,
-    .work-subsection-header::before, .section-deep-link .btn-ghost::before, .work-group-deep-link .btn-ghost::before, .pf-eyebrow::before, .pf-section-label::before,
+    .work-subsection-header::before, .pf-eyebrow::before, .pf-section-label::before,
     .hero-status-dot { animation: none !important; }
 }
 
@@ -545,22 +545,21 @@ section { padding: 7rem 0; }
 .small-project-arrow { position: absolute; top: 1.3rem; right: 1.4rem; color: var(--accent2); font-size: 0.9rem; }
 
 /* ── WORK ────────────────────────────────────────────────────── */
-/* Same pale-blue-on-pale-blue treatment #ai/#ask shares (see AI section
-   below) — a fixed light card regardless of the site's own dark/light
-   toggle. Photo-tile overlay elements
-   (.work-item-title/.work-tag/.work-item-link/.work-item-info gradient,
-   .work-item-credit below) stay hardcoded light-on-dark-photo regardless,
-   since they sit on top of images rather than the section's flat background.
-   Card/tag variables stay the pale blue palette so photo-less small-project
-   cards keep their look; only #work's own flat section background is
-   overridden below to a pale grey-blue (#e8edf3) instead of --navy. */
+/* Its own fixed palette — a light grey with a blue cast and dark text — in
+   both site themes, so the section stays light and readable either way. The
+   palette tokens are re-mapped here so the heading, subsection headers,
+   photo-less cards, rail arrows/dots and deep-link buttons all follow without
+   per-component overrides. Card fill (--navy) sits a step lighter than the
+   ground so cards still stand out. Photo-tile overlays stay hardcoded
+   light-on-dark-photo. */
 #work {
-    background: var(--navy); border-top: 1px solid #cddcf0; border-bottom: 1px solid #cddcf0;
-    --ink: #eef4fb; --navy: #dce8f7; --slate: #cddcf0; --steel: #7c93b8;
-    --mist: #445269; --silver: #1f2937; --chalk: #10131c;
-    --accent: #2f5bb0; --accent2: #1d63d6; --error: #c23b3b;
+    background: #e3e9f1;
+    border-top: 1px solid var(--slate); border-bottom: 1px solid var(--slate);
+    --ink: #d8e0eb; --navy: #f2f5f9; --slate: #c5d0de; --steel: #5b6b85;
+    --mist: #3b475c; --silver: #1f2937; --chalk: #10131c;
+    --accent: #2f5bb0; --accent2: #1d4fae; --error: #c23b3b;
+    --card-shadow-ambient: rgba(0,0,0,0.22);
 }
-#work { background: color-mix(in srgb, #e8edf3 75%, #fff); }
 /* Each subsection is its own self-contained block — a heading followed by
    its own independent row-wrapping grid — rather than a header shoehorned in
    as one more flex item inside a single shared grid. That keeps one
@@ -992,27 +991,10 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
    the three deep dives read as siblings of /profile; only the wider column,
    tab switcher, principle cards and project case studies are new here. */
 .dp-inner { max-width: 1080px; margin: 0 auto; }
+/* "Explore … in depth" links are plain .btn-ghost buttons — same look as
+   every other secondary button on the site; these rules only place them. */
 .section-deep-link { margin-top: 2rem; }
 .work-group-deep-link { display: flex; justify-content: flex-end; margin: 1.2rem 0 1.6rem; }
-/* "Explore … in depth" buttons: a larger, clickable take on
-   .work-subsection-header — same accent mono caps and pulsing glow line,
-   framed as a button that fills with the accent on hover. */
-.section-deep-link .btn-ghost, .work-group-deep-link .btn-ghost {
-    gap: 0.9rem; padding: 0.85rem 1.5rem;
-    font-size: 0.8rem; letter-spacing: 0.22em; color: var(--accent2);
-    border-color: var(--accent);
-    background: color-mix(in srgb, var(--accent2) 6%, transparent);
-    transition: color 0.2s, background 0.2s, border-color 0.2s, transform 0.15s;
-}
-.section-deep-link .btn-ghost::before, .work-group-deep-link .btn-ghost::before {
-    content: ''; display: block; width: 2.2rem; height: 1px; background: currentColor;
-    box-shadow: 0 0 6px 1px color-mix(in srgb, var(--accent2) 70%, transparent);
-    animation: pulse 2.4s ease-in-out infinite;
-}
-.section-deep-link .btn-ghost:hover, .work-group-deep-link .btn-ghost:hover {
-    color: #fff; background: var(--accent2); border-color: var(--accent2); transform: translateY(-2px);
-}
-
 .dp-tabs { display: inline-flex; border: 1px solid var(--slate); border-radius: var(--radius); overflow: hidden; }
 .dp-tab {
     font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase;
@@ -1117,12 +1099,13 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
 .swipe-rail-track.dragging * { pointer-events: none; }
 .swipe-rail-controls { display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 0.4rem; }
 /* Same look as the photo-less small-project cards (#work .rail-badge--card):
-   --navy panel fill, dark-blue --accent border, brighter accent + lift on hover. */
+   --navy panel fill, a soft border (accent blended into the section's --slate
+   so it melds with the ground), brighter accent + lift on hover. */
 .swipe-rail-btn {
     display: inline-flex; align-items: center; justify-content: center;
-    width: 2.1rem; height: 2.1rem; border-radius: 50%; cursor: pointer;
-    background: var(--navy); color: var(--chalk);
-    border: 1px solid var(--accent);
+    width: 1.75rem; height: 1.75rem; border-radius: 6px; cursor: pointer;
+    background: color-mix(in srgb, var(--navy) 55%, transparent); color: var(--chalk);
+    border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--slate));
     transition: color 0.2s, border-color 0.2s, transform 0.2s, opacity 0.2s;
 }
 .swipe-rail-btn:hover:not(:disabled) { color: var(--accent2); border-color: var(--accent2); transform: translateY(-2px); }
