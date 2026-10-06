@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import ThemeToggle from '../components/ThemeToggle';
+import SwipeRail from '../components/rails/SwipeRail';
 import { SlideshowOverlay } from '../components/WorkSection';
 import { useDocumentMeta } from '../seo';
 import { resolveImgPos } from '../utils/imagePosition';
@@ -77,7 +78,11 @@ function ProjectCase({ project, index }: { project: DisciplineProject; index: nu
         </div>
         {openLinks.length > 0 && (
           <div className="dp-case-links">
-            {openLinks.map(l => (
+            {openLinks.map(l => l.inactive ? (
+              <span key={l.url + l.label} className="dp-case-link is-inactive" role="link" aria-disabled="true">
+                <LinkIcon label={l.label} /> {l.label}
+              </span>
+            ) : (
               <a key={l.url + l.label} href={l.url} target="_blank" rel="noopener noreferrer" className="dp-case-link">
                 <LinkIcon label={l.label} /> {l.label}
               </a>
@@ -143,7 +148,9 @@ export default function DisciplinePage({ discipline }: { discipline: DisciplineK
       <section className="pf-section pf-section--alt">
         <div className="dp-inner">
           <div className="pf-section-label">How I work</div>
-          <div className="dp-principles">
+          {/* Same looping slideshow as the home page's Deep dives rail, on every
+              discipline page. */}
+          <SwipeRail label="How I work" variant="slideshow" perView={3} peek={10} align="start" loop>
             {d.principles.map(p => (
               <div key={p.title} className="dp-principle">
                 <div className="info-card-icon">{p.icon}</div>
@@ -151,7 +158,7 @@ export default function DisciplinePage({ discipline }: { discipline: DisciplineK
                 <p className="dp-principle-text">{p.text}</p>
               </div>
             ))}
-          </div>
+          </SwipeRail>
           <div className="dp-stack">
             <span className="dp-stack-label">Stack</span>
             {d.stack.map(t => <span key={t} className="skill-box etag">{t}</span>)}
@@ -172,11 +179,12 @@ export default function DisciplinePage({ discipline }: { discipline: DisciplineK
         <div className="dp-inner dp-next-inner">
           <div>
             <div className="pf-section-label">Next</div>
-            <Link to={next.path} className="dp-next-link">{next.heading} →</Link>
+            <div className="dp-next-title">{next.heading}</div>
           </div>
           <div className="dp-next-ctas">
-            <Link to="/#contact" className="btn-primary">Get in touch</Link>
+            <Link to="/#contact" className="btn-ghost">Get in touch</Link>
             <Link to="/profile" className="btn-ghost">References ↗</Link>
+            <Link to={next.path} className="btn-primary">Next →</Link>
           </div>
         </div>
       </section>

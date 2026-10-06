@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { Link } from 'react-router-dom';
+import ExploreLink from './ExploreLink';
 import type { Rail, WorkGroup } from '../types';
 import { projectBadge, useWorkGroups } from '../data/projects';
 import { DISCIPLINES } from '../data/disciplines';
@@ -129,9 +129,7 @@ export default function WorkSection() {
               <RailBlock rail={groupRail(group)} className="work-group-rail" />
               {group.discipline && DISCIPLINES[group.discipline] && (
                 <div className="work-group-deep-link">
-                  <Link to={DISCIPLINES[group.discipline].path} className="btn-ghost">
-                    Explore {DISCIPLINES[group.discipline].heading} in depth →
-                  </Link>
+                  <ExploreLink href={DISCIPLINES[group.discipline].path} label={`Explore ${DISCIPLINES[group.discipline].heading} in depth`} />
                 </div>
               )}
             </div>

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
+import ExploreLink from '../ExploreLink';
 import SwipeRail from './SwipeRail';
 import { LinkIcon, SlideshowOverlay } from '../WorkSection';
 import { resolveImgPos } from '../../utils/imagePosition';
@@ -144,7 +145,11 @@ function WorkBadgeView({ badge }: { badge: WorkBadge }) {
       <div className="rail-work-scrim" />
       {(openLinks.length > 0 || hasGallery) && (
         <div className="rail-work-icons">
-          {openLinks.map(l => (
+          {openLinks.map(l => l.inactive ? (
+            <span key={l.url} className="platform-link is-inactive" role="link" aria-disabled="true" aria-label={l.label} title={l.label}>
+              <LinkIcon label={l.label} />
+            </span>
+          ) : (
             <a key={l.url} href={l.url} target="_blank" rel="noopener noreferrer" className="platform-link" aria-label={l.label} title={l.label} draggable={false}>
               <LinkIcon label={l.label} />
             </a>
@@ -243,10 +248,8 @@ export default function BadgeRail({ railId, sectionId }: { railId: string; secti
         {rail.intro && <p className="section-intro reveal reveal-delay-2">{rail.intro}</p>}
         <RailBlock rail={rail} className="reveal reveal-delay-2" />
         {cta && (
-          <div className="section-deep-link reveal reveal-delay-3">
-            {cta.href.startsWith('/')
-              ? <Link to={cta.href} className="btn-ghost">{cta.label}</Link>
-              : <a href={cta.href} target="_blank" rel="noopener noreferrer" className="btn-ghost">{cta.label}</a>}
+          <div className="section-deep-link section-deep-link--end reveal reveal-delay-3">
+            <ExploreLink href={cta.href} label={cta.label} />
           </div>
         )}
       </div>

@@ -341,8 +341,10 @@ nav {
     box-shadow: 0 4px 14px -4px rgba(0,0,0,0.6);
     transition: background 0.2s, border-color 0.2s, transform 0.15s;
 }
-.platform-link:hover { background: var(--accent2, #5a8aee); border-color: var(--accent2, #5a8aee); transform: translateY(-2px); }
+.platform-link:not(.is-inactive):hover { background: var(--accent2, #5a8aee); border-color: var(--accent2, #5a8aee); transform: translateY(-2px); }
 .platform-link i { font-size: 1.35rem; }
+/* A link flagged "inactive" (e.g. "Coming soon"): shown, dimmed, not clickable. */
+.platform-link.is-inactive, .dp-case-link.is-inactive { opacity: 0.45; cursor: default; }
 .platform-dots { position: absolute; top: 1.4rem; right: 1.4rem; display: flex; gap: 0.5rem; z-index: 2; }
 .platform-dot {
     /* box-sizing override is load-bearing: the site-wide border-box reset
@@ -1006,11 +1008,46 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
    the three deep dives read as siblings of /profile; only the wider column,
    tab switcher, principle cards and project case studies are new here. */
 .dp-inner { max-width: 1080px; margin: 0 auto; }
-/* "Explore … in depth" links are plain .btn-ghost buttons — same look as
-   every other secondary button on the site, but pill-shaped. */
+/* "Explore … in depth" links (ExploreLink.tsx): an editorial text link, not a
+   boxed button — mono uppercase label on a hairline underline, then a hairline
+   arrow circle. The rail prev/next buttons are the same circle, so the two
+   read as one family. Hover: underline + circle take the accent, the circle
+   fills and the arrow nudges forward. */
 .section-deep-link { margin-top: 2rem; }
+/* Rail CTAs sit on the right, lined up with the Projects groups' explore links. */
+.section-deep-link--end { display: flex; justify-content: flex-end; }
 .work-group-deep-link { display: flex; justify-content: flex-end; margin: 1.2rem 0 1.6rem; }
-.section-deep-link .btn-ghost, .work-group-deep-link .btn-ghost { border-radius: 999px; }
+.explore-link {
+    --circle: 2.25rem;
+    display: inline-flex; align-items: center; gap: 0.9rem;
+    font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--mist); text-decoration: none; transition: color 0.25s;
+}
+.explore-link-label {
+    padding-bottom: 0.3rem;
+    background: linear-gradient(var(--accent2), var(--accent2)) left bottom / 0% 1px no-repeat,
+                linear-gradient(var(--steel), var(--steel)) left bottom / 100% 1px no-repeat;
+    transition: background-size 0.35s ease;
+}
+.explore-link:hover, .explore-link:focus-visible { color: var(--chalk); }
+.explore-link:hover .explore-link-label,
+.explore-link:focus-visible .explore-link-label { background-size: 100% 1px, 100% 1px; }
+.explore-link:focus-visible { outline: none; }
+.explore-link:focus-visible .explore-link-icon { outline: 2px solid var(--accent2); outline-offset: 2px; }
+
+/* The shared hairline arrow circle. */
+.explore-link-icon, .swipe-rail-btn {
+    display: inline-flex; align-items: center; justify-content: center; flex: none;
+    width: var(--circle, 2.25rem); height: var(--circle, 2.25rem); padding: 0; border-radius: 50%;
+    background: transparent; color: var(--chalk);
+    border: 1px solid color-mix(in srgb, var(--steel) 70%, transparent);
+    transition: color 0.25s, background-color 0.25s, border-color 0.25s, opacity 0.2s;
+}
+.explore-link-icon svg, .swipe-rail-btn svg { transition: transform 0.25s ease; }
+.explore-link:hover .explore-link-icon, .explore-link:focus-visible .explore-link-icon {
+    background: var(--accent); border-color: var(--accent); color: #fff;
+}
+.explore-link:hover .explore-link-icon svg { transform: translateX(3px); }
 .dp-tabs { display: inline-flex; border: 1px solid var(--slate); border-radius: var(--radius); overflow: hidden; }
 .dp-tab {
     font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase;
@@ -1023,8 +1060,11 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
 .dp-header .pf-sub { margin-bottom: 3rem; }
 .dp-intro-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 4rem; align-items: start; }
 
-.dp-principles { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5px; background: var(--slate); border: 1px solid var(--slate); border-radius: var(--radius-lg); overflow: hidden; }
-.dp-principle { background: var(--ink); padding: 1.6rem 1.7rem; display: flex; flex-direction: column; gap: 0.7rem; }
+/* "How I work" cards, one per slide in a SwipeRail slideshow. */
+.dp-principle {
+    background: var(--ink); border: 1px solid var(--slate); border-radius: var(--radius-lg);
+    padding: 1.6rem 1.7rem; display: flex; flex-direction: column; gap: 0.7rem;
+}
 .dp-principle .info-card-icon { width: 40px; height: 40px; font-size: 1.15rem; border-radius: var(--radius); }
 .dp-principle-title { font-family: var(--serif); font-size: 1.2rem; color: var(--chalk); }
 .dp-principle-text { font-size: 0.85rem; line-height: 1.65; color: var(--mist); }
@@ -1075,13 +1115,13 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
 .dp-case-tags { clear: both; display: flex; flex-wrap: wrap; gap: 0.4rem; padding-top: 0.4rem; }
 .dp-case-links { display: flex; flex-wrap: wrap; gap: 0.6rem 1.4rem; margin-top: 1.3rem; padding-top: 1.1rem; border-top: 1px solid var(--slate); }
 .dp-case-link { display: inline-flex; align-items: center; gap: 0.45rem; font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent2); text-decoration: none; transition: color 0.2s; }
-.dp-case-link:hover { color: var(--chalk); }
+.dp-case-link:not(.is-inactive):hover { color: var(--chalk); }
 
-.dp-next-inner { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+.dp-next-inner { display: flex; align-items: flex-end; justify-content: space-between; gap: 1.5rem 2rem; flex-wrap: wrap; }
 .dp-next .pf-section-label { margin-bottom: 1rem; }
-.dp-next-link { font-family: var(--serif); font-weight: 300; font-size: clamp(2rem, 3.5vw, 3rem); color: var(--chalk); text-decoration: none; transition: color 0.2s; }
-.dp-next-link:hover { color: var(--accent2); }
-.dp-next-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+.dp-next-title { font-family: var(--serif); font-weight: 300; font-size: clamp(2rem, 3.5vw, 3rem); line-height: 1.1; color: var(--chalk); }
+/* Buttons hug the right edge (Next last, far right) even once they wrap. */
+.dp-next-ctas { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: flex-end; margin-left: auto; }
 
 @media (max-width: 860px) {
     .dp-intro-grid { grid-template-columns: 1fr; gap: 2.5rem; }
@@ -1117,17 +1157,12 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
 .swipe-rail-track.dragging { scroll-snap-type: none; scroll-behavior: auto; cursor: grabbing; user-select: none; }
 .swipe-rail-track.dragging * { pointer-events: none; }
 .swipe-rail-controls { display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 0.4rem; }
-/* Same look as the photo-less small-project cards (#work .rail-badge--card):
-   --navy panel fill, a soft border (accent blended into the section's --slate
-   so it melds with the ground), brighter accent + lift on hover. */
-.swipe-rail-btn {
-    display: inline-flex; align-items: center; justify-content: center;
-    width: 1.75rem; height: 1.75rem; border-radius: 999px; cursor: pointer;
-    background: color-mix(in srgb, var(--navy) 55%, transparent); color: var(--chalk);
-    border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--slate));
-    transition: color 0.2s, border-color 0.2s, transform 0.2s, opacity 0.2s;
-}
-.swipe-rail-btn:hover:not(:disabled) { color: var(--accent2); border-color: var(--accent2); transform: translateY(-2px); }
+/* Prev/next: shape and colours come from the shared arrow circle (see
+   .explore-link-icon); the arrow nudges in its own direction on hover. */
+.swipe-rail-btn { cursor: pointer; }
+.swipe-rail-btn:hover:not(:disabled) { background: var(--accent); border-color: var(--accent); color: #fff; }
+.swipe-rail-btn:hover:not(:disabled):first-child svg { transform: translateX(-2px); }
+.swipe-rail-btn:hover:not(:disabled):last-child svg { transform: translateX(2px); }
 .swipe-rail-btn:focus-visible { outline: 2px solid var(--accent2); outline-offset: 2px; }
 .swipe-rail-btn:disabled { opacity: 0.35; cursor: default; }
 
@@ -1251,30 +1286,27 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
     display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
 }
 .rail-work-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.2rem; }
-/* Description stays tucked away until the tile is hovered (or a link inside
-   it is focused), then slides open above the tags. Only on devices that can
-   hover — on touch it's always shown, or it could never be read. */
-@media (hover: hover) {
-    .rail-work-desc {
-        max-height: 0; opacity: 0; margin-block: -0.25rem;
-        transition: max-height 0.35s ease, opacity 0.25s ease, margin 0.35s ease;
-    }
-    .rail-badge--work:hover .rail-work-desc,
-    .rail-badge--work:focus-within .rail-work-desc { max-height: 6em; opacity: 1; margin-block: 0; }
-    /* A dark shade behind the title and description that fades in with it,
-       so the opened text stays legible over bright photos. */
-    .rail-work-body { isolation: isolate; }
-    .rail-work-body::before {
-        content: ''; position: absolute; inset: -2.5rem 0 0; z-index: -1; pointer-events: none;
-        background: linear-gradient(to top, rgba(8,11,18,0.85) 0%, rgba(8,11,18,0.7) 60%, rgba(8,11,18,0) 100%);
-        opacity: 0; transition: opacity 0.35s ease;
-    }
-    .rail-badge--work:hover .rail-work-body::before,
-    .rail-badge--work:focus-within .rail-work-body::before { opacity: 1; }
-    /* …but not while the rail is moving (SwipeRail flags .scrolling). */
-    .swipe-rail-track.scrolling .rail-badge--work .rail-work-desc { max-height: 0; opacity: 0; margin-block: -0.25rem; }
-    .swipe-rail-track.scrolling .rail-badge--work .rail-work-body::before { opacity: 0; }
+/* Description stays tucked away until the tile is hovered (tapped, on touch)
+   or a link inside it is focused, then slides open above the tags. */
+.rail-work-desc {
+    max-height: 0; opacity: 0; margin-block: -0.25rem;
+    transition: max-height 0.35s ease, opacity 0.25s ease, margin 0.35s ease;
 }
+.rail-badge--work:hover .rail-work-desc,
+.rail-badge--work:focus-within .rail-work-desc { max-height: 6em; opacity: 1; margin-block: 0; }
+/* A dark shade behind the title and description that fades in with it,
+   so the opened text stays legible over bright photos. */
+.rail-work-body { isolation: isolate; }
+.rail-work-body::before {
+    content: ''; position: absolute; inset: -2.5rem 0 0; z-index: -1; pointer-events: none;
+    background: linear-gradient(to top, rgba(8,11,18,0.85) 0%, rgba(8,11,18,0.7) 60%, rgba(8,11,18,0) 100%);
+    opacity: 0; transition: opacity 0.35s ease;
+}
+.rail-badge--work:hover .rail-work-body::before,
+.rail-badge--work:focus-within .rail-work-body::before { opacity: 1; }
+/* …but not while the rail is moving (SwipeRail flags .scrolling). */
+.swipe-rail-track.scrolling .rail-badge--work .rail-work-desc { max-height: 0; opacity: 0; margin-block: -0.25rem; }
+.swipe-rail-track.scrolling .rail-badge--work .rail-work-body::before { opacity: 0; }
 .work-slideshow-rail { margin-bottom: 2.5rem; }
 
 /* Multi-slide slideshow (rail `perView` > 1): each slide is 1/--per-view of
@@ -1292,8 +1324,10 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
 .swipe-rail--multi .rail-card-body { padding: 1.1rem 1.6rem 1.6rem; }
 .swipe-rail--multi .rail-card-title { font-size: 1.3rem; }
 /* !important beats the inline --per-view from the rail's data. */
+/* Step down gradually — 2 per view through tablet widths, 1 only on phones —
+   so square work tiles don't balloon to near full width mid-range. */
 @media (max-width: 1024px) { .swipe-rail--multi { --per-view: 2 !important; } }
-@media (max-width: 768px) {
+@media (max-width: 640px) {
     .swipe-rail--multi { --per-view: 1 !important; }
     .swipe-rail--multi .swipe-rail-track { padding-inline: var(--peek, 8%); }
 }
@@ -1309,7 +1343,10 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
     scroll-snap-align: start; transform: none; opacity: 0.4;
 }
 .swipe-rail--start .swipe-rail-track > .is-active { opacity: 1; }
-@media (max-width: 1024px) { .swipe-rail--start { --per-view: 1 !important; } }
+@media (max-width: 1024px) { .swipe-rail--start:not(.swipe-rail--multi) { --per-view: 1 !important; } }
+/* Nothing to navigate when every slide is already in view (see fitClass in SwipeRail). */
+@media (min-width: 1025px) { .swipe-rail--fits .swipe-rail-controls { display: none; } }
+@media (min-width: 641px) { .swipe-rail--fits-2.swipe-rail--multi .swipe-rail-controls { display: none; } }
 @media (max-width: 768px) { .swipe-rail--start .swipe-rail-track { padding-inline: 0; } }
 
 @media (max-width: 768px) {

@@ -1,6 +1,8 @@
 export interface WorkLink {
   label: string;
   url: string;
+  /** Shown but not clickable — e.g. a "Coming soon" link before launch. */
+  inactive?: boolean;
 }
 
 export interface WorkCredit {

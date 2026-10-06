@@ -291,9 +291,15 @@ export default function SwipeRail({ children, label, variant = 'row', peek = 8, 
   } as CSSProperties;
 
   const showControls = slideshow ? count > 1 : canPrev || canNext;
+  // Every slide already in view: CSS hides the arrows/dots at the widths where
+  // that holds (--fits: at the full perView; --fits-2: also at the 2-up
+  // tablet step). Phones drop to 1-up, so they keep the navigation.
+  const fitClass = slideshow && !looping && count <= perView
+    ? (count <= 2 ? ' swipe-rail--fits swipe-rail--fits-2' : ' swipe-rail--fits')
+    : '';
 
   return (
-    <div ref={rootRef} className={`swipe-rail swipe-rail--${variant}${slideshow && perView > 1 ? ' swipe-rail--multi' : ''}${startAligned ? ' swipe-rail--start' : ''}${canPrev ? ' can-prev' : ''}${canNext ? ' can-next' : ''}`} style={style}>
+    <div ref={rootRef} className={`swipe-rail swipe-rail--${variant}${slideshow && perView > 1 ? ' swipe-rail--multi' : ''}${startAligned ? ' swipe-rail--start' : ''}${fitClass}${canPrev ? ' can-prev' : ''}${canNext ? ' can-next' : ''}`} style={style}>
       <div
         ref={trackRef}
         className={`swipe-rail-track${dragging ? ' dragging' : ''}`}

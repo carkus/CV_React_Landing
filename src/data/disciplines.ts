@@ -5,7 +5,7 @@
 
 export type DisciplineKey = 'web' | 'ai' | 'mobile';
 
-export interface DisciplineLink { label: string; url: string; }
+export interface DisciplineLink { label: string; url: string; inactive?: boolean; }
 
 export interface DisciplineProject {
   title: string;
@@ -95,7 +95,7 @@ export const DISCIPLINES: Record<DisciplineKey, Discipline> = {
         tags: ['React', 'TypeScript', 'Express', 'MySQL', 'TipTap'],
         imageUrl: '/img/scribbler-2.png',
         imageAlt: 'Scribbler',
-        links: [{ label: 'Coming soon', url: 'https://scribbler.carkus.com' }],
+        links: [{ label: 'Coming soon', url: 'https://scribbler.carkus.com', inactive: true }],
       },
       {
         title: 'AI Forms — PDF Builder',
@@ -221,9 +221,8 @@ export const DISCIPLINES: Record<DisciplineKey, Discipline> = {
           'MCP server exposing analyze_job_fit, generate_cover_letter, and fetch_job_from_url',
         ],
         tags: ['.NET', 'TypeScript', 'MCP', 'Structured Output', 'Multi-provider'],
-        imageUrl: '/img/jobfit_card_noblurb.png',
+        imageUrl: '/img/jobfit_AI_square.png',
         imageAlt: 'JobFit',
-        imagePosition: 'center 5%',
         links: [{ label: 'Open JobFit', url: 'https://jobfit.carkus.com' }],
       },
       {
@@ -372,7 +371,7 @@ export const DISCIPLINES: Record<DisciplineKey, Discipline> = {
           'Fog-of-war exploration; game state managed with Zustand',
         ],
         tags: ['React Native', 'Expo', 'TypeScript', 'Zustand', 'Game Dev'],
-        imageUrl: '/img/image_a83945ea.png',
+        imageUrl: '/img/panic_stations_square.png',
         imageAlt: 'Panic Stations',
         imagePosition: 'center 20%',
         links: [],

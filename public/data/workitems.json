@@ -33,7 +33,7 @@
         "id": "smooth-software",
         "title": "Smooth Software",
         "tags": ["React", "TypeScript", "ASP.NET Core"],
-        "imageUrl": "/img/smooth_software_wide.png",
+        "imageUrl": "/img/smooth_software.png",
         "imageAlt": "Smooth Software",
         "description": "Smooth Software builds websites, apps, and admin tools fast, at straight rates. You get clean code, clear communication, and a product you will use and love",
         "featured": true,
@@ -55,7 +55,7 @@
         "featured": true,
         "width": 60,
         "links": [
-          { "label": "Coming Soon", "url": "https://scribbler.carkus.com" }
+          { "label": "Coming Soon", "url": "https://scribbler.carkus.com", "inactive": true }
         ]
       },
       {
@@ -152,8 +152,7 @@
         "id": "jobfit",
         "title": "JobFit™ — AI Job Match Analyser",
         "tags": ["TypeScript", ".NET", "MCP", "Structured Output", "Multi-AI Providers"],
-        "imageUrl": "/img/jobfit_card_noblurb.png",
-        "imageAlt": "Job interview handshake",
+        "imageUrl": "/img/jobfit_AI_notext.png",
         "description": "Multi-provider AI tool that scores CVs against job descriptions, generates ATS compliant resumes, surfaces skill gaps, and drafts cover letters — exposes MCP tools for direct use from Claude.",
         "featured": false,
         "imagePosition": "center 5%",
@@ -167,7 +166,7 @@
         "id": "panic-stations",
         "title": "Panic Stations",
         "tags": ["React Native", "Expo", "TypeScript", "Zustand", "Game Dev"],
-        "imageUrl": "/img/image_a83945ea.png",
+        "imageUrl": "/img/panic_stations_square.png",
         "imageAlt": "Panic Stations",
         "description": "Turn-based sci-fi roguelike RPG built with React Native and Expo — procedurally generated space stations, tap-to-move pathfinding, and fog-of-war exploration.",
         "featured": false,

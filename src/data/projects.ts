@@ -36,7 +36,7 @@ export function projectBadge(item: WorkItem, short = false): Badge {
   const text = (short && item.summary) || item.description;
   const openLinks = item.links.filter(l => !!l.url);
   if (!item.imageUrl) {
-    return { type: 'card', id: item.id, title: item.title, text, tags: item.tags, href: openLinks[0]?.url };
+    return { type: 'card', id: item.id, title: item.title, text, tags: item.tags, href: openLinks.find(l => !l.inactive)?.url };
   }
   return {
     type: 'work',

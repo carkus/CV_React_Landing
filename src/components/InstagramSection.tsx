@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { SOCIALS } from '../data/socials';
+import ExploreLink from './ExploreLink';
 
 // Latest Instagram posts, read-only. /data/instagram.json is generated hourly
 // on the server by scripts/instagram/instagram_sync.py (see its README) — it
@@ -52,9 +53,7 @@ export default function InstagramSection() {
         </div>
         {PROFILE_URL && (
           <div className="section-deep-link reveal reveal-delay-3">
-            <a href={PROFILE_URL} target="_blank" rel="noopener noreferrer" className="btn-ghost">
-              Follow {feed.username ? `@${feed.username}` : 'on Instagram'} ↗
-            </a>
+            <ExploreLink href={PROFILE_URL} label={`Follow ${feed.username ? `@${feed.username}` : 'on Instagram'}`} />
           </div>
         )}
       </div>

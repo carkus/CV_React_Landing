@@ -119,7 +119,11 @@ export default function HeroSection() {
       <div className="platform-overlay" />
       {item.links.filter(l => !!l.url).length > 0 && (
         <div className="platform-links">
-          {item.links.filter(l => !!l.url).map(l => (
+          {item.links.filter(l => !!l.url).map(l => l.inactive ? (
+            <span key={l.url} className="platform-link is-inactive" role="link" aria-disabled="true" aria-label={l.label} title={l.label}>
+              <LinkIcon label={l.label} />
+            </span>
+          ) : (
             <a key={l.url} href={l.url} target="_blank" rel="noopener noreferrer" className="platform-link" aria-label={l.label} title={l.label}>
               <LinkIcon label={l.label} />
             </a>
