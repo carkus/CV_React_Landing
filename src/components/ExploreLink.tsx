@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom';
 
 // Editorial "read more" link used for every "Explore … in depth" style call to
 // action: mono uppercase label on a hairline underline, then a hairline arrow
-// circle — the same circle the rail prev/next buttons use. Any trailing arrow
-// character in the label (→ / ↗) is dropped, since the circle draws its own.
+// pill — the same pill the rail prev/next buttons use. Any trailing arrow
+// character in the label (→ / ↗) is dropped, since the pill draws its own.
 export default function ExploreLink({ href, label }: { href: string; label: string }) {
   const external = !href.startsWith('/') && !href.startsWith('#');
   const text = label.replace(/\s*[→↗]\s*$/, '');

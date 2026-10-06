@@ -373,7 +373,6 @@ export const DISCIPLINES: Record<DisciplineKey, Discipline> = {
         tags: ['React Native', 'Expo', 'TypeScript', 'Zustand', 'Game Dev'],
         imageUrl: '/img/panic_stations_square.png',
         imageAlt: 'Panic Stations',
-        imagePosition: 'center 20%',
         links: [],
       },
     ],

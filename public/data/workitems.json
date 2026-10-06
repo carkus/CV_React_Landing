@@ -33,13 +33,12 @@
         "id": "smooth-software",
         "title": "Smooth Software",
         "tags": ["React", "TypeScript", "ASP.NET Core"],
-        "imageUrl": "/img/smooth_software.png",
+        "imageUrl": "/img/smooth_square.png",
         "imageAlt": "Smooth Software",
         "description": "Smooth Software builds websites, apps, and admin tools fast, at straight rates. You get clean code, clear communication, and a product you will use and love",
         "featured": true,
         "heroImagePosition": "10% center",
         "width": 60,
-        "imageOffsetX": 100,
         "links": [
           { "label": "Open Smooth Software", "url": "https://smoothsoftware.carkus.com" }
         ]
@@ -86,7 +85,6 @@
         "tags": ["Cross-platform", "Flutter", "Swift", "Kotlin"],
         "imageUrl": "/img/icon_crop_sq.png",
         "imageAlt": "ZOME platform",
-        "imagePosition": "left center",
         "description": "ZOME is a spatial platform and messenger where you can plant your messages anywhere in the world, at any location and even points in time.",
         "featured": false,
         "heroExclude": false,
@@ -155,7 +153,6 @@
         "imageUrl": "/img/jobfit_AI_notext.png",
         "description": "Multi-provider AI tool that scores CVs against job descriptions, generates ATS compliant resumes, surfaces skill gaps, and drafts cover letters — exposes MCP tools for direct use from Claude.",
         "featured": false,
-        "imagePosition": "center 5%",
         "width": 60,
         "links": [
           { "label": "Open JobFit ↗", "url": "https://jobfit.carkus.com" }
@@ -171,7 +168,6 @@
         "description": "Turn-based sci-fi roguelike RPG built with React Native and Expo — procedurally generated space stations, tap-to-move pathfinding, and fog-of-war exploration.",
         "featured": false,
         "heroExclude": true,
-        "imagePosition": "center 20%",
         "width": 50,
         "links": []
       },
