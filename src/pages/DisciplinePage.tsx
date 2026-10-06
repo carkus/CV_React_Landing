@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import ThemeToggle from '../components/ThemeToggle';
 import { SlideshowOverlay } from '../components/WorkSection';
 import { useDocumentMeta } from '../seo';
 import { resolveImgPos } from '../utils/imagePosition';
+import { resolveMedia } from '../utils/media';
+import { useCardSlideshow } from '../utils/useCardSlideshow';
 import { DISCIPLINES, DISCIPLINE_ORDER } from '../data/disciplines';
 import type { DisciplineKey, DisciplineProject } from '../data/disciplines';
 
@@ -17,6 +19,10 @@ function LinkIcon({ label }: { label: string }) {
 function ProjectCase({ project, index }: { project: DisciplineProject; index: number }) {
   const [slideshowOpen, setSlideshowOpen] = useState(false);
   const hasSlideshow = !!project.slideshowImages?.length;
+  // Same in-card slideshow as the Work rail tiles: cover, then still images.
+  const slides = (project.slideshowImages ?? []).map(resolveMedia).filter(m => m.kind === 'image').map(m => m.src);
+  const coverRef = useRef<HTMLImageElement>(null);
+  const frame = useCardSlideshow(slides.length + 1, coverRef);
   const openLinks = project.links.filter(l => !!l.url);
   const imgPos = resolveImgPos(project.imageOffsetX, project.imageOffsetY, project.imagePosition);
   const imgStyle = {
@@ -37,16 +43,24 @@ function ProjectCase({ project, index }: { project: DisciplineProject; index: nu
         </div>
         <h3 className="dp-case-title">{project.title}</h3>
         {project.imageUrl && (
-          <figure
-            className="dp-case-media"
-            style={project.imageAspect ? { aspectRatio: project.imageAspect } : undefined}
-          >
+          <figure className="dp-case-media">
             <img
+              ref={coverRef}
               src={project.imageUrl}
               alt={project.imageAlt ?? project.title}
               loading="lazy"
               style={imgStyle}
             />
+            {slides.map((src, i) => (
+              <img
+                key={src}
+                className={`dp-case-slide${frame === i + 1 ? ' active' : ''}`}
+                src={src}
+                alt=""
+                aria-hidden="true"
+                loading="lazy"
+              />
+            ))}
             {hasSlideshow && (
               <button type="button" className="dp-case-gallery" onClick={() => setSlideshowOpen(true)}>
                 View gallery · {project.slideshowImages!.length}

@@ -1037,10 +1037,9 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
     transition: border-color 0.25s, box-shadow 0.25s;
 }
 .dp-case:hover { border-color: var(--steel); box-shadow: 0 24px 60px -30px var(--card-shadow-ambient); }
-/* The image is a float with a fixed-ratio frame (override per project via
-   imageAspect); text wraps beside it and runs full width once past it. */
+/* The image is a float in a square frame (matching the Work rail tiles); text wraps beside it and runs full width once past it. */
 .dp-case-media {
-    float: left; width: min(46%, 460px); aspect-ratio: 4 / 3;
+    float: left; width: min(46%, 460px); aspect-ratio: 1 / 1;
     margin: 0.35rem 2.2rem 1.2rem 0;
     position: relative; background: var(--slate); overflow: hidden; border-radius: var(--radius);
 }
@@ -1049,8 +1048,12 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
 /* transform-origin follows the crop focal point so imageScale zooms into the
    same part of the image the offsets frame, rather than the dead centre. */
 .dp-case-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: var(--img-pos, center); transform: scale(var(--img-scale, 1)); transform-origin: var(--img-pos, center); }
+/* In-frame slideshow stills (same rhythm as the Work rail tiles): letterboxed
+   so screenshots aren't cropped, cross-fading over the cover. */
+.dp-case-media img.dp-case-slide { object-fit: contain; object-position: center; transform: none; background: #0b0f17; opacity: 0; transition: opacity 0.8s ease; }
+.dp-case-media img.dp-case-slide.active { opacity: 1; }
 .dp-case-gallery {
-    position: absolute; left: 1rem; bottom: 1rem;
+    position: absolute; left: 1rem; bottom: 1rem; z-index: 1;
     font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase;
     color: #fff; background: rgba(10,13,20,0.6); border: 1px solid rgba(255,255,255,0.25);
     -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
@@ -1207,11 +1210,24 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
    are deliberately theme-independent (white on dark) since they sit on a
    photo, same as the Work grid's tiles. */
 .rail-badge--work { min-height: var(--slide-h, 420px); background: var(--slate); }
+/* Photo tiles are always square (rounded corners kept from .rail-badge).
+   Width comes from the rail (perView/peek); height follows it. They opt out
+   of the row's stretch-to-tallest and the rail's height floor, either of
+   which would override the aspect ratio. */
+.swipe-rail .swipe-rail-track > .rail-badge--work { aspect-ratio: 1 / 1; height: auto; min-height: 0; align-self: flex-start; }
 .rail-work-img {
     position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
     object-position: var(--img-pos, center); transform: scale(var(--img-scale, 1));
     transform-origin: var(--img-pos, center); user-select: none;
 }
+/* In-card slideshow frames: stacked over the cover, fading in when active.
+   Shown whole (contain) on a dark ground, since gallery shots are often
+   phone screens or wide UI captures that a cover crop would cut apart. */
+.rail-work-slide {
+    object-fit: contain; object-position: center; transform: none;
+    background: #0b0f17; opacity: 0; transition: opacity 0.8s ease;
+}
+.rail-work-slide.active { opacity: 1; }
 .rail-work-scrim {
     position: absolute; inset: 0; pointer-events: none;
     background: linear-gradient(to top, rgba(8,11,18,0.92) 0%, rgba(8,11,18,0.6) 38%, rgba(8,11,18,0) 70%),

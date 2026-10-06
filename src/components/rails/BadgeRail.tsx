@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import SwipeRail from './SwipeRail';
 import { LinkIcon, SlideshowOverlay } from '../WorkSection';
 import { resolveImgPos } from '../../utils/imagePosition';
+import { resolveMedia } from '../../utils/media';
+import { useCardSlideshow } from '../../utils/useCardSlideshow';
 import { resolveProjectRefs, useWorkGroups } from '../../data/projects';
 import type { Badge, CardBadge, HtmlBadge, Rail, WorkBadge } from '../../types';
 import bundledRails from '../../../public/data/rails.json';
@@ -102,16 +104,22 @@ function HtmlBadgeView({ badge }: { badge: HtmlBadge }) {
 }
 
 // Same anatomy as the Work grid's photo tile; the description is revealed on
-// hover (see .rail-work-desc in index.css).
+// hover (see .rail-work-desc in index.css). A badge with slideshowImages also
+// cycles through its still images behind the text (videos/embeds stay in the
+// Gallery overlay only).
 function WorkBadgeView({ badge }: { badge: WorkBadge }) {
   const [galleryOpen, setGalleryOpen] = useState(false);
   const imgPos = resolveImgPos(badge.imageOffsetX, badge.imageOffsetY, badge.imagePosition);
   const openLinks = (badge.links ?? []).filter(l => !!l.url);
   const hasGallery = !!badge.slideshowImages?.length;
+  const slides = (badge.slideshowImages ?? []).map(resolveMedia).filter(m => m.kind === 'image').map(m => m.src);
+  const coverRef = useRef<HTMLImageElement>(null);
+  const frame = useCardSlideshow(slides.length + 1, coverRef);
 
   return (
     <>
       <img
+        ref={coverRef}
         className="rail-work-img"
         src={badge.imageUrl}
         alt={badge.imageAlt ?? badge.title}
@@ -122,6 +130,17 @@ function WorkBadgeView({ badge }: { badge: WorkBadge }) {
           ...(badge.imageScale != null ? { '--img-scale': badge.imageScale } : {}),
         } as React.CSSProperties}
       />
+      {slides.map((src, i) => (
+        <img
+          key={src}
+          className={`rail-work-img rail-work-slide${frame === i + 1 ? ' active' : ''}`}
+          src={src}
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          draggable={false}
+        />
+      ))}
       <div className="rail-work-scrim" />
       {(openLinks.length > 0 || hasGallery) && (
         <div className="rail-work-icons">
