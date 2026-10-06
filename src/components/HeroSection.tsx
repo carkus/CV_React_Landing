@@ -163,8 +163,8 @@ export default function HeroSection() {
             <a href={CV_PDF_PATH} download className="btn-ghost nav-cv-btn">CV ↓</a>
           </div>
           <div className="hero-social">
-            <SocialLinks />
-            <a href="mailto:dicarkus@hotmail.com" className="social-link">Email ↗</a>
+            <SocialLinks arrow={false} />
+            <a href="mailto:dicarkus@hotmail.com" className="social-link">Email</a>
           </div>
         </div>
         <div className="hero-visual">

@@ -283,7 +283,7 @@ export const DISCIPLINES: Record<DisciplineKey, Discipline> = {
     sub: 'Swift / SwiftUI · Flutter · Kotlin · React Native · visionOS · Android XR',
     intro: [
       'Mobile cross-platform across native iOS and Android or cross-platform using Flutter or React Native. Also native middleware.',
-      'ZOME Shipped as a launch partner for both Apple Vision Pro and Samsung Galaxy XR, a journey in maintaining new hardware four platforms consistently and reliably.',
+      'ZOME Shipped as a launch partner for both the Apple Vision Pro and Samsung Galaxy XR; we developed to four platforms consistently and reliably.',
     ],
     stats: [
       { value: '8yr', label: 'On ZOME' },
