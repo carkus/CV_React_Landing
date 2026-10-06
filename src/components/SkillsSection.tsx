@@ -178,7 +178,7 @@ export default function SkillsSection() {
       <div className="section-inner">
         <div className="section-eyebrow reveal">Skills</div>
         <h2 className="section-heading reveal reveal-delay-1">The toolkit</h2>
-        <p className="section-intro reveal reveal-delay-2">I have worked regularly across a number of platforms, as the roles required. From building new systems to maintaining legacy code, which has given me broad exposure to cross-platform and native mobile development, and modern web frameworks. More recently, I've been focused on AI integration — revisiting my Master's work in automation through hands-on work with LLMs, both local and cloud-hosted, building RAG pipelines, agentic workflows, and structured output systems.</p>
+        <p className="section-intro reveal reveal-delay-2">Broad platform experience across cross-platform and native mobile, modern web frameworks, and legacy codebases. More recently focused on AI integration: RAG pipelines, agentic workflows, structured outputs, and LLMs both local and cloud-hosted, building on my Master's research in automation.</p>
       
         <div className="work-summation reveal reveal-delay-2">
           <div className="work-summation-col">

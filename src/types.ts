@@ -9,6 +9,8 @@ export interface WorkCredit {
 }
 
 export interface WorkItem {
+  /** Stable key — rails place a project by it ({ "type": "project", "ref": … }). */
+  id: string;
   title: string;
   tags: string[];
   /** Omit to render this entry as a flat, image-less "small project" card
@@ -17,6 +19,9 @@ export interface WorkItem {
   imageUrl?: string;
   imageAlt?: string;
   description: string;
+  /** Shorter copy for tight placements (the Selected projects rail); falls
+   *  back to description. */
+  summary?: string;
   featured: boolean;
   links: WorkLink[];
   credit?: WorkCredit;
@@ -176,6 +181,15 @@ export interface WorkBadge extends Omit<BadgeBase, 'href'> {
 
 export type Badge = HtmlBadge | CardBadge | WorkBadge;
 
+/** A project from workitems.json placed in a rail by id, so its copy lives in
+ *  one place. Resolves to a work badge (or a card, for image-less projects)
+ *  using the project's summary; any other field set here overrides the
+ *  project's value for this placement only. */
+export interface ProjectRef extends Partial<Omit<WorkBadge, 'type'>> {
+  type: 'project';
+  ref: string;
+}
+
 /** 'row' — badges at their own widths, left-aligned, swipe freely.
  *  'slideshow' — one badge at a time, centred and snapped, with a sliver of
  *  the neighbours showing either side, plus dots. */
@@ -217,5 +231,5 @@ export interface Rail {
   tone?: RailTone;
   /** Link button under the rail, e.g. { label: "Explore AI in depth →", href: "/ai" }. */
   cta?: { label: string; href: string };
-  badges: Badge[];
+  badges: (Badge | ProjectRef)[];
 }

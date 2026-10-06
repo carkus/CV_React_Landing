@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import SwipeRail from './SwipeRail';
 import { LinkIcon, SlideshowOverlay } from '../WorkSection';
 import { resolveImgPos } from '../../utils/imagePosition';
+import { resolveProjectRefs, useWorkGroups } from '../../data/projects';
 import type { Badge, CardBadge, HtmlBadge, Rail, WorkBadge } from '../../types';
 import bundledRails from '../../../public/data/rails.json';
 
@@ -16,6 +17,10 @@ import bundledRails from '../../../public/data/rails.json';
 // cell, a column, a card), so it can be dropped anywhere on any page.
 // BadgeRail (default export) wraps one in a full home-page section with the
 // rail's eyebrow/heading/intro.
+//
+// A badge of type "project" is a reference into workitems.json ({ ref: id },
+// plus any overriding fields) and is resolved to a work/card badge before
+// rendering, so project copy isn't duplicated here.
 //
 // Each badge is drawn by the renderer registered for its `type`. To add a
 // new kind of badge: add its interface to the Badge union in types.ts, then
@@ -96,9 +101,8 @@ function HtmlBadgeView({ badge }: { badge: HtmlBadge }) {
   return <div className="rail-html" dangerouslySetInnerHTML={{ __html: badge.html }} />;
 }
 
-// Same anatomy as the Work grid's photo tile, except the description is
-// always visible (a slideshow slide is big enough to carry it) rather than
-// hover-only.
+// Same anatomy as the Work grid's photo tile; the description is revealed on
+// hover (see .rail-work-desc in index.css).
 function WorkBadgeView({ badge }: { badge: WorkBadge }) {
   const [galleryOpen, setGalleryOpen] = useState(false);
   const imgPos = resolveImgPos(badge.imageOffsetX, badge.imageOffsetY, badge.imagePosition);
@@ -183,7 +187,9 @@ function BadgeShell({ badge }: { badge: Badge }) {
 export function RailBlock({ railId, rail: inline, className }: { railId?: string; rail?: Rail; className?: string }) {
   const loaded = useRail(inline ? undefined : railId);
   const rail = inline ?? loaded;
-  if (!rail || !rail.badges.length) return null;
+  const groups = useWorkGroups();
+  const badges = rail ? resolveProjectRefs(rail.badges, groups) : [];
+  if (!rail || !badges.length) return null;
 
   return (
     <div className={`rail-block${className ? ` ${className}` : ''}`}>
@@ -197,7 +203,7 @@ export function RailBlock({ railId, rail: inline, className }: { railId?: string
         autoplayMs={(rail.autoplay ?? 5) * 1000}
         height={rail.height}
       >
-        {rail.badges.map((b, i) => <BadgeShell key={badgeKey(b, i)} badge={b} />)}
+        {badges.map((b, i) => <BadgeShell key={badgeKey(b, i)} badge={b} />)}
       </SwipeRail>
     </div>
   );

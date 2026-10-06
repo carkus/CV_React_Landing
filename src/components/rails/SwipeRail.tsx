@@ -156,6 +156,22 @@ export default function SwipeRail({ children, label, variant = 'row', peek = 8, 
     return () => { el.removeEventListener('scroll', update); ro.disconnect(); };
   }, [update, children]);
 
+  // Flags the track with .scrolling while it's moving (drag, swipe, buttons,
+  // autoplay) so hover-only reveals on the slides stay off until it settles.
+  // Toggled straight on the element to avoid a re-render per scroll event.
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+    let timer: ReturnType<typeof setTimeout>;
+    const onScroll = () => {
+      el.classList.add('scrolling');
+      clearTimeout(timer);
+      timer = setTimeout(() => el.classList.remove('scrolling'), 150);
+    };
+    el.addEventListener('scroll', onScroll, { passive: true });
+    return () => { clearTimeout(timer); el.removeEventListener('scroll', onScroll); el.classList.remove('scrolling'); };
+  }, []);
+
   // Mouse drag only — touch and pen already scroll natively. Scroll-snap is
   // switched off for the duration of a drag (via .dragging) so the track
   // follows the pointer instead of fighting it, then re-snaps on release.

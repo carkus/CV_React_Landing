@@ -1,86 +1,35 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import type { WorkGroup, WorkItem } from '../types';
+import type { WorkItem } from '../types';
+import { useWorkGroups } from '../data/projects';
+import { LinkIcon } from './WorkSection';
+import SocialLinks from './SocialLinks';
 import { resolveImgPos } from '../utils/imagePosition';
 
 // Back to a static pre-baked PDF — JobFit's own CV generator (GET
 // /api/cv/download) now requires a profileId it has no default for, so the
 // public download link 500'd. Update this path whenever a fresher CV is
 // dropped into public/files/.
-const CV_PDF_PATH = '/files/mark_scicluna_cv_sep2026.pdf';
-
-const FALLBACK: WorkItem[] = [
-  {
-    title: 'ZOME — Spatial Messenger',
-    tags: ['Cross-platform', 'Swift', 'Kotlin', 'visionOS'],
-    imageUrl: 'https://images.unsplash.com/photo-1759661990336-51bd4b951fea?w=600&q=80',
-    imageAlt: 'ZOME platform',
-    description: '',
-    featured: true,
-    links: [
-      { label: 'App Store ↗', url: 'https://itunes.apple.com/us/app/zome/id1382123356?ls=1&mt=8' },
-      { label: 'Play Store ↗', url: 'https://play.google.com/store/apps/details?id=com.zomecorp.zome' },
-    ],
-  },
-  {
-    title: 'Chatty Prayers',
-    tags: ['Blazor', 'C#', 'AI'],
-    imageUrl: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&q=80',
-    imageAlt: 'Chatty Prayers',
-    description: '',
-    featured: false,
-    links: [],
-  },
-];
-
-// Same icon choice as WorkSection.tsx's LinkIcon — App Store/Play Store get
-// their platform glyph via devicon, anything else falls back to a plain
-// external-link arrow. Duplicated rather than imported since WorkSection
-// doesn't export it and the two sections already carry their own separate
-// FALLBACK data.
-function LinkIcon({ label }: { label: string }) {
-  if (/app store/i.test(label)) return <i className="devicon-apple-original" aria-hidden="true" />;
-  if (/play store/i.test(label)) return <i className="devicon-android-plain" aria-hidden="true" />;
-  return <span aria-hidden="true">↗</span>;
-}
+const CV_PDF_PATH = '/files/mark-scicluna-cv.pdf';
 
 const DWELL_MS = 10000; // time each project sits fully visible before sliding on
 const SLIDE_MS = 1400;  // slide transition duration
 const SWIPE_THRESHOLD_PX = 40; // minimum horizontal drag before it counts as a swipe, not a tap
 
 export default function HeroSection() {
-  const [items, setItems] = useState<WorkItem[]>(FALLBACK);
+  const groups = useWorkGroups();
+  // Only featured projects rotate through the hero card, and only if they
+  // have an image — heroExclude opts a featured item out anyway.
+  const items = useMemo(
+    () => groups.flatMap(g => g.items).filter(i => i.featured && i.imageUrl && !i.heroExclude),
+    [groups],
+  );
   const [idx, setIdx] = useState(0);
   // null = idle; 'next'/'prev' = a slide transition is currently animating
   // toward that direction, driven either by the dwell timer or a swipe.
   const [pending, setPending] = useState<'next' | 'prev' | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const dragRef = useRef<{ startX: number } | null>(null);
-
-  useEffect(() => {
-    const controller = new AbortController();
-
-    fetch('/data/workitems.json', { signal: controller.signal } )
-      .then(r => r.json())
-      .then((data: WorkGroup[]) => {
-        // workitems.json is grouped by subsection — flatten before filtering,
-        // otherwise .featured is read off the group object (always
-        // undefined) and the hero silently falls back to FALLBACK.
-        // Only featured projects rotate through the hero card, and only if
-        // they have an image — heroExclude opts a featured item out anyway.
-        const featured = data.flatMap(g => g.items).filter(i => i.featured && i.imageUrl && !i.heroExclude);
-        if (featured.length > 0) setItems(featured);
-      })
-      .catch((error) => {
-        if (error.name !== 'AbortError') {
-          console.error('Failed to load workitems data:', error);
-        }
-      });
-
-    return () => {
-      controller.abort();
-    };
-  }, []);
 
   // (Re)starts the auto-advance clock. Pulled out so a manual swipe can reset
   // the dwell period instead of the next auto-advance landing a moment later.
@@ -203,7 +152,7 @@ export default function HeroSection() {
             <p>Based in Melbourne.</p>
           </div>
           <div className="hero-link-stack">
-            <Link to="/profile" className="btn-ghost">Profile, References &amp; Media ↗</Link>
+            <Link to="/profile" className="btn-ghost hero-profile-btn">Profile, References &amp; Media&nbsp;↗</Link>
           </div>
           <div className="hero-status">
             <span className="hero-status-dot" />
@@ -214,8 +163,7 @@ export default function HeroSection() {
             <a href={CV_PDF_PATH} download className="btn-ghost nav-cv-btn">CV ↓</a>
           </div>
           <div className="hero-social">
-            <a href="https://github.com/carkus" target="_blank" rel="noopener noreferrer" className="social-link">GitHub ↗</a>
-            <a href="https://www.linkedin.com/in/mark-scicluna-b907809/" target="_blank" rel="noopener noreferrer" className="social-link">LinkedIn ↗</a>
+            <SocialLinks />
             <a href="mailto:dicarkus@hotmail.com" className="social-link">Email ↗</a>
           </div>
         </div>

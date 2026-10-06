@@ -1,32 +1,11 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
-import type { Badge, Rail, WorkGroup, WorkItem } from '../types';
+import type { Rail, WorkGroup } from '../types';
+import { projectBadge, useWorkGroups } from '../data/projects';
 import { DISCIPLINES } from '../data/disciplines';
 import { RailBlock } from './rails/BadgeRail';
 import { resolveMedia } from '../utils/media';
-
-const FALLBACK: WorkGroup[] = [
-  {
-    subsection: 'Frontend',
-    discipline: 'web',
-    items: [
-      { title: 'ZOME — Cross-platform product suite', tags: ['Cross-platform', 'Swift', 'Kotlin', 'visionOS'], imageUrl: 'https://images.unsplash.com/photo-1759661990336-51bd4b951fea?w=900&q=80', imageAlt: 'ZOME platform', description: 'End-to-end product suite spanning iOS, Android, and Apple Vision Pro — built cross-platform with native platform SDKs.', featured: true, links: [{ label: 'App Store ↗', url: 'https://itunes.apple.com/us/app/zome/id1382123356?ls=1&mt=8' }, { label: 'Play Store ↗', url: 'https://play.google.com/store/apps/details?id=com.zomecorp.zome' }] },
-      { title: 'Chatty Prayers', tags: ['Blazor', 'C#', 'AI'], imageUrl: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&q=80', imageAlt: 'Chatty Prayers', description: 'AI-assisted prayer and devotional web app built with Blazor WebAssembly.', featured: false, links: [] },
-      { title: 'Spatial UI Components', tags: ['visionOS', 'RealityKit'], imageUrl: 'https://images.unsplash.com/photo-1713445289643-fa1902dd9a03?w=600&q=80', imageAlt: 'visionOS spatial', description: 'A library of reusable spatial UI components for Apple Vision Pro using RealityKit and SwiftUI.', featured: false, links: [] },
-      { title: 'PDF Form Builder', tags: ['Blazor', 'PDF Generation', 'AI'], imageUrl: 'https://images.unsplash.com/photo-1602407294553-6ac9170b3ed0?w=600&q=80', imageAlt: 'CV Builder', description: 'A browser-based drag-and-drop editor for building and exporting PDF forms, now featuring AI-powered form generation.', featured: true, links: [{ label: 'Open Editor ↗', url: 'https://editor.carkus.com/form-editor' }] },
-      { title: 'Search in Robotic Task Planning', tags: ['Research', 'AI Planning'], imageUrl: 'https://images.unsplash.com/photo-1647427060118-4911c9821b82?w=600&q=80', imageAlt: 'Robotics research', description: 'Academic research into heuristic search algorithms, applied to autonomous robotic task planning.', featured: false, links: [] },
-    ],
-  },
-  {
-    subsection: 'Backend',
-    discipline: 'ai',
-    items: [
-      { title: 'ChattyPrayers.Api', tags: ['ASP.NET Core', 'Claude API', 'Gemini API', 'Ollama', 'RAG'], imageUrl: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&q=80', imageAlt: 'Server infrastructure', description: 'ASP.NET Core API powering streaming chat, multi-participant AI debate, SVG generation, and RAG-based conversation search via Ollama embeddings.', featured: false, links: [] },
-      { title: 'MarkdownForms.Api', tags: ['.NET Core', 'Markdown', 'PDF Generation', 'Claude API'], imageUrl: 'https://images.unsplash.com/photo-1555066931-4365d14431b9?w=600&q=80', imageAlt: 'Code editor', description: 'A .NET API that renders and processes dynamic form schemas defined in Markdown — PDF export with AcroForm generation and AI-assisted field population.', featured: false, links: [] },
-    ],
-  },
-];
 
 export function SlideshowOverlay({ images, alt, startIndex, onClose }: { images: string[]; alt: string; startIndex: number; onClose: () => void }) {
   const [index, setIndex] = useState(startIndex);
@@ -116,32 +95,10 @@ export function LinkIcon({ label }: { label: string }) {
 }
 
 // Each work group is shown as a slideshow rail, built from workitems.json so
-// the items keep one source of truth. Photo items become `work` badges;
-// image-less entries become plain `card` badges linking to their first URL.
+// the items keep one source of truth (see data/projects.ts).
 // Two prominent slides from the left, with the start of the next peeking in;
 // groups with more items than that loop endlessly.
 const SLIDES_PER_VIEW = 2;
-
-function toBadge(item: WorkItem): Badge {
-  const openLinks = item.links.filter(l => !!l.url);
-  if (!item.imageUrl) {
-    return { type: 'card', id: item.title, title: item.title, text: item.description, tags: item.tags, href: openLinks[0]?.url };
-  }
-  return {
-    type: 'work',
-    id: item.title,
-    title: item.title,
-    description: item.description,
-    tags: item.tags,
-    imageUrl: item.imageUrl,
-    imageAlt: item.imageAlt,
-    imageOffsetX: item.imageOffsetX,
-    imageOffsetY: item.imageOffsetY,
-    imagePosition: item.imagePosition,
-    links: openLinks,
-    slideshowImages: item.slideshowImages,
-  };
-}
 
 function groupRail(group: WorkGroup): Rail {
   return {
@@ -153,19 +110,12 @@ function groupRail(group: WorkGroup): Rail {
     peek: 10,
     loop: group.items.length > SLIDES_PER_VIEW,
     height: 360,
-    badges: group.items.map(toBadge),
+    badges: group.items.map(i => projectBadge(i)),
   };
 }
 
 export default function WorkSection() {
-  const [groups, setGroups] = useState<WorkGroup[]>(FALLBACK);
-
-  useEffect(() => {
-    fetch('/data/workitems.json')
-      .then(r => r.json())
-      .then((data: WorkGroup[]) => { if (data?.length) setGroups(data); })
-      .catch(() => {});
-  }, []);
+  const groups = useWorkGroups();
 
   return (
     <section id="work">

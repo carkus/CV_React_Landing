@@ -5,11 +5,11 @@ export default function AboutSection() {
         <div className="about-grid">
           <div className="about-image-stack reveal">
             <img className="about-img-main"
-              src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=700&q=80"
+              src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=900&h=1300&fit=crop&q=80"
               alt="Illuminated AI circuit die" />
             <div className="about-img-label">Melbourne, AU</div>
             <img className="about-img-accent"
-              src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&q=80"
+              src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=700&h=560&fit=crop&q=80"
               alt="Circuit board macro detail" />
           </div>
           <div>

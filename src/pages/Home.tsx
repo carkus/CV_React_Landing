@@ -8,6 +8,7 @@ import SkillsSection from '../components/SkillsSection';
 import WorkSection from '../components/WorkSection';
 import AskSection from '../components/AskSection';
 import TimelineSection from '../components/TimelineSection';
+import InstagramSection from '../components/InstagramSection';
 import ContactSection from '../components/ContactSection';
 import FooterSection from '../components/FooterSection';
 
@@ -63,6 +64,7 @@ export default function Home() {
       <SkillsSection />
       <WorkSection />
       <TimelineSection />
+      <InstagramSection />
       <ContactSection />
       <FooterSection />
     </>

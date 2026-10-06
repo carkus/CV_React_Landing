@@ -85,7 +85,6 @@
       {
         "type": "card",
         "id": "agentic",
-        "eyebrow": "01",
         "icon": "✦",
         "title": "Agentic Systems & Planning",
         "points": [
@@ -94,6 +93,7 @@
           "Self-evaluation scores each response and steers future model choice",
           "Rooted in MSc heuristic search and PDDL planning"
         ],
+        "href": "https://agent.carkus.com",
         "tags": [
           "Self-Scaffolding Agents",
           "Master/Worker Delegation",
@@ -102,12 +102,13 @@
           "MCP",
           "Heuristic Search",
           "PDDL"
-        ]
+        ],
+        "cta": "See it in Agent One ↗",
+        "className": "rail-badge--pill-cta"
       },
       {
         "type": "card",
         "id": "orchestration",
-        "eyebrow": "02",
         "icon": "⇄",
         "title": "Provider Orchestration & Resilience",
         "points": [
@@ -115,17 +116,19 @@
           "Correction-prompt retry on malformed output before failing over",
           "Parallel multi-provider ensembles, with every fallback logged"
         ],
+        "href": "https://moot.carkus.com",
         "tags": [
           "Fallback Chains",
           "Retry-on-Malformed",
           "Parallel Ensembles",
           "Cost Tiering"
-        ]
+        ],
+        "cta": "See it in Chatty Prayers ↗",
+        "className": "rail-badge--pill-cta"
       },
       {
         "type": "card",
         "id": "local-first",
-        "eyebrow": "03",
         "icon": "⌂",
         "title": "Local-First & Privacy",
         "points": [
@@ -133,17 +136,19 @@
           "Fully local agent bootstrapping and chat via Ollama for private development",
           "Local model picks backed by measured pass rates, not assumptions"
         ],
+        "href": "https://agent.carkus.com",
         "tags": [
           "Ollama",
           "Local LLM",
           "Data Privacy",
           "Local Embeddings"
-        ]
+        ],
+        "cta": "See it in Agent One ↗",
+        "className": "rail-badge--pill-cta"
       },
       {
         "type": "card",
         "id": "structured",
-        "eyebrow": "04",
         "icon": "▤",
         "title": "Structured Output & Prompt Discipline",
         "points": [
@@ -151,17 +156,19 @@
           "Concrete JSON examples in prompts — an exact target, not a field list",
           "Generated tool code compile-checked before it ever runs"
         ],
+        "href": "https://editor.carkus.com/form-editor",
         "tags": [
           "Schema-first Prompting",
           "Typed Outputs",
           "Prompt Templates",
           "Tool Schemas"
-        ]
+        ],
+        "cta": "See it in AI Forms ↗",
+        "className": "rail-badge--pill-cta"
       },
       {
         "type": "card",
         "id": "retrieval",
-        "eyebrow": "05",
         "icon": "⌕",
         "title": "Retrieval & Grounding",
         "points": [
@@ -169,12 +176,15 @@
           "Past successful runs retrieved as few-shot examples for new agents",
           "Live context such as weather and news injected at generation time"
         ],
+        "href": "https://moot.carkus.com",
         "tags": [
           "RAG",
           "Embeddings",
           "Context Injection",
           "Few-shot Retrieval"
-        ]
+        ],
+        "cta": "See it in Chatty Prayers ↗",
+        "className": "rail-badge--pill-cta"
       }
     ]
   },
@@ -188,122 +198,29 @@
     "loop": true,
     "badges": [
       {
-        "type": "work",
-        "id": "zome-xr",
-        "eyebrow": "Mobile & Spatial",
-        "title": "ZOME: Spatial Messenger (VisionOS & XR)",
-        "imageUrl": "/img/ZOME_vision_ui.png",
-        "imageAlt": "ZOME VisionOS",
-        "description": "A spatial platform and messenger where you can plant your messages anywhere in the world, at any location and even points in time.",
-        "tags": [
-          "Swift",
-          "SwiftUI",
-          "visionOS",
-          "Android XR"
-        ],
-        "slideshowImages": [
-          "/img/zome_ar1.png",
-          "/img/zome_ar2.png",
-          "/img/zome_ar3.png",
-          "/img/zome_ar4.png",
-          "/img/zome_ar5.png",
-          "/img/zome_ar6.png",
-          "/img/zome_ar7.png"
-        ],
-        "links": [
-          {
-            "label": "App Store ↗",
-            "url": "https://itunes.apple.com/us/app/zome/id1382123356?ls=1&mt=8"
-          },
-          {
-            "label": "Play Store ↗",
-            "url": "https://play.google.com/store/apps/details?id=com.zomecorp.zome"
-          }
-        ]
+        "type": "project",
+        "ref": "zome-xr",
+        "eyebrow": "Mobile & Spatial"
       },
       {
-        "type": "work",
-        "id": "agent-one",
-        "eyebrow": "AI Systems",
-        "title": "Agent One — Realtime Agent Workers",
-        "imageUrl": "/img/AgentOne_logo.jpg",
-        "imageAlt": "Agent One",
-        "description": "Self-scaffolding and self-evaluating agent platform — describe a task in plain language and it builds purpose-built agents, assigns a role and accesses MCP tools, via Ollama locally or through Gemini.",
-        "tags": [
-          "Local LLMs",
-          "Ollama",
-          "AWS Lambda",
-          "Agentic"
-        ],
-        "links": [
-          {
-            "label": "Open Agent One",
-            "url": "https://agent.carkus.com"
-          }
-        ]
+        "type": "project",
+        "ref": "agent-one",
+        "eyebrow": "AI Systems"
       },
       {
-        "type": "work",
-        "id": "chatty-prayers",
-        "eyebrow": "AI Systems",
-        "title": "Chatty Prayers — AI Debates, and Counsel",
-        "imageUrl": "/img/chatty_prayers.png",
-        "imageAlt": "Chatty Prayers",
-        "description": "Personality-driven AI platform with one-on-one chat, confidant reflection and structured multi-participant debate — Blazor and a RAG pipeline over the Claude and Gemini APIs.",
-        "tags": [
-          "Blazor",
-          "Claude API",
-          "Gemini API"
-        ],
-        "links": [
-          {
-            "label": "Open Chatty Prayers ↗",
-            "url": "https://moot.carkus.com"
-          }
-        ]
+        "type": "project",
+        "ref": "chatty-prayers",
+        "eyebrow": "AI Systems"
       },
       {
-        "type": "work",
-        "id": "ai-forms",
-        "eyebrow": "AI Systems",
-        "title": "AI Forms — PDF Builder",
-        "imageUrl": "/img/pdf_form.png",
-        "imageAlt": "AI Forms - PDF Builder",
-        "description": "Drag-and-drop PDF editor with AI form generation — describe a form in plain text and an agentic pipeline generates the fields and layout, with pre-filled values.",
-        "tags": [
-          "Blazor",
-          "PDF Generation",
-          "Agentic Pipeline",
-          "Claude API"
-        ],
-        "links": [
-          {
-            "label": "Open AI Forms ↗",
-            "url": "https://editor.carkus.com/form-editor"
-          }
-        ]
+        "type": "project",
+        "ref": "ai-forms",
+        "eyebrow": "AI Systems"
       },
       {
-        "type": "work",
-        "id": "scribbler",
-        "eyebrow": "Web & Backend",
-        "title": "Scribbler 2026",
-        "imageUrl": "/img/scribbler-2.png",
-        "imageAlt": "Scribbler",
-        "description": "Collaborative writing platform organising work into Collections and Articles, with suggestions, appraisal notifications, messaging and distraction-free rich-text editing.",
-        "tags": [
-          "React",
-          "TypeScript",
-          "Express",
-          "MySQL",
-          "TipTap"
-        ],
-        "links": [
-          {
-            "label": "Coming Soon",
-            "url": "https://scribbler.carkus.com"
-          }
-        ]
+        "type": "project",
+        "ref": "scribbler",
+        "eyebrow": "Web & Backend"
       }
     ]
   }

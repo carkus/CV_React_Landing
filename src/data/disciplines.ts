@@ -293,8 +293,8 @@ export const DISCIPLINES: Record<DisciplineKey, Discipline> = {
     heading: 'Mobile & Spatial',
     sub: 'Swift / SwiftUI · Flutter · Kotlin · React Native · visionOS · Android XR',
     intro: [
-      'For eight years I was a core engineer on ZOME at Rhizomenet, a spatial messenger shipped across iOS, Android, Apple Vision Pro, and Android XR. That covered cross-platform UI, native iOS and Android middleware, and a SwiftUI/visionOS spatial app.',
-      'We were a day-one launch partner for Apple Vision Pro and available on day one for Samsung Galaxy XR. That meant hitting launch deadlines on new hardware while keeping four platforms consistent.',
+      'Mobile cross-platform across native iOS and Android or cross-platform using Flutter or React Native. Also native middleware.',
+      'ZOME Shipped as a launch partner for both Apple Vision Pro and Samsung Galaxy XR, a journey in maintaining new hardware four platforms consistently and reliably.',
     ],
     stats: [
       { value: '8yr', label: 'On ZOME' },

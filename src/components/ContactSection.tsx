@@ -1,3 +1,5 @@
+import SocialLinks from './SocialLinks';
+
 export default function ContactSection() {
   return (
     <section id="contact">
@@ -7,8 +9,7 @@ export default function ContactSection() {
         <p className="contact-sub">Open to mobile, web, and spatial computing roles.<br />Available for contract and full-time.<br />Based in Melbourne, open to remote.</p>
         <a href="mailto:dicarkus@hotmail.com" className="contact-email">Email me (dicarkus@hotmail.com)</a>
         <div className="social-links">
-          <a href="https://github.com/carkus" target="_blank" rel="noopener noreferrer" className="social-link">GitHub ↗</a>
-          <a href="https://www.linkedin.com/in/mark-scicluna-b907809/" target="_blank" rel="noopener noreferrer" className="social-link">LinkedIn ↗</a>
+          <SocialLinks />
         </div>
       </div>
     </section>

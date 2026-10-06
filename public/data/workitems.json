@@ -4,10 +4,12 @@
     "discipline": "web",
     "items": [
       {
-        "title": "Agent One - Realtime Agent Workers",
+        "id": "agent-one",
+        "title": "Agent One - Agent Workers",
         "tags": ["Local LLMs", "Ollama", "AWS Lambda", "Agentic"],
         "imageUrl": "/img/AgentOne_logo.jpg",
         "description": "Self-scaffolding and self-evaluating agent platform — describe a task in plain language and it builds purpose-built agents, assigns a role, accesses MCP tools, via Ollama locally or through Gemini. Checks its own responses and learns which models perform best.",
+        "summary": "Self-scaffolding and self-evaluating agent platform — describe a task in plain language and it builds purpose-built agents, assigns a role and accesses MCP tools, via Ollama locally or through Gemini.",
         "featured": true,
         "width": 50,
         "links": [
@@ -15,11 +17,12 @@
         ]
       },
       {
+        "id": "fpg-receipts",
         "title": "FPG Receipts",
         "tags": ["React", "TypeScript", "ASP.NET Core"],
         "imageUrl": "/img/fpg_logo.jpg",
         "imageAlt": "FPG Receipts app",
-        "description": "Receipt generator built for the Fitzroy Public Gallery — line items, commission and GST calculation, and bank details, laid out live against a print-ready preview pane for one-click PDF export.",
+        "description": "Office tools. This for the Fitzroy Public Gallery — line items, commission and GST calculation, and bank details, preview panes, PDF export.",
         "featured": false,
         "width": 40,
         "links": [
@@ -27,6 +30,7 @@
         ]
       },
       {
+        "id": "smooth-software",
         "title": "Smooth Software",
         "tags": ["React", "TypeScript", "ASP.NET Core"],
         "imageUrl": "/img/smooth_software_wide.png",
@@ -41,11 +45,13 @@
         ]
       },      
       {
+        "id": "scribbler",
         "title": "Scribbler 2026",
         "tags": ["React", "TypeScript", "Express", "MySQL", "TipTap"],
         "imageUrl": "/img/scribbler-2.png",
         "imageAlt": "Scribbler",
         "description": "Collaborative writing platform for organising work into Collections and Articles, allows suggestions and appraisal notifications, messaging — and distraction-free rich-text editing.",
+        "summary": "Collaborative writing platform organising work into Collections and Articles, with suggestions, appraisal notifications, messaging and distraction-free rich-text editing.",
         "featured": true,
         "width": 60,
         "links": [
@@ -53,6 +59,7 @@
         ]
       },
       {
+        "id": "ai-forms",
         "title": "AI Forms - PDF Builder",
         "tags": ["Blazor", "PDF Generation", "Agentic Pipeline", "Claude API", "Structured Prompting"],
         "imageUrl": "/img/pdf_form.png",
@@ -60,6 +67,7 @@
         "imagePosition": "calc(50% - 50px) center",
         "heroImagePosition": "80% center",
         "description": "Drag-and-drop PDF editor with AI form generation — describe a form in plain text and an agentic LangGraph/LlamaIndex pipeline generates the fields, layout, with pre-filled values.",
+        "summary": "Drag-and-drop PDF editor with AI form generation — describe a form in plain text and an agentic pipeline generates the fields and layout, with pre-filled values.",
         "featured": true,
         "width": 40,
         "links": [
@@ -73,6 +81,7 @@
     "discipline": "mobile",
     "items": [
       {
+        "id": "zome-mobile",
         "title": "ZOME: Spatial Messenger (Mobile)",
         "tags": ["Cross-platform", "Flutter", "Swift", "Kotlin"],
         "imageUrl": "/img/icon_crop_sq.png",
@@ -89,12 +98,14 @@
         ]
       },
       {
+        "id": "zome-xr",
         "title": "ZOME: Spatial Messenger (VisionOS & XR)",
         "tags": ["Swift", "SwiftUI", "visionOS", "Android XR"],
         "imageUrl": "/img/ZOME_vision_ui.png",
         "imageAlt": "ZOME VisionOS",
         "heroImagePosition": "50% center",
         "description": "ZOME is a spatial platform and messenger where you can plant your messages anywhere in the world, at any location and even points in time.",
+        "summary": "A spatial platform and messenger where you can plant your messages anywhere in the world, at any location and even points in time.",
         "featured": true,
         "width": 50,
         "slideshowImages": ["/img/zome_ar1.png", "/img/zome_ar2.png", "/img/zome_ar3.png", "/img/zome_ar4.png", "/img/zome_ar5.png", "/img/zome_ar6.png", "/img/zome_ar7.png"],
@@ -104,6 +115,7 @@
         ]
       },
       {
+        "id": "spatial-ui",
         "title": "Spatial UI Components for VisionOS",
         "tags": ["visionOS", "Android XR"],
         "imageUrl": "/img/spatial_architect.png",
@@ -122,12 +134,14 @@
     "discipline": "ai",
     "items": [
       {
-        "title": "Chatty Prayers — AI Debates, and Counsel",
+        "id": "chatty-prayers",
+        "title": "Chatty Prayers — AIs Debate",
         "tags": ["Blazor", "Claude API", "Gemini API"],
         "imageUrl": "/img/chatty_prayers.png",
         "imageAlt": "Chatty Prayers",
         "heroImagePosition": "50% center",
         "description": "Personality-driven AI platform with one-on-one chat, confidant reflection, and structured multi-participant debate — built with Blazor and a RAG pipeline over the Claude and Gemini APIs, with conversation and dialogue persistence powering multi-personality, multi-participant exchanges.",
+        "summary": "Personality-driven AI platform with one-on-one chat, confidant reflection and structured multi-participant debate — Blazor and a RAG pipeline over the Claude and Gemini APIs.",
         "featured": true,
         "width": 40,
         "links": [
@@ -135,6 +149,7 @@
         ]
       },
       {
+        "id": "jobfit",
         "title": "JobFit™ — AI Job Match Analyser",
         "tags": ["TypeScript", ".NET", "MCP", "Structured Output", "Multi-AI Providers"],
         "imageUrl": "/img/jobfit_card_noblurb.png",
@@ -149,6 +164,7 @@
         "_credit": { "name": "Mina Rad", "url": "https://unsplash.com/@miinrad" }
       },
       {
+        "id": "panic-stations",
         "title": "Panic Stations",
         "tags": ["React Native", "Expo", "TypeScript", "Zustand", "Game Dev"],
         "imageUrl": "/img/image_a83945ea.png",
@@ -161,6 +177,7 @@
         "links": []
       },
       {
+        "id": "ai-task-planning",
         "title": "AI Task Planning - Agents and robotics",
         "tags": ["AI Research", "Robotics Task Planning"],
         "imageUrl": "https://images.unsplash.com/photo-1647427060118-4911c9821b82?w=600&q=80",
@@ -177,6 +194,7 @@
     "discipline": "ai",
     "items": [
       {
+        "id": "chattyprayers-api",
         "title": "ChattyPrayers.Api",
         "tags": ["ASP.NET Core", "Claude API", "Gemini API", "Ollama", "RAG"],
         "imageUrl": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&q=80",
@@ -187,6 +205,7 @@
         "links": []
       },
       {
+        "id": "markdownforms-api",
         "title": "MarkdownForms.Api",
         "tags": [".NET Core", "Markdown", "PDF Generation", "Claude API"],
         "imageUrl": "/img/kelly-sikkema-6fIxFaOvwHQ-unsplash.jpg",
@@ -203,6 +222,7 @@
     "subsection": "Small Projects",
     "items": [
       {
+        "id": "auth-login",
         "title": "Auth Login",
         "tags": ["ASP.NET Core", "JWT", "Multi-tenant"],
         "description": "Multi-tenant shared auth server — registration, login, token refresh, email verification, and password reset, auto-provisioning a siteId per consuming project.",
@@ -211,6 +231,7 @@
         "links": []
       },
       {
+        "id": "markdown-viewer",
         "title": "Markdown Viewer",
         "tags": ["React", "react-markdown"],
         "description": "Lightweight Markdown rendering utility with syntax-highlighted code blocks and GitHub-flavoured Markdown support.",
@@ -219,5 +240,5 @@
         "links": []
       }
     ]
-  },
+  }
 ]

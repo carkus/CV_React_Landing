@@ -401,13 +401,16 @@ section { padding: 7rem 0; }
 
 /* ── ABOUT ───────────────────────────────────────────────────── */
 #about { background: var(--navy); border-top: 1px solid var(--slate); }
-.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
-.about-image-stack { position: relative; height: 560px; }
-.about-img-main { position: absolute; top: 0; left: 0; width: 86%; height: 90%; object-fit: cover; filter: grayscale(30%); border: 1px solid var(--steel); border-radius: var(--radius-lg); box-shadow: 0 35px 70px -18px rgba(0,0,0,0.7); }
-.about-img-accent { position: absolute; bottom: -20px; right: 0; width: 58%; height: 54%; object-fit: cover; filter: grayscale(10%); border: 1px solid var(--accent); border-radius: var(--radius); box-shadow: 0 0 30px color-mix(in srgb, var(--accent) 20%, transparent), 0 35px 70px -18px rgba(0,0,0,0.7); }
+/* The image stack stretches to the full height of the text column (min
+   560px) rather than stopping at a fixed height, so the left side fills the
+   section; the main shot is portrait and the accent overlaps its lower right. */
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: stretch; }
+.about-image-stack { position: relative; min-height: 560px; }
+.about-img-main { position: absolute; top: 0; left: 0; width: 86%; height: calc(100% - 4rem); object-fit: cover; filter: grayscale(30%); border: 1px solid var(--steel); border-radius: var(--radius-lg); box-shadow: 0 35px 70px -18px rgba(0,0,0,0.7); }
+.about-img-accent { position: absolute; bottom: 0; right: 0; width: 58%; height: 38%; object-fit: cover; filter: grayscale(10%); border: 1px solid var(--accent); border-radius: var(--radius); box-shadow: 0 0 30px color-mix(in srgb, var(--accent) 20%, transparent), 0 35px 70px -18px rgba(0,0,0,0.7); }
 :root[data-theme="light"] .about-img-main { box-shadow: 0 30px 60px -20px rgba(0,0,0,0.26); }
 :root[data-theme="light"] .about-img-accent { box-shadow: 0 0 30px color-mix(in srgb, var(--accent) 20%, transparent), 0 30px 60px -20px rgba(0,0,0,0.26); }
-.about-img-label { position: absolute; bottom: 53%; right: 0; width: 58%; padding: 0.6rem 0.8rem; background: var(--accent); font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: #fff; }
+.about-img-label { position: absolute; bottom: calc(38% + 0.75rem); right: 0; width: 58%; z-index: 1; padding: 0.6rem 0.8rem; background: var(--accent); font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: #fff; }
 .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2.5rem; }
 .stat-item { border-left: 2px solid var(--accent); padding-left: 1rem; }
 .stat-number { font-family: var(--serif); font-size: 2.4rem; font-weight: 300; color: var(--chalk); line-height: 1; }
@@ -829,6 +832,14 @@ section { padding: 7rem 0; }
 .contact-sub { font-size: 1rem; color: var(--mist); max-width: 48ch; margin: 0 auto 3rem; line-height: 1.75; }
 .contact-email { display: inline-block; font-family: var(--mono); font-size: 1.1rem; letter-spacing: 0.08em; color: var(--accent2); text-decoration: none; border-bottom: 1px solid var(--accent); padding-bottom: 2px; margin-bottom: 3rem; position: relative; z-index: 1; transition: color 0.2s, text-shadow 0.2s; }
 .contact-email:hover { color: var(--chalk); text-shadow: 0 0 16px color-mix(in srgb, var(--accent2) 60%, transparent); }
+/* Instagram feed — square photo tiles, border-only hover (no shadows). */
+.ig-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.6rem; }
+.ig-post { position: relative; display: block; aspect-ratio: 1; overflow: hidden; border: 1px solid var(--steel); border-radius: var(--radius); transition: border-color 0.2s; }
+.ig-post img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
+.ig-post:hover { border-color: var(--accent2); }
+.ig-post:hover img { transform: scale(1.04); }
+.ig-post-kind { position: absolute; top: 0.45rem; right: 0.55rem; font-size: 0.8rem; color: #fff; background: rgba(10,13,20,0.55); border-radius: 999px; padding: 0.1rem 0.4rem; }
+@media (max-width: 600px) { .ig-grid { grid-template-columns: repeat(3, 1fr); gap: 0.35rem; } }
 .social-links { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; }
 .social-link { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mist); text-decoration: none; transition: color 0.2s; }
 .social-link:hover { color: var(--chalk); }
@@ -859,6 +870,10 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
 
 /* ── PROFILE PAGE ────────────────────────────────────────────── */
 .hero-link-stack { display: flex; flex-direction: column; align-items: flex-start; gap: 0.9rem; margin-bottom: 1.4rem; }
+/* One line, never wrapped. On narrow phones the tracking tightens so it
+   still fits the column. */
+.hero-profile-btn { white-space: nowrap; }
+@media (max-width: 480px) { .hero-profile-btn { letter-spacing: 0.06em; padding-inline: 1rem; } }
 .pf-page { min-height: 100vh; background: var(--ink); color: var(--chalk); font-family: var(--sans); }
 .pf-nav { display: flex; align-items: center; justify-content: space-between; padding: 1.4rem 3rem; border-bottom: 1px solid var(--slate); position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--ink) 95%, transparent); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
 .pf-nav-back { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mist); text-decoration: none; transition: color 0.2s; }
@@ -945,7 +960,7 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
     section { padding: 4.5rem 0; }
     #ask { padding: 1.35rem 0; }
     .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-    .about-image-stack { height: 260px; }
+    .about-image-stack { height: 260px; min-height: 0; }
     .about-stats { gap: 1rem; }
     .stat-number { font-size: 1.8rem; }
     .skills-cat-techs { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 0.7rem; padding: 1rem; }
@@ -992,9 +1007,10 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
    tab switcher, principle cards and project case studies are new here. */
 .dp-inner { max-width: 1080px; margin: 0 auto; }
 /* "Explore … in depth" links are plain .btn-ghost buttons — same look as
-   every other secondary button on the site; these rules only place them. */
+   every other secondary button on the site, but pill-shaped. */
 .section-deep-link { margin-top: 2rem; }
 .work-group-deep-link { display: flex; justify-content: flex-end; margin: 1.2rem 0 1.6rem; }
+.section-deep-link .btn-ghost, .work-group-deep-link .btn-ghost { border-radius: 999px; }
 .dp-tabs { display: inline-flex; border: 1px solid var(--slate); border-radius: var(--radius); overflow: hidden; }
 .dp-tab {
     font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase;
@@ -1103,7 +1119,7 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
    so it melds with the ground), brighter accent + lift on hover. */
 .swipe-rail-btn {
     display: inline-flex; align-items: center; justify-content: center;
-    width: 1.75rem; height: 1.75rem; border-radius: 6px; cursor: pointer;
+    width: 1.75rem; height: 1.75rem; border-radius: 999px; cursor: pointer;
     background: color-mix(in srgb, var(--navy) 55%, transparent); color: var(--chalk);
     border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--slate));
     transition: color 0.2s, border-color 0.2s, transform 0.2s, opacity 0.2s;
@@ -1118,14 +1134,14 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
     display: flex; flex-direction: column; position: relative; overflow: hidden;
     background: var(--navy); border: 1px solid var(--slate); border-radius: var(--radius-lg);
     color: var(--chalk); text-decoration: none;
-    transition: border-color 0.25s, transform 0.2s, box-shadow 0.25s;
+    transition: border-color 0.25s, transform 0.2s;
 }
 .rail-badge--sm { --badge-w: 220px; }
 .rail-badge--md { --badge-w: 300px; }
 .rail-badge--lg { --badge-w: 400px; }
 .rail-badge--xl { --badge-w: 520px; }
 .rail-badge--link { cursor: pointer; }
-.rail-badge--link:hover { border-color: var(--accent2); transform: translateY(-2px); box-shadow: 0 18px 40px -24px var(--card-shadow-ambient); }
+.rail-badge--link:hover { border-color: var(--accent2); transform: translateY(-2px); }
 /* Photo-less small-project cards in the work rails: a stronger border so they
    hold their edge against #work's pale grey-blue ground. */
 #work .rail-badge--card { border-color: color-mix(in srgb, var(--steel) 60%, transparent); }
@@ -1148,6 +1164,9 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
 /* On a photo scrim tags are always light-on-dark, whatever the tone. */
 .rail-tag--on-photo { color: #fff; background: rgba(10,13,20,0.45); border-color: rgba(90,138,238,0.2); }
 .rail-card-cta { margin-top: auto; padding-top: 0.6rem; font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent2); }
+/* Opt-in (badge className) pill CTA — solid accent fill, deepens on card hover. */
+.rail-badge--pill-cta .rail-card-cta { align-self: flex-start; padding: 0.4rem 0.9rem; border-radius: 999px; color: #fff; background: var(--accent2); border: 1px solid var(--accent2); transition: background 0.2s, border-color 0.2s; }
+.rail-badge--pill-cta:hover .rail-card-cta { background: var(--accent); border-color: var(--accent); }
 /* html badges bring their own markup; give it the card's padding by default. */
 .rail-html { padding: 1.4rem 1.5rem; flex: 1; display: flex; flex-direction: column; }
 .rail-html-stack { display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
@@ -1216,6 +1235,30 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
     display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
 }
 .rail-work-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.2rem; }
+/* Description stays tucked away until the tile is hovered (or a link inside
+   it is focused), then slides open above the tags. Only on devices that can
+   hover — on touch it's always shown, or it could never be read. */
+@media (hover: hover) {
+    .rail-work-desc {
+        max-height: 0; opacity: 0; margin-block: -0.25rem;
+        transition: max-height 0.35s ease, opacity 0.25s ease, margin 0.35s ease;
+    }
+    .rail-badge--work:hover .rail-work-desc,
+    .rail-badge--work:focus-within .rail-work-desc { max-height: 6em; opacity: 1; margin-block: 0; }
+    /* A dark shade behind the title and description that fades in with it,
+       so the opened text stays legible over bright photos. */
+    .rail-work-body { isolation: isolate; }
+    .rail-work-body::before {
+        content: ''; position: absolute; inset: -2.5rem 0 0; z-index: -1; pointer-events: none;
+        background: linear-gradient(to top, rgba(8,11,18,0.85) 0%, rgba(8,11,18,0.7) 60%, rgba(8,11,18,0) 100%);
+        opacity: 0; transition: opacity 0.35s ease;
+    }
+    .rail-badge--work:hover .rail-work-body::before,
+    .rail-badge--work:focus-within .rail-work-body::before { opacity: 1; }
+    /* …but not while the rail is moving (SwipeRail flags .scrolling). */
+    .swipe-rail-track.scrolling .rail-badge--work .rail-work-desc { max-height: 0; opacity: 0; margin-block: -0.25rem; }
+    .swipe-rail-track.scrolling .rail-badge--work .rail-work-body::before { opacity: 0; }
+}
 .work-slideshow-rail { margin-bottom: 2.5rem; }
 
 /* Multi-slide slideshow (rail `perView` > 1): each slide is 1/--per-view of
