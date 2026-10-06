@@ -4,7 +4,7 @@ import ThemeToggle from '../components/ThemeToggle';
 import SwipeRail from '../components/rails/SwipeRail';
 import { SlideshowOverlay } from '../components/WorkSection';
 import { useDocumentMeta } from '../seo';
-import { resolveImgPos } from '../utils/imagePosition';
+import { frameStyle } from '../utils/imageFrame';
 import { resolveMedia } from '../utils/media';
 import { useCardSlideshow } from '../utils/useCardSlideshow';
 import { DISCIPLINES, DISCIPLINE_ORDER } from '../data/disciplines';
@@ -25,11 +25,6 @@ function ProjectCase({ project, index }: { project: DisciplineProject; index: nu
   const coverRef = useRef<HTMLImageElement>(null);
   const frame = useCardSlideshow(slides.length + 1, coverRef);
   const openLinks = project.links.filter(l => !!l.url);
-  const imgPos = resolveImgPos(project.imageOffsetX, project.imageOffsetY, project.imagePosition);
-  const imgStyle = {
-    ...(imgPos ? { '--img-pos': imgPos } : {}),
-    ...(project.imageScale != null ? { '--img-scale': project.imageScale } : {}),
-  } as React.CSSProperties;
 
   // Typeset like a magazine column: heading full width, then the image floats
   // in a fixed-ratio frame and the summary/highlights wrap around and under
@@ -50,7 +45,7 @@ function ProjectCase({ project, index }: { project: DisciplineProject; index: nu
               src={project.imageUrl}
               alt={project.imageAlt ?? project.title}
               loading="lazy"
-              style={imgStyle}
+              style={frameStyle(project.imageFrame)}
             />
             {slides.map((src, i) => (
               <img

@@ -3,6 +3,8 @@
 // long-form write-ups that change rarely, and keeping them typed here means
 // one shared DisciplinePage component can render all three.
 
+import type { ImageFrame } from '../utils/imageFrame';
+
 export type DisciplineKey = 'web' | 'ai' | 'mobile';
 
 export interface DisciplineLink { label: string; url: string; inactive?: boolean; }
@@ -16,21 +18,9 @@ export interface DisciplineProject {
   tags: string[];
   imageUrl?: string;
   imageAlt?: string;
-  /** Pixel nudges for the case-study image from its imagePosition anchor
-   *  (default centre) — same convention as WorkItem.imageOffsetX / imageOffsetY.
-   *  Positive X moves the image right, positive Y moves it down. */
-  imageOffsetX?: number;
-  imageOffsetY?: number;
-  /** Raw CSS object-position fallback for the case-study image crop. */
-  imagePosition?: string;
-  /** Zoom factor for the case-study image, e.g. 1.2 for 20% larger — scales
-   *  around the offset/position focal point, so it zooms into the part of the
-   *  image the offsets already frame. Defaults to 1 (no zoom). */
-  imageScale?: number;
-  /** Frame shape of the case-study image, as a CSS aspect-ratio such as
-   *  "16/9" or "1". The text wraps around this frame, so the image keeps its
-   *  shape however long the write-up gets. Defaults to "4/3". */
-  imageAspect?: string;
+  /** Framing of the case-study image — independent of the same project's
+   *  framing in workitems.json. See utils/imageFrame.ts. */
+  imageFrame?: ImageFrame;
   /** Gallery entries: images, video files (.mp4/.mov/.webm…) or YouTube/Vimeo
    *  URLs — the viewer is picked per entry. A bare file name resolves to
    *  /img/ (images) or /files/ (videos). See utils/media.ts. */
@@ -136,7 +126,7 @@ export const DISCIPLINES: Record<DisciplineKey, Discipline> = {
         tags: ['React', 'TypeScript', 'ASP.NET Core', 'Mailgun'],
         imageUrl: '/img/smooth_software_wide.png',
         imageAlt: 'Smooth Software',
-        imagePosition: '10% center',
+        imageFrame: { position: '10% center' },
         links: [{ label: 'Open Smooth Software', url: 'https://smoothsoftware.carkus.com' }],
       },
       {
@@ -313,9 +303,9 @@ export const DISCIPLINES: Record<DisciplineKey, Discipline> = {
         meta: 'Rhizomenet · 2017–2026',
         summary: 'ZOME lets you plant messages anywhere in the world, at any location and even at points in time. The spatial edition brings that to Apple Vision Pro and Android XR.',
         highlights: [
-          'Early visionOS developer within the team; day-one Apple Vision Pro launch partner',
+          'Early visionOS developer; day-one Apple Vision Pro launch partner',
           'SwiftUI spatial UI over RealityKit and ARKit, with a hand-tracking gesture system',
-          'Custom entity animation via RealityKit’s FromToByAnimation',
+          'Hussein Chalayan designed ui panels animated according to stance',
           'Day-one availability on Samsung Galaxy XR via Android XR',
         ],
         tags: ['Swift', 'SwiftUI', 'visionOS', 'RealityKit', 'ARKit', 'Android XR'],
@@ -340,8 +330,7 @@ export const DISCIPLINES: Record<DisciplineKey, Discipline> = {
         tags: ['Flutter', 'Swift', 'Kotlin', 'Cross-platform'],
         imageUrl: '/img/zome_banner_mobile_no_button.png',
         imageAlt: 'ZOME mobile',
-        imagePosition: 'left center',
-        imageScale: 1.3,
+        imageFrame: { position: 'left center', scale: 1.3 },
         slideshowImages: ['/img/zome_phone1.png', '/img/zome_phone2.png', '/img/zome_phone3.png', '/img/zome_phone4.png', '/img/zome_phone5.png', '/img/zome_phone6.png', '/img/zome_phone7.png'],
         links: [
           { label: 'App Store', url: 'https://itunes.apple.com/us/app/zome/id1382123356?ls=1&mt=8' },

@@ -35,14 +35,14 @@
         "tags": ["React", "TypeScript", "ASP.NET Core"],
         "imageUrl": "/img/smooth_square.png",
         "imageAlt": "Smooth Software",
+        "heroImageFrame": { "position": "10% center" },
         "description": "Smooth Software builds websites, apps, and admin tools fast, at straight rates. You get clean code, clear communication, and a product you will use and love",
         "featured": true,
-        "heroImagePosition": "10% center",
         "width": 60,
         "links": [
           { "label": "Open Smooth Software", "url": "https://smoothsoftware.carkus.com" }
         ]
-      },      
+      },
       {
         "id": "scribbler",
         "title": "Scribbler 2026",
@@ -63,8 +63,8 @@
         "tags": ["Blazor", "PDF Generation", "Agentic Pipeline", "Claude API", "Structured Prompting"],
         "imageUrl": "/img/pdf_form.png",
         "imageAlt": "AI Forms - PDF Builder",
-        "imagePosition": "calc(50% - 50px) center",
-        "heroImagePosition": "80% center",
+        "imageFrame": { "position": "calc(50% - 50px) center" },
+        "heroImageFrame": { "position": "80% center" },
         "description": "Drag-and-drop PDF editor with AI form generation — describe a form in plain text and an agentic LangGraph/LlamaIndex pipeline generates the fields, layout, with pre-filled values.",
         "summary": "Drag-and-drop PDF editor with AI form generation — describe a form in plain text and an agentic pipeline generates the fields and layout, with pre-filled values.",
         "featured": true,
@@ -101,7 +101,7 @@
         "tags": ["Swift", "SwiftUI", "visionOS", "Android XR"],
         "imageUrl": "/img/ZOME_vision_ui.png",
         "imageAlt": "ZOME VisionOS",
-        "heroImagePosition": "50% center",
+        "heroImageFrame": { "position": "50% center" },
         "description": "ZOME is a spatial platform and messenger where you can plant your messages anywhere in the world, at any location and even points in time.",
         "summary": "A spatial platform and messenger where you can plant your messages anywhere in the world, at any location and even points in time.",
         "featured": true,
@@ -118,9 +118,9 @@
         "tags": ["visionOS", "Android XR"],
         "imageUrl": "/img/spatial_architect.png",
         "imageAlt": "Spatial UI Components",
+        "heroImageFrame": { "position": "80% center" },
         "description": "A library of reusable spatial UI components for Apple Vision Pro using RealityKit, SwiftUI.",
         "featured": false,
-        "heroImagePosition": "80% center",
         "width": 100,
         "height": 90,
         "links": []
@@ -137,7 +137,7 @@
         "tags": ["Blazor", "Claude API", "Gemini API"],
         "imageUrl": "/img/chatty_prayers.png",
         "imageAlt": "Chatty Prayers",
-        "heroImagePosition": "50% center",
+        "heroImageFrame": { "position": "50% center" },
         "description": "Personality-driven AI platform with one-on-one chat, confidant reflection, and structured multi-participant debate — built with Blazor and a RAG pipeline over the Claude and Gemini APIs, with conversation and dialogue persistence powering multi-personality, multi-participant exchanges.",
         "summary": "Personality-driven AI platform with one-on-one chat, confidant reflection and structured multi-participant debate — Blazor and a RAG pipeline over the Claude and Gemini APIs.",
         "featured": true,
@@ -152,7 +152,7 @@
         "tags": ["TypeScript", ".NET", "MCP", "Structured Output", "Multi-AI Providers"],
         "imageUrl": "/img/jobfit_AI_notext.png",
         "description": "Multi-provider AI tool that scores CVs against job descriptions, generates ATS compliant resumes, surfaces skill gaps, and drafts cover letters — exposes MCP tools for direct use from Claude.",
-        "featured": false,
+        "featured": true,
         "width": 60,
         "links": [
           { "label": "Open JobFit ↗", "url": "https://jobfit.carkus.com" }

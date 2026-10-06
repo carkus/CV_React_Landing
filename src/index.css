@@ -309,7 +309,7 @@ nav {
    sliding to -66.6666% (next) or 0% (prev) and snapping back on commit. */
 .platform-track { display: flex; width: 300%; height: 100%; touch-action: pan-y; }
 .platform-slide { position: relative; width: 33.3333%; height: 100%; flex-shrink: 0; }
-.platform-img { width: 100%; height: 100%; object-fit: cover; object-position: var(--img-pos, center); opacity: 0.85; -webkit-user-drag: none; -webkit-user-select: none; user-select: none; }
+.platform-img { width: 100%; height: 100%; object-fit: cover; object-position: var(--img-pos, center); transform: scale(var(--img-scale, 1)); transform-origin: var(--img-pos, center); opacity: 0.85; -webkit-user-drag: none; -webkit-user-select: none; user-select: none; }
 /* Multi-stop fade (was a flat 0%→60% linear) so the dark reaches further up
    the card and holds more opacity near the bottom — needed now that
    .platform-desc can run several unclamped lines and still needs to read
@@ -1083,7 +1083,7 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
 }
 /* Alternate the image side so a long list of case studies doesn't read as one column. */
 .dp-case:nth-child(even) .dp-case-media { float: right; margin: 0.35rem 0 1.2rem 2.2rem; }
-/* transform-origin follows the crop focal point so imageScale zooms into the
+/* transform-origin follows the crop focal point so a frame's scale zooms into the
    same part of the image the offsets frame, rather than the dead centre. */
 .dp-case-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: var(--img-pos, center); transform: scale(var(--img-scale, 1)); transform-origin: var(--img-pos, center); }
 /* In-frame slideshow stills (same rhythm as the Work rail tiles): letterboxed
@@ -1180,7 +1180,8 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
 #work .rail-badge--card.rail-badge--link:hover { border-color: var(--accent2); }
 
 .rail-card-media { position: relative; height: 160px; background: var(--slate); flex-shrink: 0; }
-.rail-card-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: var(--img-pos, center); }
+.rail-card-media { overflow: hidden; }
+.rail-card-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: var(--img-pos, center); transform: scale(var(--img-scale, 1)); transform-origin: var(--img-pos, center); }
 .rail-card-icon { margin: 1.4rem 1.5rem 0; width: 40px; height: 40px; font-size: 1.15rem; border-radius: var(--radius); }
 .rail-card-body { padding: 1.1rem 1.5rem 1.4rem; display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
 .rail-card-eyebrow { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent2); }
@@ -1300,9 +1301,10 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
 }
 .rail-badge--work:hover .rail-work-body::before,
 .rail-badge--work:focus-within .rail-work-body::before { opacity: 1; }
-/* …but not while the rail is moving (SwipeRail flags .scrolling). */
+/* …but not while the rail is moving (SwipeRail flags .scrolling) — disabled
+   to try keeping the hover description up during a swipe; uncomment to restore:
 .swipe-rail-track.scrolling .rail-badge--work .rail-work-desc { max-height: 0; opacity: 0; margin-block: -0.25rem; }
-.swipe-rail-track.scrolling .rail-badge--work .rail-work-body::before { opacity: 0; }
+.swipe-rail-track.scrolling .rail-badge--work .rail-work-body::before { opacity: 0; } */
 .work-slideshow-rail { margin-bottom: 2.5rem; }
 
 /* Multi-slide slideshow (rail `perView` > 1): each slide is 1/--per-view of

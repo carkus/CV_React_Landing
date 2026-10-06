@@ -11,22 +11,6 @@
     "badges": [
       {
         "type": "card",
-        "id": "web",
-        "size": "md",
-        "href": "/web",
-        "icon": "◧",
-        "eyebrow": "Web",
-        "title": "Web & Backend",
-        "text": "React, Blazor and .NET — collaborative editors, PDF builders, shared auth.",
-        "tags": [
-          "React",
-          "TypeScript",
-          "ASP.NET Core"
-        ],
-        "cta": "Explore →"
-      },
-      {
-        "type": "card",
         "id": "ai",
         "size": "md",
         "href": "/ai",
@@ -52,8 +36,25 @@
         "text": "Eight years on ZOME across iOS, Android, Vision Pro and Android XR.",
         "tags": [
           "SwiftUI",
+          "Kotlin",
           "Flutter",
           "visionOS"
+        ],
+        "cta": "Explore →"
+      },
+      {
+        "type": "card",
+        "id": "web",
+        "size": "md",
+        "href": "/web",
+        "icon": "◧",
+        "eyebrow": "Web",
+        "title": "Web & Backend",
+        "text": "React, Blazor and .NET — collaborative editors, PDF builders, shared auth.",
+        "tags": [
+          "React",
+          "TypeScript",
+          "ASP.NET Core"
         ],
         "cta": "Explore →"
       },
@@ -103,7 +104,7 @@
           "Heuristic Search",
           "PDDL"
         ],
-        "cta": "See it in Agent One ↗",
+        "cta": "Open Agent One ↗",
         "className": "rail-badge--pill-cta"
       },
       {
@@ -123,7 +124,7 @@
           "Parallel Ensembles",
           "Cost Tiering"
         ],
-        "cta": "See it in Chatty Prayers ↗",
+        "cta": "Open in Chatty Prayers ↗",
         "className": "rail-badge--pill-cta"
       },
       {
@@ -143,7 +144,7 @@
           "Data Privacy",
           "Local Embeddings"
         ],
-        "cta": "See it in Agent One ↗",
+        "cta": "Open in Agent One ↗",
         "className": "rail-badge--pill-cta"
       },
       {
@@ -163,7 +164,7 @@
           "Prompt Templates",
           "Tool Schemas"
         ],
-        "cta": "See it in AI Forms ↗",
+        "cta": "Open Form Editor ↗",
         "className": "rail-badge--pill-cta"
       },
       {
@@ -172,7 +173,7 @@
         "icon": "⌕",
         "title": "Retrieval & Grounding",
         "points": [
-          "Semantic search over my own data, chunked and pre-fetched as needed",
+          "Semantic search chunked and pre-fetched as needed",
           "Past successful runs retrieved as few-shot examples for new agents",
           "Live context such as weather and news injected at generation time"
         ],

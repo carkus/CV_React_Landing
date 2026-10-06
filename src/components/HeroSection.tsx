@@ -4,7 +4,7 @@ import type { WorkItem } from '../types';
 import { useWorkGroups } from '../data/projects';
 import { LinkIcon } from './WorkSection';
 import SocialLinks from './SocialLinks';
-import { resolveImgPos } from '../utils/imagePosition';
+import { frameStyle } from '../utils/imageFrame';
 
 // Back to a static pre-baked PDF — JobFit's own CV generator (GET
 // /api/cv/download) now requires a profileId it has no default for, so the
@@ -104,17 +104,13 @@ export default function HeroSection() {
       : idx;
 
   const renderSlide = (item: WorkItem) => {
-    const imgPos = resolveImgPos(item.heroImageOffsetX, item.heroImageOffsetY, item.heroImagePosition);
     return (
     <>
       <img
         className="platform-img"
         src={item.imageUrl}
         alt={item.imageAlt}
-        style={{
-          ...(imgPos ? { '--img-pos': imgPos } as React.CSSProperties : {}),
-          ...(item.heroImageTransform ? { transform: item.heroImageTransform } : {}),
-        }}
+        style={frameStyle(item.heroImageFrame)}
       />
       <div className="platform-overlay" />
       {item.links.filter(l => !!l.url).length > 0 && (

@@ -46,9 +46,7 @@ export function projectBadge(item: WorkItem, short = false): Badge {
     tags: item.tags,
     imageUrl: item.imageUrl,
     imageAlt: item.imageAlt,
-    imageOffsetX: item.imageOffsetX,
-    imageOffsetY: item.imageOffsetY,
-    imagePosition: item.imagePosition,
+    imageFrame: item.imageFrame,
     links: openLinks,
     slideshowImages: item.slideshowImages,
   };

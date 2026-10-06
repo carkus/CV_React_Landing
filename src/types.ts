@@ -1,3 +1,5 @@
+import type { ImageFrame } from './utils/imageFrame';
+
 export interface WorkLink {
   label: string;
   url: string;
@@ -27,22 +29,10 @@ export interface WorkItem {
   featured: boolean;
   links: WorkLink[];
   credit?: WorkCredit;
-  imagePosition?: string;
-  /** Pixel nudge for the work tile image, from its imagePosition anchor
-   *  (default centre). Positive moves the image right. */
-  imageOffsetX?: number;
-  /** Pixel nudge for the work tile image, from its imagePosition anchor
-   *  (default centre). Positive moves the image down. */
-  imageOffsetY?: number;
-  heroImagePosition?: string;
-  /** Pixel nudges for the hero slide image, from its heroImagePosition anchor
-   *  (default centre). Positive X moves right, positive Y moves down. */
-  heroImageOffsetX?: number;
-  heroImageOffsetY?: number;
-  /** Raw CSS `transform` value (e.g. 'scale(1.15) translateY(-4%)') applied to
-   *  the hero slide image, for fine-tuning framing/zoom beyond what
-   *  heroImagePosition's object-position crop anchor alone can reach. */
-  heroImageTransform?: string;
+  /** Framing of the Work tile image (and project badges). See utils/imageFrame.ts. */
+  imageFrame?: ImageFrame;
+  /** Framing of the hero slideshow image — independent of imageFrame. */
+  heroImageFrame?: ImageFrame;
   width?: number;
   height?: number;
   /** Gallery entries: images, video files (.mp4/.mov/.webm…) or YouTube/Vimeo
@@ -144,9 +134,8 @@ export interface CardBadge extends BadgeBase {
   icon?: string;
   imageUrl?: string;
   imageAlt?: string;
-  /** Pixel nudges from the image's centre, as WorkItem.imageOffsetX / imageOffsetY. */
-  imageOffsetX?: number;
-  imageOffsetY?: number;
+  /** Framing of the image. See utils/imageFrame.ts. */
+  imageFrame?: ImageFrame;
   /** Bullet points under the text — dash-marked, like the case studies. */
   points?: string[];
   /** Optional call-to-action label shown at the bottom, e.g. "Explore →". */
@@ -164,14 +153,8 @@ export interface WorkBadge extends Omit<BadgeBase, 'href'> {
   tags?: string[];
   imageUrl: string;
   imageAlt?: string;
-  /** Pixel nudges from imagePosition, as WorkItem.imageOffsetX / imageOffsetY. */
-  imageOffsetX?: number;
-  imageOffsetY?: number;
-  /** Zoom factor, e.g. 1.2 — scales around the offset focal point. */
-  imageScale?: number;
-  /** Raw CSS object-position — same as WorkItem.imagePosition; the 0–100
-   *  offsets above take precedence when set. */
-  imagePosition?: string;
+  /** Framing of the tile image. See utils/imageFrame.ts. */
+  imageFrame?: ImageFrame;
   links?: WorkLink[];
   /** Gallery entries: images, video files (.mp4/.mov/.webm…) or YouTube/Vimeo
    *  URLs — the viewer is picked per entry. A bare file name resolves to

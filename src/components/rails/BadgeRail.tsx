@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import ExploreLink from '../ExploreLink';
 import SwipeRail from './SwipeRail';
 import { LinkIcon, SlideshowOverlay } from '../WorkSection';
-import { resolveImgPos } from '../../utils/imagePosition';
+import { frameStyle } from '../../utils/imageFrame';
 import { resolveMedia } from '../../utils/media';
 import { useCardSlideshow } from '../../utils/useCardSlideshow';
 import { resolveProjectRefs, useWorkGroups } from '../../data/projects';
@@ -64,7 +64,6 @@ function useRail(railId: string | undefined): Rail | undefined {
 /* ── Renderers ─────────────────────────────────────────────────── */
 
 function CardBadgeView({ badge }: { badge: CardBadge }) {
-  const imgPos = resolveImgPos(badge.imageOffsetX, badge.imageOffsetY, undefined);
   return (
     <>
       {badge.imageUrl ? (
@@ -74,7 +73,7 @@ function CardBadgeView({ badge }: { badge: CardBadge }) {
             alt={badge.imageAlt ?? badge.title}
             loading="lazy"
             draggable={false}
-            style={imgPos ? { '--img-pos': imgPos } as React.CSSProperties : undefined}
+            style={frameStyle(badge.imageFrame)}
           />
         </div>
       ) : badge.icon ? (
@@ -110,7 +109,6 @@ function HtmlBadgeView({ badge }: { badge: HtmlBadge }) {
 // Gallery overlay only).
 function WorkBadgeView({ badge }: { badge: WorkBadge }) {
   const [galleryOpen, setGalleryOpen] = useState(false);
-  const imgPos = resolveImgPos(badge.imageOffsetX, badge.imageOffsetY, badge.imagePosition);
   const openLinks = (badge.links ?? []).filter(l => !!l.url);
   const hasGallery = !!badge.slideshowImages?.length;
   const slides = (badge.slideshowImages ?? []).map(resolveMedia).filter(m => m.kind === 'image').map(m => m.src);
@@ -126,10 +124,7 @@ function WorkBadgeView({ badge }: { badge: WorkBadge }) {
         alt={badge.imageAlt ?? badge.title}
         loading="lazy"
         draggable={false}
-        style={{
-          ...(imgPos ? { '--img-pos': imgPos } : {}),
-          ...(badge.imageScale != null ? { '--img-scale': badge.imageScale } : {}),
-        } as React.CSSProperties}
+        style={frameStyle(badge.imageFrame)}
       />
       {slides.map((src, i) => (
         <img

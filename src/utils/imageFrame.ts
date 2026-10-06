@@ -1,3 +1,29 @@
+// One framing system for every cropped (object-fit: cover) image on the site.
+//
+// Each placement of an image carries its own ImageFrame, so the same picture
+// can be framed differently in each place without one affecting another:
+//   WorkItem.imageFrame        — Work rail tile (and project badges)
+//   WorkItem.heroImageFrame    — hero slideshow card
+//   DisciplineProject.imageFrame — case study on the /web, /ai, /mobile pages
+//   CardBadge/WorkBadge.imageFrame — hand-written rail badges
+//
+// frameStyle() turns a frame into the --img-pos / --img-scale custom
+// properties that every framed image's CSS rule reads.
+
+import type { CSSProperties } from 'react';
+
+export interface ImageFrame {
+  /** Crop anchor — any CSS object-position, e.g. "left center" or "30% 20%".
+   *  Defaults to centre. */
+  position?: string;
+  /** Pixel nudges from the anchor. Positive X moves the image right,
+   *  positive Y moves it down. Not clamped, so big nudges can expose an edge. */
+  offsetX?: number;
+  offsetY?: number;
+  /** Zoom, e.g. 1.2 for 20% larger — scales around the framed focal point. */
+  scale?: number;
+}
+
 const X_KEYWORDS: Record<string, string> = { left: '0%', center: '50%', right: '100%' };
 const Y_KEYWORDS: Record<string, string> = { top: '0%', center: '50%', bottom: '100%' };
 
@@ -42,13 +68,8 @@ const parseBase = (position: string | undefined): [string, string] | undefined =
 const nudge = (base: string, px: number | undefined): string =>
   px ? `calc(${base} + ${px}px)` : base;
 
-/** Resolves the `--img-pos` CSS custom property (object-position) for an image.
- *  `position` is the anchor (any CSS object-position, default centre);
- *  `offsetX` / `offsetY` are pixel nudges from that anchor — positive X moves
- *  the image right, positive Y moves it down. Large nudges can expose a gap at
- *  the image's edge, since pixels aren't clamped. Returns undefined when
- *  nothing is set, so the CSS var is left unset. */
-export const resolveImgPos = (
+/** The object-position for a frame: the anchor plus any pixel nudges. */
+const resolveImgPos = (
   offsetX: number | undefined,
   offsetY: number | undefined,
   position: string | undefined,
@@ -58,3 +79,13 @@ export const resolveImgPos = (
   if (!base) return position;
   return `${nudge(base[0], offsetX)} ${nudge(base[1], offsetY)}`;
 };
+
+/** Inline style for a framed image; undefined when the frame is empty. */
+export function frameStyle(frame: ImageFrame | undefined): CSSProperties | undefined {
+  if (!frame) return undefined;
+  const pos = resolveImgPos(frame.offsetX, frame.offsetY, frame.position);
+  const style: Record<string, string | number> = {};
+  if (pos) style['--img-pos'] = pos;
+  if (frame.scale != null && frame.scale !== 1) style['--img-scale'] = frame.scale;
+  return Object.keys(style).length ? style as CSSProperties : undefined;
+}
