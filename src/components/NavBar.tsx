@@ -1,12 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ThemeToggle from './ThemeToggle';
-
-// Back to a static pre-baked PDF — JobFit's own CV generator (GET
-// /api/cv/download) now requires a profileId it has no default for, so the
-// public download link 500'd. Update this path whenever a fresher CV is
-// dropped into public/files/.
-const CV_PDF_PATH = '/files/mark_scicluna_cv_sep2026.pdf';
+import { CV_PDF_PATH } from '../data/cv';
 
 export default function NavBar() {
   const [open, setOpen] = useState(false);

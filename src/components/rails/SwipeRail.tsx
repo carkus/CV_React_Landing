@@ -189,7 +189,23 @@ export default function SwipeRail({ children, label, variant = 'row', peek = 8, 
       const dx = e.clientX - startX;
       if (!moved && Math.abs(dx) < DRAG_THRESHOLD_PX) return;
       if (!moved) { moved = true; setDragging(true); el.setPointerCapture(e.pointerId); }
-      el.scrollLeft = startScroll - dx;
+      let left = startScroll - dx;
+      // Looping: the settle-time recentre is held off mid-drag, so wrap here
+      // instead — whenever the drag strays half a set from the originals,
+      // shift both the position and the drag origin by one whole set. The
+      // sets are identical, so the jump is invisible and the drag never runs
+      // out of track. 'instant' so the track's scroll-behavior: smooth (still
+      // on until the .dragging re-render lands) doesn't animate the jump.
+      if (looping) {
+        const first = el.children[0] as HTMLElement | undefined;
+        const firstOriginal = el.children[count] as HTMLElement | undefined;
+        const setW = first && firstOriginal ? firstOriginal.offsetLeft - first.offsetLeft : 0;
+        if (setW > 0) {
+          if (left < setW / 2) { left += setW; startScroll += setW; }
+          else if (left > setW * 1.5) { left -= setW; startScroll -= setW; }
+        }
+      }
+      el.scrollTo({ left, behavior: 'instant' });
     };
     const onUp = (e: PointerEvent) => {
       if (!down) return;
@@ -214,7 +230,7 @@ export default function SwipeRail({ children, label, variant = 'row', peek = 8, 
       el.removeEventListener('pointercancel', onUp);
       el.removeEventListener('click', onClickCapture, true);
     };
-  }, []);
+  }, [looping, count]);
 
   // `i` is a rendered-child index (so, when looping, it can be a copy).
   const goToRaw = (i: number) => {

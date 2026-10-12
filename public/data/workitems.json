@@ -35,7 +35,7 @@
         "tags": ["React", "TypeScript", "ASP.NET Core"],
         "imageUrl": "/img/smooth_square.png",
         "imageAlt": "Smooth Software",
-        "heroImageFrame": { "position": "10% center" },
+        "heroImageFrame": { "position": "40%" },
         "description": "Smooth Software builds websites, apps, and admin tools fast, at straight rates. You get clean code, clear communication, and a product you will use and love",
         "featured": true,
         "width": 60,
