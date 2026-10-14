@@ -185,8 +185,8 @@
     ]
   },
   {
-    "subsection": "AI & Backend",
-    "discipline": "ai",
+    "subsection": "API",
+    "discipline": "backend",
     "items": [
       {
         "id": "chattyprayers-api",
