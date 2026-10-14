@@ -121,12 +121,12 @@ export default function WorkSection() {
     <section id="work">
       <div className="section-inner">
         <h2 className="section-heading reveal reveal-delay-1">Selected projects</h2>
-        <RailBlock railId="featured-work" className="work-slideshow-rail reveal reveal-delay-2" />
+        <RailBlock railId="featured-work" className="work-slideshow-rail rail-bleed reveal reveal-delay-2" />
         <div className="reveal reveal-delay-3">
           {groups.map(group => (
             <div key={group.subsection} className="work-group">
               <div className="work-subsection-header">{group.subsection}</div>
-              <RailBlock rail={groupRail(group)} className="work-group-rail" />
+              <RailBlock rail={groupRail(group)} className="work-group-rail rail-bleed" />
               {group.discipline && DISCIPLINES[group.discipline] && (
                 <div className="work-group-deep-link">
                   <ExploreLink href={DISCIPLINES[group.discipline].path} label={`Explore ${DISCIPLINES[group.discipline].heading} in depth`} />

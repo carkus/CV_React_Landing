@@ -5,12 +5,7 @@ import { useWorkGroups } from '../data/projects';
 import { LinkIcon } from './WorkSection';
 import SocialLinks from './SocialLinks';
 import { frameStyle } from '../utils/imageFrame';
-
-// Back to a static pre-baked PDF — JobFit's own CV generator (GET
-// /api/cv/download) now requires a profileId it has no default for, so the
-// public download link 500'd. Update this path whenever a fresher CV is
-// dropped into public/files/.
-const CV_PDF_PATH = '/files/mark-scicluna-cv.pdf';
+import { CV_PDF_PATH, downloadCv } from '../data/cv';
 
 const DWELL_MS = 10000; // time each project sits fully visible before sliding on
 const SLIDE_MS = 1400;  // slide transition duration
@@ -160,7 +155,7 @@ export default function HeroSection() {
           </div>
           <div className="hero-ctas">
             <a href="#work" className="btn-primary">View Work →</a>
-            <a href={CV_PDF_PATH} download className="btn-ghost nav-cv-btn">CV ↓</a>
+            <a href={CV_PDF_PATH} download onClick={downloadCv} className="btn-ghost nav-cv-btn">CV ↓</a>
           </div>
           <div className="hero-social">
             <SocialLinks />

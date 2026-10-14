@@ -1,12 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ThemeToggle from './ThemeToggle';
-
-// Back to a static pre-baked PDF — JobFit's own CV generator (GET
-// /api/cv/download) now requires a profileId it has no default for, so the
-// public download link 500'd. Update this path whenever a fresher CV is
-// dropped into public/files/.
-const CV_PDF_PATH = '/files/mark_scicluna_cv_sep2026.pdf';
+import { CV_PDF_PATH, downloadCv } from '../data/cv';
 
 export default function NavBar() {
   const [open, setOpen] = useState(false);
@@ -50,7 +45,7 @@ export default function NavBar() {
               <Link to="/ai">AI</Link>
               <Link to="/mobile">Mobile</Link>
             </li>
-            <li><a href={CV_PDF_PATH} download className="nav-app-link nav-cv-btn">↓ CV</a></li>
+            <li><a href={CV_PDF_PATH} download onClick={downloadCv} className="nav-app-link nav-cv-btn">↓ CV</a></li>
           </ul>
           <ThemeToggle />
           <button className={`nav-hamburger${open ? ' open' : ''}`} onClick={() => setOpen(o => !o)} aria-label="Menu">
@@ -65,7 +60,7 @@ export default function NavBar() {
         <a href="#work"         onClick={close}>Work</a>
         <a href="#timeline"     onClick={close}>Timeline</a>
         <a href="#contact"      onClick={close}>Contact</a>
-        <a href={CV_PDF_PATH} download style={{ color: '#eab308' }} onClick={close}>↓ CV</a>
+        <a href={CV_PDF_PATH} download style={{ color: '#eab308' }} onClick={e => { close(); downloadCv(e); }}>↓ CV</a>
         <div className="nav-drawer-divider">
           <span>Deep dives</span>
         </div>

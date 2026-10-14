@@ -18,6 +18,13 @@ import type { CSSProperties, ReactNode } from 'react';
 // there's always more to scroll in either direction.
 
 const DRAG_THRESHOLD_PX = 6;
+// Slideshow mouse drags: a drag at least this long always moves on at least
+// one slide on release, however short it is next to the slide width.
+const FLICK_MIN_PX = 40;
+// How far a release carries on: pointer velocity (px/ms, measured over the
+// last VELOCITY_WINDOW_MS) times this many ms is added before picking a slide.
+const MOMENTUM_MS = 260;
+const VELOCITY_WINDOW_MS = 100;
 // How long scrolling must be quiet before a looping rail re-centres.
 const SETTLE_MS = 140;
 // Autoplay only runs while the rail crosses this central band of the
@@ -174,28 +181,77 @@ export default function SwipeRail({ children, label, variant = 'row', peek = 8, 
 
   // Mouse drag only — touch and pen already scroll natively. Scroll-snap is
   // switched off for the duration of a drag (via .dragging) so the track
-  // follows the pointer instead of fighting it, then re-snaps on release.
+  // follows the pointer instead of fighting it. On release a slideshow picks
+  // its slide from the drag's direction and speed (see onUp) and glides
+  // there; a row just re-snaps.
   useEffect(() => {
     const el = trackRef.current;
     if (!el) return;
     let down = false, moved = false, startX = 0, startScroll = 0;
+    // Recent pointer positions, for the release velocity.
+    let samples: { t: number; x: number }[] = [];
+
+    // Rendered-child index whose snap position is closest to `left`.
+    const nearestTo = (left: number) => {
+      let best = 0, bestDist = Infinity;
+      for (let i = 0; i < el.children.length; i++) {
+        const dist = Math.abs(centreOf(el, i) - left);
+        if (dist < bestDist) { bestDist = dist; best = i; }
+      }
+      return best;
+    };
 
     const onDown = (e: PointerEvent) => {
       if (e.pointerType !== 'mouse' || e.button !== 0) return;
       down = true; moved = false; startX = e.clientX; startScroll = el.scrollLeft;
+      samples = [{ t: e.timeStamp, x: e.clientX }];
     };
     const onMove = (e: PointerEvent) => {
       if (!down) return;
       const dx = e.clientX - startX;
+      samples.push({ t: e.timeStamp, x: e.clientX });
+      while (samples.length > 2 && e.timeStamp - samples[0].t > VELOCITY_WINDOW_MS) samples.shift();
       if (!moved && Math.abs(dx) < DRAG_THRESHOLD_PX) return;
       if (!moved) { moved = true; setDragging(true); el.setPointerCapture(e.pointerId); }
-      el.scrollLeft = startScroll - dx;
+      let left = startScroll - dx;
+      // Looping: the settle-time recentre is held off mid-drag, so wrap here
+      // instead — whenever the drag strays half a set from the originals,
+      // shift both the position and the drag origin by one whole set. The
+      // sets are identical, so the jump is invisible and the drag never runs
+      // out of track. 'instant' so the track's scroll-behavior: smooth (still
+      // on until the .dragging re-render lands) doesn't animate the jump.
+      if (looping) {
+        const first = el.children[0] as HTMLElement | undefined;
+        const firstOriginal = el.children[count] as HTMLElement | undefined;
+        const setW = first && firstOriginal ? firstOriginal.offsetLeft - first.offsetLeft : 0;
+        if (setW > 0) {
+          if (left < setW / 2) { left += setW; startScroll += setW; }
+          else if (left > setW * 1.5) { left -= setW; startScroll -= setW; }
+        }
+      }
+      el.scrollTo({ left, behavior: 'instant' });
     };
     const onUp = (e: PointerEvent) => {
       if (!down) return;
       down = false;
       if (el.hasPointerCapture(e.pointerId)) el.releasePointerCapture(e.pointerId);
       setDragging(false);
+      if (!moved || !slideshow) return;
+      // Carry the release on by the pointer's recent velocity, then take the
+      // slide nearest that point — so a fast flick can cross several slides.
+      // startScroll has been shifted along with any loop wrap, so it still
+      // marks where this drag began in the track's current coordinates.
+      const first = samples[0], last = samples[samples.length - 1];
+      const recent = e.timeStamp - last.t < VELOCITY_WINDOW_MS && last.t > first.t;
+      const velocity = recent ? (last.x - first.x) / (last.t - first.t) : 0;
+      const from = nearestTo(startScroll);
+      let target = nearestTo(el.scrollLeft - velocity * MOMENTUM_MS);
+      // A short drag still counts: move on one slide in its direction rather
+      // than springing back to where it started.
+      const dx = e.clientX - startX;
+      if (target === from && Math.abs(dx) >= FLICK_MIN_PX) target = from + (dx < 0 ? 1 : -1);
+      target = Math.max(0, Math.min(el.children.length - 1, target));
+      el.scrollTo({ left: centreOf(el, target), behavior: 'smooth' });
     };
     // A drag that ends over a link or button mustn't also count as a click.
     const onClickCapture = (e: MouseEvent) => {
@@ -214,7 +270,7 @@ export default function SwipeRail({ children, label, variant = 'row', peek = 8, 
       el.removeEventListener('pointercancel', onUp);
       el.removeEventListener('click', onClickCapture, true);
     };
-  }, []);
+  }, [looping, count, slideshow, centreOf]);
 
   // `i` is a rendered-child index (so, when looping, it can be a copy).
   const goToRaw = (i: number) => {
