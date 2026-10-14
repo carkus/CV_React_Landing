@@ -7,6 +7,7 @@ import { LinkIcon, SlideshowOverlay } from '../WorkSection';
 import { frameStyle } from '../../utils/imageFrame';
 import { resolveMedia } from '../../utils/media';
 import { useCardSlideshow } from '../../utils/useCardSlideshow';
+import CardSlide from '../CardSlide';
 import { resolveProjectRefs, useWorkGroups } from '../../data/projects';
 import type { Badge, CardBadge, HtmlBadge, Rail, WorkBadge } from '../../types';
 import bundledRails from '../../../public/data/rails.json';
@@ -105,15 +106,15 @@ function HtmlBadgeView({ badge }: { badge: HtmlBadge }) {
 
 // Same anatomy as the Work grid's photo tile; the description is revealed on
 // hover (see .rail-work-desc in index.css). A badge with slideshowImages also
-// cycles through its still images behind the text (videos/embeds stay in the
-// Gallery overlay only).
+// cycles through its images and video files behind the text (videos play
+// muted; YouTube/Vimeo embeds stay in the Gallery overlay only).
 function WorkBadgeView({ badge }: { badge: WorkBadge }) {
   const [galleryOpen, setGalleryOpen] = useState(false);
   const openLinks = (badge.links ?? []).filter(l => !!l.url);
   const hasGallery = !!badge.slideshowImages?.length;
-  const slides = (badge.slideshowImages ?? []).map(resolveMedia).filter(m => m.kind === 'image').map(m => m.src);
+  const slides = (badge.slideshowImages ?? []).map(resolveMedia).filter(m => m.kind !== 'embed');
   const coverRef = useRef<HTMLImageElement>(null);
-  const frame = useCardSlideshow(slides.length + 1, coverRef);
+  const { frame, onScreen, next } = useCardSlideshow(slides.length + 1, coverRef, f => slides[f - 1]?.kind === 'video');
 
   return (
     <>
@@ -126,16 +127,8 @@ function WorkBadgeView({ badge }: { badge: WorkBadge }) {
         draggable={false}
         style={frameStyle(badge.imageFrame)}
       />
-      {slides.map((src, i) => (
-        <img
-          key={src}
-          className={`rail-work-img rail-work-slide${frame === i + 1 ? ' active' : ''}`}
-          src={src}
-          alt=""
-          aria-hidden="true"
-          loading="lazy"
-          draggable={false}
-        />
+      {slides.map((m, i) => (
+        <CardSlide key={m.src} media={m} className="rail-work-img rail-work-slide" active={frame === i + 1} playing={onScreen} onEnded={next} />
       ))}
       <div className="rail-work-scrim" />
       {(openLinks.length > 0 || hasGallery) && (

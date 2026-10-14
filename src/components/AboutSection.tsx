@@ -11,14 +11,28 @@ const ABOUT_SLIDES = [
   { id: '1451187580459-43490279c0fa', alt: 'City lights across the Earth at night' },
   { id: '1677442136019-21780ecad995', alt: 'Abstract AI render' },
 ];
+// The smaller accent image has its own set (so the two never match) and
+// moves at half the main panel's pace.
+const ACCENT_SLIDES = [
+  { id: '1518770660439-4636190af475', alt: 'Circuit board macro detail' },
+  { id: '1488590528505-98d2b5aba04b', alt: 'Code on a laptop screen' },
+  { id: '1485827404703-89b55fcc595e', alt: 'Humanoid robot' },
+  { id: '1504639725590-34d0984388bd', alt: 'Glasses in front of code on monitors' }
+];
 const SLIDE_DWELL_MS = 6000; // the fade itself is in index.css (.about-slide)
+const unsplash = (id: string, w: number, h: number) =>
+  `https://images.unsplash.com/photo-${id}?w=${w}&h=${h}&fit=crop&q=80`;
 
 export default function AboutSection() {
-  const [slideIdx, setSlideIdx] = useState(0);
+  // One clock for both: the main panel steps every tick, the accent every
+  // second tick.
+  const [tick, setTick] = useState(0);
+  const slideIdx = tick % ABOUT_SLIDES.length;
+  const accentIdx = Math.floor(tick / 2) % ACCENT_SLIDES.length;
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const t = setInterval(() => setSlideIdx(i => (i + 1) % ABOUT_SLIDES.length), SLIDE_DWELL_MS);
+    const t = setInterval(() => setTick(n => n + 1), SLIDE_DWELL_MS);
     return () => clearInterval(t);
   }, []);
 
@@ -31,15 +45,21 @@ export default function AboutSection() {
               {ABOUT_SLIDES.map((slide, i) => (
                 <img key={slide.id}
                   className={`about-slide${i === slideIdx ? ' active' : ''}`}
-                  src={`https://images.unsplash.com/photo-${slide.id}?w=900&h=1300&fit=crop&q=80`}
+                  src={unsplash(slide.id, 900, 1300)}
                   alt={i === slideIdx ? slide.alt : ''}
                   aria-hidden={i !== slideIdx} />
               ))}
             </div>
             <div className="about-img-label">Melbourne, AU</div>
-            <img className="about-img-accent"
-              src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=700&h=560&fit=crop&q=80"
-              alt="Circuit board macro detail" />
+            <div className="about-img-accent">
+              {ACCENT_SLIDES.map((slide, i) => (
+                <img key={slide.id}
+                  className={`about-slide${i === accentIdx ? ' active' : ''}`}
+                  src={unsplash(slide.id, 700, 560)}
+                  alt={i === accentIdx ? slide.alt : ''}
+                  aria-hidden={i !== accentIdx} />
+              ))}
+            </div>
           </div>
           <div>
             <div className="section-eyebrow reveal">About</div>

@@ -7,6 +7,7 @@ import { useDocumentMeta } from '../seo';
 import { frameStyle } from '../utils/imageFrame';
 import { resolveMedia } from '../utils/media';
 import { useCardSlideshow } from '../utils/useCardSlideshow';
+import CardSlide from '../components/CardSlide';
 import { DISCIPLINES, DISCIPLINE_ORDER } from '../data/disciplines';
 import type { DisciplineKey, DisciplineProject } from '../data/disciplines';
 
@@ -20,10 +21,11 @@ function LinkIcon({ label }: { label: string }) {
 function ProjectCase({ project, index }: { project: DisciplineProject; index: number }) {
   const [slideshowOpen, setSlideshowOpen] = useState(false);
   const hasSlideshow = !!project.slideshowImages?.length;
-  // Same in-card slideshow as the Work rail tiles: cover, then still images.
-  const slides = (project.slideshowImages ?? []).map(resolveMedia).filter(m => m.kind === 'image').map(m => m.src);
+  // Same in-card slideshow as the Work rail tiles: cover, then images and
+  // muted video files (embeds stay in the gallery overlay).
+  const slides = (project.slideshowImages ?? []).map(resolveMedia).filter(m => m.kind !== 'embed');
   const coverRef = useRef<HTMLImageElement>(null);
-  const frame = useCardSlideshow(slides.length + 1, coverRef);
+  const { frame, onScreen, next } = useCardSlideshow(slides.length + 1, coverRef, f => slides[f - 1]?.kind === 'video');
   const openLinks = project.links.filter(l => !!l.url);
 
   // Typeset like a magazine column: heading full width, then the image floats
@@ -47,15 +49,8 @@ function ProjectCase({ project, index }: { project: DisciplineProject; index: nu
               loading="lazy"
               style={frameStyle(project.imageFrame)}
             />
-            {slides.map((src, i) => (
-              <img
-                key={src}
-                className={`dp-case-slide${frame === i + 1 ? ' active' : ''}`}
-                src={src}
-                alt=""
-                aria-hidden="true"
-                loading="lazy"
-              />
+            {slides.map((m, i) => (
+              <CardSlide key={m.src} media={m} className="dp-case-slide" active={frame === i + 1} playing={onScreen} onEnded={next} />
             ))}
             {hasSlideshow && (
               <button type="button" className="dp-case-gallery" onClick={() => setSlideshowOpen(true)}>

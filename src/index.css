@@ -290,7 +290,7 @@ nav {
 .platform-card {
     width: 100%; height: 100%; min-width: 0;
     background: linear-gradient(145deg, var(--slate) 0%, var(--navy) 100%);
-    border: 1px solid var(--steel); border-radius: var(--radius-lg);
+    border: 1px solid var(--steel); border-radius: 0 0 calc(var(--radius-lg) * 2) calc(var(--radius-lg) * 2);
     position: relative; overflow: hidden;
     animation: platform-glow-pulse 6s ease-in-out infinite;
 }
@@ -409,11 +409,12 @@ section { padding: 7rem 0; }
 .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: stretch; }
 .about-image-stack { position: relative; min-height: 560px; }
 .about-img-main { position: absolute; top: 0; left: 0; width: 86%; height: calc(100% - 4rem); overflow: hidden; border: 1px solid var(--steel); border-radius: 0 0 calc(var(--radius-lg) * 2) calc(var(--radius-lg) * 2); box-shadow: 0 35px 70px -18px rgba(0,0,0,0.7); }
-/* The main panel is a cross-fading slideshow: every slide is stacked in it
-   and only the .active one is opaque (cycled in AboutSection.tsx). */
+/* Both About panels are cross-fading slideshows: every slide is stacked in
+   the panel and only the .active one is opaque (cycled in AboutSection.tsx). */
 .about-slide { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(30%); opacity: 0; transition: opacity 1.6s ease; }
 .about-slide.active { opacity: 1; }
-.about-img-accent { position: absolute; bottom: 0; right: 0; width: 58%; height: 38%; object-fit: cover; filter: grayscale(10%); border: 1px solid var(--accent); border-radius: 0 0 calc(var(--radius) * 2) calc(var(--radius) * 2); box-shadow: 0 0 30px color-mix(in srgb, var(--accent) 20%, transparent), 0 35px 70px -18px rgba(0,0,0,0.7); }
+.about-img-accent .about-slide { filter: grayscale(10%); }
+.about-img-accent { position: absolute; bottom: 0; right: 0; width: 58%; height: 38%; overflow: hidden; border: 1px solid var(--accent); border-radius: 0 0 calc(var(--radius) * 2) calc(var(--radius) * 2); box-shadow: 0 0 30px color-mix(in srgb, var(--accent) 20%, transparent), 0 35px 70px -18px rgba(0,0,0,0.7); }
 :root[data-theme="light"] .about-img-main { box-shadow: 0 30px 60px -20px rgba(0,0,0,0.26); }
 :root[data-theme="light"] .about-img-accent { box-shadow: 0 0 30px color-mix(in srgb, var(--accent) 20%, transparent), 0 30px 60px -20px rgba(0,0,0,0.26); }
 .about-img-label { position: absolute; bottom: calc(38% + 0.75rem); right: 0; width: 58%; z-index: 1; padding: 0.6rem 0.8rem; background: var(--accent); font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: #fff; }
@@ -434,7 +435,7 @@ section { padding: 7rem 0; }
    between them again. #ai's local --navy/--slate/--accent2 re-tint
    still applies since these classes reference the same custom
    properties. */
-.info-card-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5px; background: var(--slate); border: 1px solid var(--slate); border-radius: var(--radius-lg); overflow: hidden; }
+.info-card-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5px; background: var(--slate); border: 1px solid var(--slate); border-radius: 0 0 calc(var(--radius-lg) * 2) calc(var(--radius-lg) * 2); overflow: hidden; }
 .info-card { background: var(--navy); padding: 1.6rem 1.8rem; position: relative; overflow: hidden; display: flex; flex-direction: column; transition: background 0.25s; }
 .info-card:hover { background: color-mix(in srgb, var(--navy) 80%, var(--accent) 20%); }
 .info-card-main { display: flex; flex-direction: row; align-items: flex-start; gap: 1.2rem; position: relative; z-index: 1; }
@@ -527,7 +528,7 @@ section { padding: 7rem 0; }
        it, so a row's shorter cards stopped matching their row-mates. */
     display: flex; flex-direction: column; position: relative;
     background: var(--navy); border: 1px solid var(--slate);
-    border-radius: var(--radius); padding: 1.4rem 1.5rem;
+    border-radius: 0 0 calc(var(--radius) * 2) calc(var(--radius) * 2); padding: 1.4rem 1.5rem;
     text-decoration: none; color: inherit;
     transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
 }
@@ -562,9 +563,9 @@ section { padding: 7rem 0; }
    ground so cards still stand out. Photo-tile overlays stay hardcoded
    light-on-dark-photo. */
 #work {
-    background: #e3e9f1;
+    background: #e6f3fd;
     border-top: 1px solid var(--slate); border-bottom: 1px solid var(--slate);
-    --ink: #d8e0eb; --navy: #f2f5f9; --slate: #c5d0de; --steel: #5b6b85;
+    --ink: #d6e9f8; --navy: #f5faff; --slate: #c4dcf0; --steel: #5b6b85;
     --mist: #3b475c; --silver: #1f2937; --chalk: #10131c;
     --accent: #2f5bb0; --accent2: #1d4fae; --error: #c23b3b;
     --card-shadow-ambient: rgba(0,0,0,0.22);
@@ -599,7 +600,7 @@ section { padding: 7rem 0; }
    in a bottom scrim that slides up on hover only — clicking the tile itself
    opens its primary link in a new tab rather than pinning the overlay open,
    so there's no tap-to-hold state to manage. */
-.work-item { position: relative; height: 300px; border-radius: var(--radius); overflow: hidden; cursor: pointer; border: 1px solid var(--steel); transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; }
+.work-item { position: relative; height: 300px; border-radius: 0 0 calc(var(--radius) * 2) calc(var(--radius) * 2); overflow: hidden; cursor: pointer; border: 1px solid var(--steel); transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; }
 .work-item.no-link { cursor: default; }
 .work-item:hover { border-color: var(--accent2); transform: translateY(-2px); box-shadow: 0 12px 28px -10px color-mix(in srgb, var(--accent2) 35%, transparent); }
 .work-item > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: var(--img-pos, center); filter: grayscale(15%) brightness(0.85); transition: filter 0.4s, transform 0.5s; }
@@ -625,12 +626,12 @@ section { padding: 7rem 0; }
    flat card backgrounds, overlay chips sit on top of photos and need a
    translucent backing + brighter text to stay legible. */
 .skill-box {
-    font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase;
+    font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.1em; text-transform: uppercase;
     display: inline-flex; align-items: center; gap: 0.35em;
     /* ~70% of the way to a full stadium pill (which would need ~half the
        box's own height) — rounded enough to read as pill-shaped without
        going fully capsule. */
-    padding: 0.18rem 0.45rem; border-radius: 6px;
+    padding: 0.2rem 0.5rem; border-radius: 6.6px;
 }
 .work-tag { color: #fff; background: rgba(10,13,20,0.45); border: 1px solid rgba(90,138,238,0.2); }
 /* Plain icon links, not boxed buttons — App Store/Play Store get their
@@ -652,7 +653,7 @@ section { padding: 7rem 0; }
     background: rgba(6,10,20,0.92); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
 }
 .slideshow-image {
-    border-radius: var(--radius);
+    border-radius: 0 0 calc(var(--radius) * 2) calc(var(--radius) * 2);
     width: min(85vh, calc(100vw - 12rem), 900px);
     height: min(85vh, calc(100vw - 12rem), 900px);
     aspect-ratio: 1 / 1;
@@ -740,7 +741,7 @@ section { padding: 7rem 0; }
 .expertise-scroll-area::-webkit-scrollbar { display: none; }
 .expertise-panel {
     flex-shrink: 0; width: 340px; position: relative; display: flex; flex-direction: column;
-    background: var(--navy); border: 1px solid var(--slate); border-radius: var(--radius);
+    background: var(--navy); border: 1px solid var(--slate); border-radius: 0 0 calc(var(--radius) * 2) calc(var(--radius) * 2);
     overflow: hidden; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 .expertise-panel:hover { border-color: var(--accent2); transform: translateY(-2px); box-shadow: 0 12px 28px -10px color-mix(in srgb, var(--accent2) 35%, transparent); }
@@ -764,15 +765,15 @@ section { padding: 7rem 0; }
 .expertise-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: auto; }
 .etag { font-weight: 400; border: 1px solid var(--steel); color: var(--chalk); background: transparent; }
 .etag-icon { display: inline-flex; align-items: center; justify-content: center; }
-.etag-icon i { font-size: 0.625rem; }
-.etag-icon img { width: 10px; height: 10px; object-fit: contain; }
-.etag-icon span { font-size: 0.55rem; color: var(--accent2); line-height: 1; }
+.etag-icon i { font-size: 0.69rem; }
+.etag-icon img { width: 11px; height: 11px; object-fit: contain; }
+.etag-icon span { font-size: 0.6rem; color: var(--accent2); line-height: 1; }
 /* Toolkit (#skills) tech tags run ~10% larger than tags elsewhere — text,
    padding and inline icons all scaled together. */
-#skills .skill-box { font-size: 0.64rem; padding: 0.2rem 0.5rem; }
-#skills .etag-icon i { font-size: 0.69rem; }
-#skills .etag-icon img { width: 11px; height: 11px; }
-#skills .etag-icon span { font-size: 0.6rem; }
+#skills .skill-box { font-size: 0.7rem; padding: 0.22rem 0.55rem; }
+#skills .etag-icon i { font-size: 0.76rem; }
+#skills .etag-icon img { width: 12px; height: 12px; }
+#skills .etag-icon span { font-size: 0.66rem; }
 .scroll-hint { display: flex; align-items: center; justify-content: flex-end; gap: 0.6rem; font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mist); max-width: 1280px; margin: 0 auto; padding: 1.4rem 3rem 0; animation: pulse 2s ease-in-out infinite; }
 @keyframes pulse { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }
 
@@ -808,7 +809,7 @@ section { padding: 7rem 0; }
 
 /* ── REFERENCES ──────────────────────────────────────────────── */
 #references { background: var(--navy); border-top: 1px solid var(--slate); }
-.testimonials-grid { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--slate); border-radius: var(--radius-lg); overflow: hidden; }
+.testimonials-grid { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--slate); border-radius: 0 0 calc(var(--radius-lg) * 2) calc(var(--radius-lg) * 2); overflow: hidden; }
 .testimonial-card { padding: 2.5rem; border-bottom: 1px solid var(--slate); display: flex; flex-direction: column; gap: 1rem; }
 .testimonial-card:last-child { border-bottom: none; }
 .testimonial-quote { font-family: var(--serif); font-size: 4rem; line-height: 0.8; color: var(--accent); margin-bottom: -0.5rem; text-shadow: 0 0 24px color-mix(in srgb, var(--accent) 35%, transparent); }
@@ -840,7 +841,7 @@ section { padding: 7rem 0; }
 .contact-email:hover { color: var(--chalk); text-shadow: 0 0 16px color-mix(in srgb, var(--accent2) 60%, transparent); }
 /* Instagram feed — square photo tiles, border-only hover (no shadows). */
 .ig-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.6rem; }
-.ig-post { position: relative; display: block; aspect-ratio: 1; overflow: hidden; border: 1px solid var(--steel); border-radius: var(--radius); transition: border-color 0.2s; }
+.ig-post { position: relative; display: block; aspect-ratio: 1; overflow: hidden; border: 1px solid var(--steel); border-radius: 0 0 calc(var(--radius) * 2) calc(var(--radius) * 2); transition: border-color 0.2s; }
 .ig-post img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
 .ig-post:hover { border-color: var(--accent2); }
 .ig-post:hover img { transform: scale(1.04); }
@@ -1064,7 +1065,7 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
 
 /* "How I work" cards, one per slide in a SwipeRail slideshow. */
 .dp-principle {
-    background: var(--ink); border: 1px solid var(--slate); border-radius: var(--radius-lg);
+    background: var(--ink); border: 1px solid var(--slate); border-radius: 0 0 calc(var(--radius-lg) * 2) calc(var(--radius-lg) * 2);
     padding: 1.6rem 1.7rem; display: flex; flex-direction: column; gap: 0.7rem;
 }
 .dp-principle .info-card-icon { width: 40px; height: 40px; font-size: 1.15rem; border-radius: var(--radius); }
@@ -1075,7 +1076,7 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
 
 .dp-cases { display: flex; flex-direction: column; gap: 2.5rem; }
 .dp-case {
-    background: var(--navy); border: 1px solid var(--slate); border-radius: var(--radius-lg); overflow: hidden;
+    background: var(--navy); border: 1px solid var(--slate); border-radius: 0 0 calc(var(--radius-lg) * 2) calc(var(--radius-lg) * 2); overflow: hidden;
     transition: border-color 0.25s, box-shadow 0.25s;
 }
 .dp-case:hover { border-color: var(--steel); box-shadow: 0 24px 60px -30px var(--card-shadow-ambient); }
@@ -1083,17 +1084,17 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
 .dp-case-media {
     float: left; width: min(46%, 460px); aspect-ratio: 1 / 1;
     margin: 0.35rem 2.2rem 1.2rem 0;
-    position: relative; background: var(--slate); overflow: hidden; border-radius: var(--radius);
+    position: relative; background: var(--slate); overflow: hidden; border-radius: 0 0 calc(var(--radius) * 2) calc(var(--radius) * 2);
 }
 /* Alternate the image side so a long list of case studies doesn't read as one column. */
 .dp-case:nth-child(even) .dp-case-media { float: right; margin: 0.35rem 0 1.2rem 2.2rem; }
 /* transform-origin follows the crop focal point so a frame's scale zooms into the
    same part of the image the offsets frame, rather than the dead centre. */
-.dp-case-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: var(--img-pos, center); transform: scale(var(--img-scale, 1)); transform-origin: var(--img-pos, center); }
-/* In-frame slideshow stills (same rhythm as the Work rail tiles): letterboxed
+.dp-case-media img, .dp-case-media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: var(--img-pos, center); transform: scale(var(--img-scale, 1)); transform-origin: var(--img-pos, center); }
+/* In-frame slideshow frames, stills or muted video (same rhythm as the Work rail tiles): letterboxed
    so screenshots aren't cropped, cross-fading over the cover. */
-.dp-case-media img.dp-case-slide { object-fit: contain; object-position: center; transform: none; background: #0b0f17; opacity: 0; transition: opacity 0.8s ease; }
-.dp-case-media img.dp-case-slide.active { opacity: 1; }
+.dp-case-media .dp-case-slide { object-fit: contain; object-position: center; transform: none; background: #0b0f17; opacity: 0; transition: opacity 0.8s ease; }
+.dp-case-media .dp-case-slide.active { opacity: 1; }
 .dp-case-gallery {
     position: absolute; left: 1rem; bottom: 1rem; z-index: 1;
     font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase;
@@ -1168,7 +1169,7 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
     --badge-w: 300px;
     flex: 0 0 min(var(--badge-w), 85vw); scroll-snap-align: start;
     display: flex; flex-direction: column; position: relative; overflow: hidden;
-    background: var(--navy); border: 1px solid var(--slate); border-radius: var(--radius-lg);
+    background: var(--navy); border: 1px solid var(--slate); border-radius: 0 0 calc(var(--radius-lg) * 2) calc(var(--radius-lg) * 2);
     color: var(--chalk); text-decoration: none;
     transition: border-color 0.25s, transform 0.2s;
 }
@@ -1179,7 +1180,7 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
 .rail-badge--link { cursor: pointer; }
 .rail-badge--link:hover { border-color: var(--accent2); transform: translateY(-2px); }
 /* Photo-less small-project cards in the work rails: a stronger border so they
-   hold their edge against #work's pale grey-blue ground. */
+   hold their edge against #work's pale baby-blue ground. */
 #work .rail-badge--card { border-color: color-mix(in srgb, var(--steel) 60%, transparent); }
 #work .rail-badge--card.rail-badge--link:hover { border-color: var(--accent2); }
 
