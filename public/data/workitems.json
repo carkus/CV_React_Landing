@@ -65,6 +65,7 @@
         "summary": "Collaborative writing platform organising work into Collections and Articles, with suggestions, appraisal notifications, messaging and distraction-free rich-text editing.",
         "featured": true,
         "width": 60,
+        "screenshots": ["/img/screenshots/01-landing.png", "/img/screenshots/02-collections.png", "/img/screenshots/04-collection-belisha.png", "/img/screenshots/06-article-exodus.png", "/img/screenshots/07-article-lisbon-cell-toolbar.png", "/img/screenshots/08-profile.png", "/img/screenshots/09-users.png", "/img/screenshots/11-messages.png"],
         "links": [
           { "label": "Coming Soon", "url": "https://scribbler.carkus.com", "inactive": true }
         ]
