@@ -1,8 +1,21 @@
-import { defineConfig } from 'vite'
+import { createLogger, defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+
+// projects.ts and BadgeRail.tsx deliberately import workitems.json/rails.json
+// straight from public/data/ — bundled for first paint and as the fetch
+// fallback, while the same files stay in public/ so re-deploying just the
+// JSON updates the live site. Vite's dev server warns about that import on
+// every transform, so drop that one message; all other warnings pass through.
+const logger = createLogger()
+const warn = logger.warn
+logger.warn = (msg, options) => {
+  if (msg.includes('Assets in public directory cannot be imported from JavaScript')) return
+  warn(msg, options)
+}
 
 // https://vite.dev/config/
 export default defineConfig({
+  customLogger: logger,
   plugins: [react()],
   resolve: {
     // @carkus/seo-react is a `file:` link to a sibling repo (../carkus-seo-react)

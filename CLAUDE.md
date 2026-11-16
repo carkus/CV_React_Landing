@@ -14,6 +14,7 @@ npm run lint       # eslint
 Deployment scripts (PowerShell):
 
 ```powershell
+.\killrun.ps1      # stop this site's dev server on :5173 (only if it's serving this site), then npm run dev
 .\deploy.ps1       # npm run build then WinSCP sync dist/ → root@170.64.223.82:/var/www/carkus.com
 .\deploy-data.ps1  # (lives in CV_carkus_landing — not used here; data is managed directly in the carkus-data repo)
 ```

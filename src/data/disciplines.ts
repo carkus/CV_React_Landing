@@ -88,20 +88,6 @@ export const DISCIPLINES: Record<DisciplineKey, Discipline> = {
         links: [{ label: 'Coming soon', url: 'https://scribbler.carkus.com', inactive: true }],
       },
       {
-        title: 'AI Forms — PDF Builder',
-        meta: 'Personal · Blazor + .NET',
-        summary: 'A browser-based drag-and-drop editor for building and exporting PDF forms. Describe a form in plain text and an AI pipeline generates the fields and layout, with pre-filled values.',
-        highlights: [
-          'Drag-and-drop form canvas in Blazor WebAssembly',
-          'Backed by MarkdownForms.Api — form schemas defined in Markdown, exported as PDFs with real AcroForm fields',
-          'Plain-language form generation via an agentic LangGraph / LlamaIndex pipeline and the Claude API',
-        ],
-        tags: ['Blazor', 'ASP.NET Core', 'PDF Generation', 'Claude API'],
-        imageUrl: '/img/pdf_form.png',
-        imageAlt: 'AI Forms PDF Builder',
-        links: [{ label: 'Open editor', url: 'https://editor.carkus.com/form-editor' }],
-      },
-      {
         title: 'FPG Receipts',
         meta: 'Client · Fitzroy Public Gallery',
         summary: 'A receipt generator built for the Fitzroy Public Gallery — line items, commission and GST calculation, and bank details, laid out live against a print-ready preview pane for one-click PDF export.',
@@ -124,10 +110,24 @@ export const DISCIPLINES: Record<DisciplineKey, Discipline> = {
           'ASP.NET Core minimal-API backend: contact form → email via Mailgun',
         ],
         tags: ['React', 'TypeScript', 'ASP.NET Core', 'Mailgun'],
-        imageUrl: '/img/smooth_software_wide.png',
+        imageUrl: '/img/smooth_square.png',
         imageAlt: 'Smooth Software',
         imageFrame: { position: '10% center' },
         links: [{ label: 'Open Smooth Software', url: 'https://smoothsoftware.carkus.com' }],
+      },
+      {
+        title: 'AI Forms — PDF Builder',
+        meta: 'Personal · Blazor + .NET',
+        summary: 'A browser-based drag-and-drop editor for building and exporting PDF forms. Describe a form in plain text and an AI pipeline generates the fields and layout, with pre-filled values.',
+        highlights: [
+          'Drag-and-drop form canvas in Blazor WebAssembly',
+          'Backed by MarkdownForms.Api — form schemas defined in Markdown, exported as PDFs with real AcroForm fields',
+          'Plain-language form generation via an agentic LangGraph / LlamaIndex pipeline and the Claude API',
+        ],
+        tags: ['Blazor', 'ASP.NET Core', 'PDF Generation', 'Claude API'],
+        imageUrl: '/img/pdf_form.png',
+        imageAlt: 'AI Forms PDF Builder',
+        links: [{ label: 'Open editor', url: 'https://editor.carkus.com/form-editor' }],
       },
       {
         title: 'Auth Login',
@@ -283,7 +283,7 @@ export const DISCIPLINES: Record<DisciplineKey, Discipline> = {
     sub: 'Swift / SwiftUI · Flutter · Kotlin · React Native · visionOS · Android XR',
     intro: [
       'Mobile cross-platform across native iOS and Android or cross-platform using Flutter or React Native. Also native middleware.',
-      'ZOME Shipped as a launch partner for both Apple Vision Pro and Samsung Galaxy XR, a journey in maintaining new hardware four platforms consistently and reliably.',
+      'ZOME Shipped as a launch partner for both the Apple Vision Pro and Samsung Galaxy XR; we developed to four platforms consistently and reliably.',
     ],
     stats: [
       { value: '8yr', label: 'On ZOME' },

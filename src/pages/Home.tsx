@@ -56,16 +56,18 @@ export default function Home() {
   return (
     <>
       <NavBar />
-      <HeroSection />
-      <AboutSection />
-      <BadgeRail railId="deep-dives" />
-      <AskSection />
-      <BadgeRail railId="ai-threads" sectionId="ai" />
-      <SkillsSection />
-      <WorkSection />
-      <TimelineSection />
-      <InstagramSection />
-      <ContactSection />
+      <main id="main" tabIndex={-1}>
+        <HeroSection />
+        <AboutSection />
+        <BadgeRail railId="deep-dives" />
+        <AskSection />
+        <BadgeRail railId="ai-threads" sectionId="ai" />
+        <SkillsSection />
+        <WorkSection />
+        <TimelineSection />
+        <InstagramSection />
+        <ContactSection />
+      </main>
       <FooterSection />
     </>
   );

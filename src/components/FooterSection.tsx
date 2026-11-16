@@ -15,7 +15,11 @@ export default function FooterSection() {
     if (localStorage.getItem(OWNER_FLAG) === '1') return;
     if (import.meta.env.DEV) return;
 
-    fetch(VISIT_URL, { method: 'POST' })
+    fetch(VISIT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ path: window.location.pathname, referrer: document.referrer || null }),
+    })
       .then(res => (res.ok ? res.json() : null))
       .then(data => data && setCount(data.count))
       .catch(() => {});
@@ -28,6 +32,7 @@ export default function FooterSection() {
         <p>Melbourne, Australia</p>
         {count !== null && <p className="footer-visitors">{count.toLocaleString()} visits</p>}
       </div>
+      <p className="footer-privacy">Visits are logged (IP address, browser, referrer) and kept for 90 days.</p>
     </footer>
   );
 }

@@ -4,6 +4,17 @@
     "discipline": "web",
     "items": [
       {
+        "id": "globetrotter",
+        "title": "Globetrotter",
+        "tags": ["React Native", "Geo", "Social", "Tourism"],
+        "imageUrl": "/img/promo-square.jpg",
+        "description": "Day trip planner and schedular for tourists",
+        "summary": "Day trip planner and schedular for tourists",
+        "featured": false,
+        "width": 50,
+        "links": []
+      },
+      {
         "id": "agent-one",
         "title": "Agent One - Agent Workers",
         "tags": ["Local LLMs", "Ollama", "AWS Lambda", "Agentic"],
@@ -12,6 +23,7 @@
         "summary": "Self-scaffolding and self-evaluating agent platform — describe a task in plain language and it builds purpose-built agents, assigns a role and accesses MCP tools, via Ollama locally or through Gemini.",
         "featured": true,
         "width": 50,
+        "screenshots": ["/img/screenshots/08-setup-focus.png", "/img/screenshots/09-setup-brief.png", "/img/screenshots/10-setup-outputs.png", "/img/screenshots/11a-deploy.png", "/img/screenshots/11e-export-menu.png", "/img/screenshots/12a-deploy.png"],
         "links": [
           { "label": "Open Agent One", "url": "https://agent.carkus.com" }
         ]
@@ -35,7 +47,7 @@
         "tags": ["React", "TypeScript", "ASP.NET Core"],
         "imageUrl": "/img/smooth_square.png",
         "imageAlt": "Smooth Software",
-        "heroImageFrame": { "position": "10% center" },
+        "heroImageFrame": { "position": "45%" },
         "description": "Smooth Software builds websites, apps, and admin tools for businesses.",
         "featured": true,
         "width": 60,
@@ -135,25 +147,28 @@
         "id": "chatty-prayers",
         "title": "Chatty Prayers — AIs Debate",
         "tags": ["Blazor", "Claude API", "Gemini API"],
-        "imageUrl": "/img/chatty_prayers.png",
+        "imageUrl": "/img/chatty_prayers_1.png",
         "imageAlt": "Chatty Prayers",
         "heroImageFrame": { "position": "50% center" },
         "description": "Personality-driven AI platform with one-on-one chat, confidant reflection, and structured multi-participant debate — built with Blazor and a RAG pipeline over the Claude and Gemini APIs, with conversation and dialogue persistence powering multi-personality, multi-participant exchanges.",
         "summary": "Personality-driven AI platform with one-on-one chat, confidant reflection and structured multi-participant debate — Blazor and a RAG pipeline over the Claude and Gemini APIs.",
         "featured": true,
         "width": 40,
+        "slideshowImages": ["/img/chatty_prayers_1.png", "/img/chatty_prayers_2.png", "/img/chatty_prayers_3.png", "/img/chatty_prayers_4.png"],
         "links": [
           { "label": "Open Chatty Prayers ↗", "url": "https://moot.carkus.com" }
         ]
       },
       {
         "id": "jobfit",
-        "title": "JobFit™ — AI Job Match Analyser",
+        "title": "JobFit™ — AI Job Fit Advisor",
         "tags": ["TypeScript", ".NET", "MCP", "Structured Output", "Multi-AI Providers"],
         "imageUrl": "/img/jobfit_AI_notext.png",
         "description": "Multi-provider AI tool that scores CVs against job descriptions, generates ATS compliant resumes, surfaces skill gaps, and drafts cover letters — exposes MCP tools for direct use from Claude.",
         "featured": true,
         "width": 60,
+        "slideshowImages": ["/img/jobfit_banner_square_1.png", "/img/jobfit_banner_square_2.png", "/img/jobfit_banner_square_3.png", "/img/jobfit_banner_square_4.png", "/img/jobfit_banner_square_5.jpg", "/img/jobfit_banner_square_6.jpg", "/img/jobfit_banner_square_7.jpg", "/img/jobfit_banner_square_8.jpg"],
+        "screenshots": ["/img/screenshots/light_01-landing.png", "/img/screenshots/02-app-hero-profile.png", "/img/screenshots/03-skills-tab.png", "/img/screenshots/light_05-qualifications-languages.png", "/img/screenshots/light_06-job-search-tab.png", "/img/screenshots/08-role-evaluation-result.png", "/img/screenshots/light_08-role-evaluation-result.png"],
         "links": [
           { "label": "Open JobFit ↗", "url": "https://jobfit.carkus.com" }
         ],
@@ -185,7 +200,7 @@
     ]
   },
   {
-    "subsection": "Backend",
+    "subsection": "API",
     "discipline": "ai",
     "items": [
       {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDocumentMeta } from '../seo';
 import './smoothSoftware.css';
@@ -18,6 +18,10 @@ function SmoothDiscussForm() {
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<'idle' | 'sent' | 'error'>('idle');
   const [error, setError] = useState('');
+  const emailId = useId();
+  const messageId = useId();
+  const emailRef = useRef<HTMLInputElement>(null);
+  useEffect(() => { if (open) emailRef.current?.focus(); }, [open]);
 
   // Revert the "Sent" confirmation back to the toggle link after a pause,
   // rather than leaving it there permanently.
@@ -62,20 +66,24 @@ function SmoothDiscussForm() {
   }
 
   if (status === 'sent') {
-    return <p className="smooth-discuss-toggle smooth-discuss-sent">Sent — I'll reply directly to your email shortly.</p>;
+    return <p className="smooth-discuss-toggle smooth-discuss-sent" role="status">Sent — I'll reply directly to your email shortly.</p>;
   }
 
   if (!open) {
     return (
       <button type="button" className="smooth-discuss-toggle" onClick={() => setOpen(true)}>
-        Got a project in mind? Send a query →
+        Got a project in mind? Send a query <span aria-hidden="true">→</span>
       </button>
     );
   }
 
   return (
-    <form className="smooth-discuss-form" onSubmit={send}>
+    <form className="smooth-discuss-form" onSubmit={send} aria-label="Project enquiry">
+      <label htmlFor={emailId} className="sr-only">Your email</label>
       <input
+        ref={emailRef}
+        id={emailId}
+        autoComplete="email"
         className="smooth-discuss-input"
         type="email"
         placeholder="your@email.com"
@@ -83,7 +91,9 @@ function SmoothDiscussForm() {
         onChange={e => setEmail(e.target.value)}
         required
       />
+      <label htmlFor={messageId} className="sr-only">What are you looking to build?</label>
       <textarea
+        id={messageId}
         className="smooth-discuss-textarea"
         placeholder="What are you looking to build?"
         value={message}
@@ -92,9 +102,9 @@ function SmoothDiscussForm() {
         required
       />
       <button className="smooth-discuss-submit" type="submit" disabled={loading || !email.trim() || !message.trim()}>
-        {loading ? '···' : 'Send →'}
+        {loading ? <><span aria-hidden="true">···</span><span className="sr-only">Sending</span></> : <>Send <span aria-hidden="true">→</span></>}
       </button>
-      {status === 'error' && <p className="smooth-discuss-status smooth-discuss-status-error">{error}</p>}
+      {status === 'error' && <p className="smooth-discuss-status smooth-discuss-status-error" role="alert">{error}</p>}
     </form>
   );
 }
@@ -165,8 +175,8 @@ export default function SmoothSoftware() {
 
   return (
     <div className="smooth-page">
-      <Link to="/" className="smooth-back">← Back to mscicluna.com</Link>
-      <div className="smooth-card">
+      <Link to="/" className="smooth-back"><span aria-hidden="true">←</span> Back to mscicluna.com</Link>
+      <main id="main" tabIndex={-1} className="smooth-card">
         <div className="smooth-card-inner">
         {/* Decorative flowing neon curves, echoing the source mockup's ribbon
             accents. The real source ribbon lines sit crammed against adjacent
@@ -203,8 +213,8 @@ export default function SmoothSoftware() {
             </div>
 
             <div className="smooth-divider">
-              <span className="smooth-spark smooth-spark-left">✦</span>
-              <span className="smooth-spark smooth-spark-right">✦</span>
+              <span className="smooth-spark smooth-spark-left" aria-hidden="true">✦</span>
+              <span className="smooth-spark smooth-spark-right" aria-hidden="true">✦</span>
               <div className="smooth-divider-inner">
                 <p className="smooth-pitch">
                   We combine AI-accelerated engineering with human expertise<br />
@@ -219,7 +229,7 @@ export default function SmoothSoftware() {
 
             <div className="smooth-contacts">
               <a href="https://instagram.com/markanthonyscicluna" target="_blank" rel="noopener noreferrer" className="smooth-contact-link">
-                <span className="smooth-contact-icon">
+                <span className="smooth-contact-icon" aria-hidden="true">
                   <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <rect x="2" y="2" width="20" height="20" rx="5" />
                     <circle cx="12" cy="12" r="4.5" />
@@ -239,7 +249,7 @@ export default function SmoothSoftware() {
 
         </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

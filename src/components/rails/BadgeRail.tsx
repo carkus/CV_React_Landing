@@ -78,11 +78,11 @@ function CardBadgeView({ badge }: { badge: CardBadge }) {
           />
         </div>
       ) : badge.icon ? (
-        <div className="info-card-icon rail-card-icon">{badge.icon}</div>
+        <div className="info-card-icon rail-card-icon" aria-hidden="true">{badge.icon}</div>
       ) : null}
       <div className="rail-card-body">
         {badge.eyebrow && <div className="rail-card-eyebrow">{badge.eyebrow}</div>}
-        <div className="rail-card-title">{badge.title}</div>
+        <div className="rail-card-title" role="heading" aria-level={3}>{badge.title}</div>
         {badge.text && <p className="rail-card-text">{badge.text}</p>}
         {badge.points && badge.points.length > 0 && (
           <ul className="rail-card-points">
@@ -107,11 +107,12 @@ function HtmlBadgeView({ badge }: { badge: HtmlBadge }) {
 // Same anatomy as the Work grid's photo tile; the description is revealed on
 // hover (see .rail-work-desc in index.css). A badge with slideshowImages also
 // cycles through its images and video files behind the text (videos play
-// muted; YouTube/Vimeo embeds stay in the Gallery overlay only).
+// muted; YouTube/Vimeo embeds are skipped). `screenshots` open in the
+// overlay from the Screenshots button.
 function WorkBadgeView({ badge }: { badge: WorkBadge }) {
-  const [galleryOpen, setGalleryOpen] = useState(false);
+  const [screenshotsOpen, setScreenshotsOpen] = useState(false);
   const openLinks = (badge.links ?? []).filter(l => !!l.url);
-  const hasGallery = !!badge.slideshowImages?.length;
+  const hasScreenshots = !!badge.screenshots?.length;
   const slides = (badge.slideshowImages ?? []).map(resolveMedia).filter(m => m.kind !== 'embed');
   const coverRef = useRef<HTMLImageElement>(null);
   const { frame, onScreen, next } = useCardSlideshow(slides.length + 1, coverRef, f => slides[f - 1]?.kind === 'video');
@@ -131,7 +132,7 @@ function WorkBadgeView({ badge }: { badge: WorkBadge }) {
         <CardSlide key={m.src} media={m} className="rail-work-img rail-work-slide" active={frame === i + 1} playing={onScreen} onEnded={next} />
       ))}
       <div className="rail-work-scrim" />
-      {(openLinks.length > 0 || hasGallery) && (
+      {(openLinks.length > 0 || hasScreenshots) && (
         <div className="rail-work-icons">
           {openLinks.map(l => l.inactive ? (
             <span key={l.url} className="platform-link is-inactive" role="link" aria-disabled="true" aria-label={l.label} title={l.label}>
@@ -142,16 +143,16 @@ function WorkBadgeView({ badge }: { badge: WorkBadge }) {
               <LinkIcon label={l.label} />
             </a>
           ))}
-          {hasGallery && (
-            <button type="button" className="rail-work-gallery" onClick={() => setGalleryOpen(true)}>
-              Gallery · {badge.slideshowImages!.length}
+          {hasScreenshots && (
+            <button type="button" className="rail-work-gallery" onClick={() => setScreenshotsOpen(true)} aria-label={`Open screenshots of ${badge.title} (${badge.screenshots!.length} items)`}>
+              Screenshots · {badge.screenshots!.length}
             </button>
           )}
         </div>
       )}
       <div className="rail-work-body">
         {badge.eyebrow && <div className="rail-work-eyebrow">{badge.eyebrow}</div>}
-        <div className="rail-work-title">{badge.title}</div>
+        <div className="rail-work-title" role="heading" aria-level={3}>{badge.title}</div>
         {badge.description && <p className="rail-work-desc">{badge.description}</p>}
         {badge.tags && badge.tags.length > 0 && (
           <div className="rail-work-tags">
@@ -159,8 +160,8 @@ function WorkBadgeView({ badge }: { badge: WorkBadge }) {
           </div>
         )}
       </div>
-      {hasGallery && galleryOpen && (
-        <SlideshowOverlay images={badge.slideshowImages!} alt={badge.imageAlt ?? badge.title} startIndex={0} onClose={() => setGalleryOpen(false)} />
+      {hasScreenshots && screenshotsOpen && (
+        <SlideshowOverlay images={badge.screenshots!} alt={badge.imageAlt ?? badge.title} kind="screenshots" startIndex={0} onClose={() => setScreenshotsOpen(false)} />
       )}
     </>
   );

@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import MotionToggle from './MotionToggle';
+import { prefersReducedMotion } from '../motion';
 
 // The main About image cross-fades through these (Unsplash photo ids — free
 // to use and hotlink, no attribution needed). The first is what shows before
@@ -27,14 +29,16 @@ export default function AboutSection() {
   // One clock for both: the main panel steps every tick, the accent every
   // second tick.
   const [tick, setTick] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const animates = !prefersReducedMotion();
   const slideIdx = tick % ABOUT_SLIDES.length;
   const accentIdx = Math.floor(tick / 2) % ACCENT_SLIDES.length;
 
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!animates || paused) return;
     const t = setInterval(() => setTick(n => n + 1), SLIDE_DWELL_MS);
     return () => clearInterval(t);
-  }, []);
+  }, [animates, paused]);
 
   return (
     <section id="about">
@@ -51,6 +55,9 @@ export default function AboutSection() {
               ))}
             </div>
             <div className="about-img-label">Melbourne, AU</div>
+            {animates && (
+              <MotionToggle paused={paused} onToggle={() => setPaused(p => !p)} what="photo slideshow" className="motion-toggle--on-photo" />
+            )}
             <div className="about-img-accent">
               {ACCENT_SLIDES.map((slide, i) => (
                 <img key={slide.id}
@@ -67,12 +74,12 @@ export default function AboutSection() {
               Mobile, Web, AI<br /><em>One Engineer</em>
             </h2>
             <div className="about-text reveal reveal-delay-2">
-              <p>Over 10 years experience in cross-platform mobile software in Swift/SwiftUI, Flutter, and React Native, alongside web development in React and Blazor/.NET. More recently, I've moved into AI development and integration, building on those platforms with the Claude and Gemini APIs.</p>
-              <p>For 8 years I was a core engineer on ZOME at Rhizomenet — spanning native iOS, Android, cross-platform (Flutter), and visionOS. React has remained my consistent web toolkit.</p>
-              <p>Building on my Master's research in automation, I've continued exploring the progress of AI and its emerging applications, implications, and opportunities. Recent tools I've built use AI for tailoring content to user preferences, document analysis, and forms generation, following best practices in prompt engineering, structured outputs, and agentic workflow design. </p>
+              <p>Native and cross-platform mobile software in Swift/SwiftUI, Flutter, and React Native, alongside web development in React and Blazor/.NET. AI product development and integration into existing systems.</p>
+              <p>For several years, I was a core engineer on ZOME at Rhizomenet — spanning native iOS, Android, and cross-platform front-ends, and visionOS. React has remained my consistent web toolkit.</p>
+              <p>Building on my Master's research in automation, I build and apply agentic AI utilising best guardrail practise. Recently for tailoring content to user preferences, document analysis, and form generation, prompt engineering, structured outputs, and agent workflows design. </p>
             </div>
             <div className="about-stats reveal reveal-delay-3">
-              <div className="stat-item"><div className="stat-number">10+</div><div className="stat-label">Years experience</div></div>
+              <div className="stat-item"><div className="stat-number">10</div><div className="stat-label">Years experience</div></div>
               <div className="stat-item"><div className="stat-number">5</div><div className="stat-label">Core platforms</div></div>
               <div className="stat-item"><div className="stat-number">MSc</div><div className="stat-label">Computer Science</div></div>
               <div className="stat-item"><div className="stat-number">8yr</div><div className="stat-label">At Rhizomenet</div></div>

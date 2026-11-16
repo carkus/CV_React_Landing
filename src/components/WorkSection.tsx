@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import ExploreLink from './ExploreLink';
 import type { Rail, WorkGroup } from '../types';
@@ -7,12 +7,30 @@ import { DISCIPLINES } from '../data/disciplines';
 import { RailBlock } from './rails/BadgeRail';
 import { resolveMedia } from '../utils/media';
 
-export function SlideshowOverlay({ images, alt, startIndex, onClose }: { images: string[]; alt: string; startIndex: number; onClose: () => void }) {
+export function SlideshowOverlay({ images, alt, startIndex, onClose, kind = 'gallery' }: { images: string[]; alt: string; startIndex: number; onClose: () => void; kind?: string }) {
   const [index, setIndex] = useState(startIndex);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+
+  // Modal dialog behaviour: focus moves to Close on open, Tab cycles within
+  // the overlay, and focus returns to whatever opened it on close.
+  useEffect(() => {
+    const opener = document.activeElement as HTMLElement | null;
+    closeRef.current?.focus();
+    return () => { opener?.focus?.(); };
+  }, []);
 
   useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {
       if (e.key === 'Escape') onClose();
+      if (e.key === 'Tab' && dialogRef.current) {
+        const focusables = dialogRef.current.querySelectorAll<HTMLElement>('button, [href], video[controls], iframe, [tabindex]:not([tabindex="-1"])');
+        const first = focusables[0], last = focusables[focusables.length - 1];
+        if (!first) return;
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        else if (!dialogRef.current.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+      }
       // A focused video uses the arrow keys to seek — leave them to it.
       if (e.target instanceof HTMLVideoElement) return;
       if (e.key === 'ArrowRight') setIndex(i => (i + 1) % images.length);
@@ -23,15 +41,15 @@ export function SlideshowOverlay({ images, alt, startIndex, onClose }: { images:
   }, [images.length, onClose]);
 
   return createPortal(
-    <div className="slideshow-overlay" onClick={onClose}>
-      <button type="button" className="slideshow-close" onClick={onClose} aria-label="Close slideshow">✕</button>
+    <div ref={dialogRef} className="slideshow-overlay" onClick={onClose} role="dialog" aria-modal="true" aria-label={`${alt} ${kind}`}>
+      <button ref={closeRef} type="button" className="slideshow-close" onClick={onClose} aria-label={`Close ${kind}`}>✕</button>
       <button
         type="button"
         className="slideshow-nav slideshow-prev"
         aria-label="Previous item"
         onClick={e => { e.stopPropagation(); setIndex(i => (i - 1 + images.length) % images.length); }}
       >
-        ‹
+        <span aria-hidden="true">‹</span>
       </button>
       <GalleryItem entry={images[index]} label={`${alt} — ${index + 1} of ${images.length}`} />
       <button
@@ -40,9 +58,12 @@ export function SlideshowOverlay({ images, alt, startIndex, onClose }: { images:
         aria-label="Next item"
         onClick={e => { e.stopPropagation(); setIndex(i => (i + 1) % images.length); }}
       >
-        ›
+        <span aria-hidden="true">›</span>
       </button>
-      <div className="slideshow-counter">{index + 1} / {images.length}</div>
+      <div className="slideshow-counter" aria-live="polite">
+        <span aria-hidden="true">{index + 1} / {images.length}</span>
+        <span className="sr-only">Item {index + 1} of {images.length}</span>
+      </div>
     </div>,
     document.body
   );
@@ -125,7 +146,7 @@ export default function WorkSection() {
         <div className="reveal reveal-delay-3">
           {groups.map(group => (
             <div key={group.subsection} className="work-group">
-              <div className="work-subsection-header">{group.subsection}</div>
+              <h3 className="work-subsection-header">{group.subsection}</h3>
               <RailBlock rail={groupRail(group)} className="work-group-rail rail-bleed" />
               {group.discipline && DISCIPLINES[group.discipline] && (
                 <div className="work-group-deep-link">

@@ -70,7 +70,7 @@ export default function TimelineSection() {
                   ))}
                   {pct && (
                     <div className="timeline-dur">
-                      <div className="timeline-dur-bar">
+                      <div className="timeline-dur-bar" aria-hidden="true">
                         <div className="timeline-dur-fill" data-pct={pct} />
                       </div>
                       <div className="timeline-dur-label">{dur}yr</div>
@@ -79,7 +79,7 @@ export default function TimelineSection() {
                 </div>
                 <div className="timeline-dot" />
                 <div>
-                  <div className="timeline-role">{e.role}</div>
+                  <div className="timeline-role" role="heading" aria-level={3}>{e.role}</div>
                   <div className="timeline-org">{e.org}</div>
                   <p className="timeline-desc">{e.desc}</p>
                   {e.tags.length > 0 && (

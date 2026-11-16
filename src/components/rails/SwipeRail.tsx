@@ -1,5 +1,7 @@
 import { Children, cloneElement, isValidElement, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
+import MotionToggle from '../MotionToggle';
+import { prefersReducedMotion } from '../../motion';
 
 // Generic horizontal swipe track — knows nothing about badges or data, just
 // lays out whatever children it's given. Touch devices get native momentum
@@ -62,10 +64,30 @@ export default function SwipeRail({ children, label, variant = 'row', peek = 8, 
   const [canNext, setCanNext] = useState(false);
   const [active, setActive] = useState(0);
   const [dragging, setDragging] = useState(false);
+  // Pause button for autoplay (WCAG 2.2.2); read live by the autoplay timer.
+  const [paused, setPaused] = useState(false);
+  const pausedRef = useRef(false);
+  useEffect(() => { pausedRef.current = paused; }, [paused]);
   const rawActiveRef = useRef(0);
   const items = Children.toArray(children);
   const count = items.length;
-  const slideshow = variant === 'slideshow';
+  // How many slides the current breakpoint shows at once. Media queries
+  // override --per-view, so it's read back from CSS and re-read on resize.
+  const [shownAtOnce, setShownAtOnce] = useState(perView);
+  useLayoutEffect(() => {
+    const root = rootRef.current;
+    if (!root || variant !== 'slideshow') return;
+    const read = () => setShownAtOnce(
+      Math.max(1, Math.round(parseFloat(getComputedStyle(root).getPropertyValue('--per-view')) || perView)));
+    read();
+    const ro = new ResizeObserver(read);
+    ro.observe(root);
+    return () => ro.disconnect();
+  }, [variant, perView]);
+  // Every slide already in view at this width: drop the slideshow entirely
+  // (no loop copies, arrows, dots, autoplay or pause) and lay it out as a row.
+  const fits = variant === 'slideshow' && count <= shownAtOnce;
+  const slideshow = variant === 'slideshow' && !fits;
   const looping = slideshow && loop && count > 1;
   const startAligned = slideshow && align === 'start';
   const copies = (prefix: string) =>
@@ -110,9 +132,14 @@ export default function SwipeRail({ children, label, variant = 'row', peek = 8, 
       Array.from(el.children).forEach((c, i) => {
         const offset = looping ? ((i % count) - idx + count) % count : i - raw;
         c.classList.toggle('is-active', offset >= 0 && offset < span);
+        // Loop copies are presentation only: hidden from screen readers
+        // and, via inert, out of the tab order too (aria-hidden alone would
+        // leave their links focusable but unannounced).
         if (looping) {
-          if (i < count || i >= 2 * count) c.setAttribute('aria-hidden', 'true');
+          const copy = i < count || i >= 2 * count;
+          if (copy) c.setAttribute('aria-hidden', 'true');
           else c.removeAttribute('aria-hidden');
+          c.toggleAttribute('inert', copy);
         }
       });
     }
@@ -300,7 +327,7 @@ export default function SwipeRail({ children, label, variant = 'row', peek = 8, 
   useEffect(() => {
     const root = rootRef.current, track = trackRef.current;
     if (!slideshow || !autoplayMs || count < 2 || !root || !track) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (prefersReducedMotion()) return;
 
     let centred = false;
     const io = new IntersectionObserver(([e]) => { centred = e.isIntersecting; }, { rootMargin: AUTOPLAY_BAND });
@@ -320,7 +347,9 @@ export default function SwipeRail({ children, label, variant = 'row', peek = 8, 
     const interacted = () => { last = Date.now(); };
     const timer = setInterval(() => {
       const now = Date.now();
-      if (!centred || isHovered() || document.hidden) { last = now; return; }
+      // Also held while keyboard focus is inside, so a slide never moves
+      // out from under it, and while the visitor has paused it.
+      if (!centred || isHovered() || document.hidden || pausedRef.current || root.matches(':focus-within')) { last = now; return; }
       if (now - last < autoplayMs) return;
       last = now;
       advanceRef.current();
@@ -342,20 +371,15 @@ export default function SwipeRail({ children, label, variant = 'row', peek = 8, 
   };
 
   const style = {
-    ...(slideshow ? { '--peek': `${peek}%`, '--per-view': perView } : {}),
+    ...(variant === 'slideshow' ? { '--peek': `${peek}%`, '--per-view': perView } : {}),
     ...(height ? { '--slide-h': `${height}px` } : {}),
   } as CSSProperties;
 
-  const showControls = slideshow ? count > 1 : canPrev || canNext;
-  // Every slide already in view: CSS hides the arrows/dots at the widths where
-  // that holds (--fits: at the full perView; --fits-2: also at the 2-up
-  // tablet step). Phones drop to 1-up, so they keep the navigation.
-  const fitClass = slideshow && !looping && count <= perView
-    ? (count <= 2 ? ' swipe-rail--fits swipe-rail--fits-2' : ' swipe-rail--fits')
-    : '';
+  const showControls = fits ? false : slideshow ? count > 1 : canPrev || canNext;
+  const autoplays = slideshow && !!autoplayMs && count > 1 && !prefersReducedMotion();
 
   return (
-    <div ref={rootRef} className={`swipe-rail swipe-rail--${variant}${slideshow && perView > 1 ? ' swipe-rail--multi' : ''}${startAligned ? ' swipe-rail--start' : ''}${fitClass}${canPrev ? ' can-prev' : ''}${canNext ? ' can-next' : ''}`} style={style}>
+    <div ref={rootRef} className={`swipe-rail swipe-rail--${variant}${variant === 'slideshow' && perView > 1 ? ' swipe-rail--multi' : ''}${variant === 'slideshow' && align === 'start' ? ' swipe-rail--start' : ''}${fits ? ' swipe-rail--fits' : ''}${canPrev ? ' can-prev' : ''}${canNext ? ' can-next' : ''}`} style={style}>
       <div
         ref={trackRef}
         className={`swipe-rail-track${dragging ? ' dragging' : ''}`}
@@ -380,12 +404,13 @@ export default function SwipeRail({ children, label, variant = 'row', peek = 8, 
                   className={`swipe-rail-dot${i === active ? ' active' : ''}`}
                   onClick={() => goTo(i)}
                   aria-label={`Go to slide ${i + 1} of ${count}`}
-                  aria-current={i === active}
+                  aria-current={i === active ? 'true' : undefined}
                 />
               ))}
             </div>
           )}
           <button type="button" className="swipe-rail-btn" onClick={() => step(1)} disabled={nextDisabled} aria-label="Next"><Chevron dir="right" /></button>
+          {autoplays && <MotionToggle paused={paused} onToggle={() => setPaused(p => !p)} what="slideshow" />}
         </div>
       )}
     </div>

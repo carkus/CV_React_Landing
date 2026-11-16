@@ -102,9 +102,9 @@ export default function DisciplinePage({ discipline }: { discipline: DisciplineK
   return (
     <div className="pf-page dp-page">
 
-      <nav className="pf-nav dp-nav">
+      <nav className="pf-nav dp-nav" aria-label="Page">
         <Link to="/" className="pf-nav-back">← Home</Link>
-        <div className="dp-tabs" aria-label="Disciplines">
+        <div className="dp-tabs" role="group" aria-label="Disciplines">
           {DISCIPLINE_ORDER.map(k => (
             <NavLink key={k} to={DISCIPLINES[k].path} className={({ isActive }) => `dp-tab${isActive ? ' active' : ''}`}>
               {DISCIPLINES[k].label}
@@ -113,6 +113,8 @@ export default function DisciplinePage({ discipline }: { discipline: DisciplineK
         </div>
         <ThemeToggle />
       </nav>
+
+      <main id="main" tabIndex={-1}>
 
       <header className="pf-header dp-header">
         <div className="dp-inner">
@@ -137,7 +139,7 @@ export default function DisciplinePage({ discipline }: { discipline: DisciplineK
 
       <section className="pf-section pf-section--alt">
         <div className="dp-inner">
-          <div className="pf-section-label">How I work</div>
+          <div className="pf-section-label" role="heading" aria-level={2}>How I work</div>
           {/* Same looping slideshow as the home page's Deep dives rail, on every
               discipline page. */}
           <SwipeRail label="How I work" variant="slideshow" perView={3} peek={10} align="start" loop>
@@ -158,7 +160,7 @@ export default function DisciplinePage({ discipline }: { discipline: DisciplineK
 
       <section className="pf-section">
         <div className="dp-inner">
-          <div className="pf-section-label">Projects</div>
+          <div className="pf-section-label" role="heading" aria-level={2}>Projects</div>
           <div className="dp-cases">
             {d.projects.map((p, i) => <ProjectCase key={p.title} project={p} index={i} />)}
           </div>
@@ -168,7 +170,7 @@ export default function DisciplinePage({ discipline }: { discipline: DisciplineK
       <section className="pf-section pf-section--alt dp-next">
         <div className="dp-inner dp-next-inner">
           <div>
-            <div className="pf-section-label">Next</div>
+            <div className="pf-section-label" role="heading" aria-level={2}>Next</div>
             <div className="dp-next-title">{next.heading}</div>
           </div>
           <div className="dp-next-ctas">
@@ -178,6 +180,8 @@ export default function DisciplinePage({ discipline }: { discipline: DisciplineK
           </div>
         </div>
       </section>
+
+      </main>
 
       <footer className="pf-footer">
         <Link to="/" className="pf-footer-back">← Back to {window.location.host}</Link>

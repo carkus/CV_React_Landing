@@ -103,9 +103,9 @@ function buildSubgroups(cat: string, data: SkillsJson, skills: Skill[]): { name:
 }
 
 function SkillIcon({ icon }: { icon: string }) {
-  if (icon.startsWith('devicon-')) return <i className={icon} />;
+  if (icon.startsWith('devicon-')) return <i className={icon} aria-hidden="true" />;
   if (icon.startsWith('img/'))    return <img src={`/${icon}`} alt="" />;
-  return <span>{icon}</span>;
+  return <span aria-hidden="true">{icon}</span>;
 }
 
 function SkillTag({ s }: { s: Skill }) {
@@ -158,7 +158,7 @@ export default function SkillsSection() {
     };
 
     const obs = new IntersectionObserver(entries => {
-      entries[0].isIntersecting ? cascade() : reset();
+      if (entries[0].isIntersecting) cascade(); else reset();
     }, { threshold: 0.15 });
     obs.observe(board);
     return () => { obs.disconnect(); reset(); };
@@ -212,7 +212,7 @@ export default function SkillsSection() {
         <div className="skills-board" id="skillsBoard" ref={boardRef}>
           {topGroups.map(group => (
             <div key={group.cat} className="skills-cat-row">
-              <div className="skills-cat-header">
+              <div className="skills-cat-header" role="heading" aria-level={3}>
                 <span>{group.cat}</span>
               </div>
               <div className="skills-cat-techs">
@@ -222,9 +222,9 @@ export default function SkillsSection() {
                       <div className="skill-row-icon"><SkillIcon icon={s.icon} /></div>
                       <div className="skill-row-name">{s.name}</div>
                     </div>
-                    <div className="skill-row-stars" title={`${s.pct}% proficiency`}>
+                    <div className="skill-row-stars" title={`${s.pct}% proficiency`} role="img" aria-label={`${Math.round(s.pct / 20)} out of 5`}>
                       {Array.from({ length: 5 }, (_, i) => (
-                        <span key={i} className={`skill-row-star${i < Math.round(s.pct / 20) ? ' filled' : ''}`}>★</span>
+                        <span key={i} aria-hidden="true" className={`skill-row-star${i < Math.round(s.pct / 20) ? ' filled' : ''}`}>★</span>
                       ))}
                     </div>
                   </div>
@@ -235,12 +235,12 @@ export default function SkillsSection() {
         </div>
         {aiGroup && (
           <div className="skills-other-box">
-            <div className="skills-col-header">AI</div>
+            <div className="skills-col-header" role="heading" aria-level={3}>AI</div>
             {aiGroup.summary && <p className="skills-summary">{aiGroup.summary}</p>}
             <div className="skills-subgroups">
               {buildSubgroups(aiGroup.cat, data, aiGroup.skills).map(sub => (
                 <div key={sub.name} className="skills-subgroup">
-                  {sub.name && <div className="skills-subgroup-label">{sub.name}</div>}
+                  {sub.name && <div className="skills-subgroup-label" role="heading" aria-level={4}>{sub.name}</div>}
                   <div className="skills-other">
                     {sub.skills.map(s => <SkillTag key={s.name} s={s} />)}
                   </div>
@@ -251,7 +251,7 @@ export default function SkillsSection() {
         )}
         {arVrGroup && (
           <div className="skills-other-box">
-            <div className="skills-col-header">AR/VR</div>
+            <div className="skills-col-header" role="heading" aria-level={3}>AR/VR</div>
             <div className="skills-other">
               {arVrGroup.skills.map(s => <SkillTag key={s.name} s={s} />)}
             </div>
@@ -259,7 +259,7 @@ export default function SkillsSection() {
         )}
         {otherSkills.length > 0 && (
           <div className="skills-other-box">
-            <div className="skills-col-header">Other Skills</div>
+            <div className="skills-col-header" role="heading" aria-level={3}>Other Skills</div>
             <div className="skills-other">
               {otherSkills.map(s => <SkillTag key={s.name} s={s} />)}
             </div>
@@ -267,7 +267,7 @@ export default function SkillsSection() {
         )}
         {githubStats && (
           <div className="skills-other-box">
-            <div className="skills-col-header">Active on GitHub · Last {githubStats.months} Months</div>
+            <div className="skills-col-header" role="heading" aria-level={3}>Active on GitHub · Last {githubStats.months} Months</div>
             <div className="skills-other">
               {githubStats.languages.map(l => (
                 <span key={l.language} className="skill-box etag">
