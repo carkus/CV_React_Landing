@@ -49,6 +49,7 @@ export function projectBadge(item: WorkItem, short = false): Badge {
     imageFrame: item.imageFrame,
     links: openLinks,
     slideshowImages: item.slideshowImages,
+    screenshots: item.screenshots,
   };
 }
 

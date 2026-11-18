@@ -39,6 +39,10 @@ export interface WorkItem {
    *  URLs — the viewer is picked per entry. A bare file name resolves to
    *  /img/ (images) or /files/ (videos). See utils/media.ts. */
   slideshowImages?: string[];
+  /** Product screenshots, opened from a separate "Screenshots" button in the
+   *  same overlay as the gallery. Not cycled on the tile. Kept in
+   *  /img/screenshots/. Same entry formats as slideshowImages. */
+  screenshots?: string[];
   /** When true, this item is skipped by the hero rotation even if it has an imageUrl. */
   heroExclude?: boolean;
 }
@@ -160,6 +164,10 @@ export interface WorkBadge extends Omit<BadgeBase, 'href'> {
    *  URLs — the viewer is picked per entry. A bare file name resolves to
    *  /img/ (images) or /files/ (videos). See utils/media.ts. */
   slideshowImages?: string[];
+  /** Product screenshots, opened from a separate "Screenshots" button in the
+   *  same overlay as the gallery. Not cycled on the tile. Kept in
+   *  /img/screenshots/. Same entry formats as slideshowImages. */
+  screenshots?: string[];
   /** Short mono label above the title, e.g. "Personal · 2026". */
   eyebrow?: string;
 }

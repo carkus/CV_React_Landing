@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const PORTFOLIO_API_BASE = import.meta.env.DEV ? 'http://localhost:5131' : 'https://api.carkus.com';
@@ -33,6 +33,12 @@ function DiscussForm() {
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<'idle' | 'sent' | 'error'>('idle');
   const [error, setError] = useState('');
+  const emailId = useId();
+  const messageId = useId();
+  const emailRef = useRef<HTMLInputElement>(null);
+
+  // Move focus into the form when it opens so keyboard users land on it.
+  useEffect(() => { if (open) emailRef.current?.focus(); }, [open]);
 
   async function send(e: React.FormEvent) {
     e.preventDefault();
@@ -69,14 +75,18 @@ function DiscussForm() {
   if (!open) {
     return (
       <button type="button" className="ai-discuss-toggle" onClick={() => setOpen(true)}>
-        Want a real conversation? Leave your email →
+        Want a real conversation? Leave your email <span aria-hidden="true">→</span>
       </button>
     );
   }
 
   return (
-    <form className="ai-discuss-form" onSubmit={send}>
+    <form className="ai-discuss-form" onSubmit={send} aria-label="Contact Mark">
+      <label htmlFor={emailId} className="sr-only">Your email</label>
       <input
+        ref={emailRef}
+        id={emailId}
+        autoComplete="email"
         className="ai-ask-input"
         type="email"
         placeholder="your@email.com"
@@ -84,7 +94,9 @@ function DiscussForm() {
         onChange={e => setEmail(e.target.value)}
         required
       />
+      <label htmlFor={messageId} className="sr-only">Message</label>
       <textarea
+        id={messageId}
         className="ai-discuss-textarea"
         placeholder="What would you like to discuss?"
         value={message}
@@ -93,10 +105,10 @@ function DiscussForm() {
         required
       />
       <button className="ai-ask-submit" type="submit" disabled={loading || !email.trim() || !message.trim()}>
-        {loading ? '···' : 'Send →'}
+        {loading ? <><span aria-hidden="true">···</span><span className="sr-only">Sending</span></> : <>Send <span aria-hidden="true">→</span></>}
       </button>
-      {status === 'sent' && <p className="ai-ask-reply">Thanks — I'll reply directly to your email shortly.</p>}
-      {status === 'error' && <p className="ai-ask-error">{error}</p>}
+      {status === 'sent' && <p className="ai-ask-reply" role="status">Thanks — I'll reply directly to your email shortly.</p>}
+      {status === 'error' && <p className="ai-ask-error" role="alert">{error}</p>}
     </form>
   );
 }
@@ -115,6 +127,7 @@ function AiAsk() {
   const [provider, setProvider] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const askId = useId();
 
   async function ask(e: React.FormEvent) {
     e.preventDefault();
@@ -154,8 +167,10 @@ function AiAsk() {
 
   return (
     <div className="ai-ask reveal reveal-delay-2">
-      <form className="ai-ask-form" onSubmit={ask}>
+      <form className="ai-ask-form" onSubmit={ask} aria-label="Ask the AI assistant">
+        <label htmlFor={askId} className="sr-only">Your question about Mark</label>
         <input
+          id={askId}
           className="ai-ask-input"
           type="text"
           placeholder="e.g. what's his experience with RAG?"
@@ -164,10 +179,11 @@ function AiAsk() {
           onChange={e => onMessageChange(e.target.value)}
         />
         <button className="ai-ask-submit" type="submit" disabled={loading || !message.trim()}>
-          {loading ? '···' : 'Ask →'}
+          {loading ? <><span aria-hidden="true">···</span><span className="sr-only">Asking</span></> : <>Ask <span aria-hidden="true">→</span></>}
         </button>
       </form>
-      {error && <p className="ai-ask-error">{error}</p>}
+      {error && <p className="ai-ask-error" role="alert">{error}</p>}
+      <div aria-live="polite">
       {reply && (
         <div className="ai-ask-reply-block">
           <p className="ai-ask-reply">{renderReplyWithLinks(reply)}</p>
@@ -179,6 +195,7 @@ function AiAsk() {
           )}
         </div>
       )}
+      </div>
       <div className="ai-discuss">
         <DiscussForm />
       </div>

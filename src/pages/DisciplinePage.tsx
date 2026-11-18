@@ -7,6 +7,7 @@ import { useDocumentMeta } from '../seo';
 import { frameStyle } from '../utils/imageFrame';
 import { resolveMedia } from '../utils/media';
 import { useCardSlideshow } from '../utils/useCardSlideshow';
+import CardSlide from '../components/CardSlide';
 import { DISCIPLINES, DISCIPLINE_ORDER } from '../data/disciplines';
 import type { DisciplineKey, DisciplineProject } from '../data/disciplines';
 
@@ -20,10 +21,11 @@ function LinkIcon({ label }: { label: string }) {
 function ProjectCase({ project, index }: { project: DisciplineProject; index: number }) {
   const [slideshowOpen, setSlideshowOpen] = useState(false);
   const hasSlideshow = !!project.slideshowImages?.length;
-  // Same in-card slideshow as the Work rail tiles: cover, then still images.
-  const slides = (project.slideshowImages ?? []).map(resolveMedia).filter(m => m.kind === 'image').map(m => m.src);
+  // Same in-card slideshow as the Work rail tiles: cover, then images and
+  // muted video files (embeds stay in the gallery overlay).
+  const slides = (project.slideshowImages ?? []).map(resolveMedia).filter(m => m.kind !== 'embed');
   const coverRef = useRef<HTMLImageElement>(null);
-  const frame = useCardSlideshow(slides.length + 1, coverRef);
+  const { frame, onScreen, next } = useCardSlideshow(slides.length + 1, coverRef, f => slides[f - 1]?.kind === 'video');
   const openLinks = project.links.filter(l => !!l.url);
 
   // Typeset like a magazine column: heading full width, then the image floats
@@ -47,15 +49,8 @@ function ProjectCase({ project, index }: { project: DisciplineProject; index: nu
               loading="lazy"
               style={frameStyle(project.imageFrame)}
             />
-            {slides.map((src, i) => (
-              <img
-                key={src}
-                className={`dp-case-slide${frame === i + 1 ? ' active' : ''}`}
-                src={src}
-                alt=""
-                aria-hidden="true"
-                loading="lazy"
-              />
+            {slides.map((m, i) => (
+              <CardSlide key={m.src} media={m} className="dp-case-slide" active={frame === i + 1} playing={onScreen} onEnded={next} />
             ))}
             {hasSlideshow && (
               <button type="button" className="dp-case-gallery" onClick={() => setSlideshowOpen(true)}>
@@ -107,9 +102,9 @@ export default function DisciplinePage({ discipline }: { discipline: DisciplineK
   return (
     <div className="pf-page dp-page">
 
-      <nav className="pf-nav dp-nav">
+      <nav className="pf-nav dp-nav" aria-label="Page">
         <Link to="/" className="pf-nav-back">← Home</Link>
-        <div className="dp-tabs" aria-label="Disciplines">
+        <div className="dp-tabs" role="group" aria-label="Disciplines">
           {DISCIPLINE_ORDER.map(k => (
             <NavLink key={k} to={DISCIPLINES[k].path} className={({ isActive }) => `dp-tab${isActive ? ' active' : ''}`}>
               {DISCIPLINES[k].label}
@@ -118,6 +113,8 @@ export default function DisciplinePage({ discipline }: { discipline: DisciplineK
         </div>
         <ThemeToggle />
       </nav>
+
+      <main id="main" tabIndex={-1}>
 
       <header className="pf-header dp-header">
         <div className="dp-inner">
@@ -142,7 +139,7 @@ export default function DisciplinePage({ discipline }: { discipline: DisciplineK
 
       <section className="pf-section pf-section--alt">
         <div className="dp-inner">
-          <div className="pf-section-label">How I work</div>
+          <div className="pf-section-label" role="heading" aria-level={2}>How I work</div>
           {/* Same looping slideshow as the home page's Deep dives rail, on every
               discipline page. */}
           <SwipeRail label="How I work" variant="slideshow" perView={3} peek={10} align="start" loop>
@@ -163,7 +160,7 @@ export default function DisciplinePage({ discipline }: { discipline: DisciplineK
 
       <section className="pf-section">
         <div className="dp-inner">
-          <div className="pf-section-label">Projects</div>
+          <div className="pf-section-label" role="heading" aria-level={2}>Projects</div>
           <div className="dp-cases">
             {d.projects.map((p, i) => <ProjectCase key={p.title} project={p} index={i} />)}
           </div>
@@ -173,7 +170,7 @@ export default function DisciplinePage({ discipline }: { discipline: DisciplineK
       <section className="pf-section pf-section--alt dp-next">
         <div className="dp-inner dp-next-inner">
           <div>
-            <div className="pf-section-label">Next</div>
+            <div className="pf-section-label" role="heading" aria-level={2}>Next</div>
             <div className="dp-next-title">{next.heading}</div>
           </div>
           <div className="dp-next-ctas">
@@ -183,6 +180,8 @@ export default function DisciplinePage({ discipline }: { discipline: DisciplineK
           </div>
         </div>
       </section>
+
+      </main>
 
       <footer className="pf-footer">
         <Link to="/" className="pf-footer-back">← Back to {window.location.host}</Link>

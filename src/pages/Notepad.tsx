@@ -71,10 +71,12 @@ export default function Notepad() {
 
   return (
     <div className="pf-page np-page">
-      <nav className="pf-nav">
+      <nav className="pf-nav" aria-label="Page">
         <Link to="/" className="pf-nav-back">← mscicluna.com</Link>
         <span className="pf-nav-title">Websocket Notepad</span>
       </nav>
+
+      <main id="main" tabIndex={-1}>
 
       <div className="np-toolbar">
         <span className={`np-status np-status-${status}`}>{status}</span>
@@ -109,6 +111,7 @@ export default function Notepad() {
           ))}
         </div>
       )}
+      </main>
     </div>
   );
 }

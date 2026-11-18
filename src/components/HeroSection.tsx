@@ -1,15 +1,56 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import type { WorkItem } from '../types';
 import { useWorkGroups } from '../data/projects';
 import { LinkIcon } from './WorkSection';
 import SocialLinks from './SocialLinks';
 import { frameStyle } from '../utils/imageFrame';
-import { CV_PDF_PATH } from '../data/cv';
+import { CV_PDF_PATH, downloadCv } from '../data/cv';
+import { resolveMedia } from '../utils/media';
+import { useCardSlideshow } from '../utils/useCardSlideshow';
+import CardSlide from './CardSlide';
+import MotionToggle from './MotionToggle';
+import { prefersReducedMotion } from '../motion';
 
 const DWELL_MS = 10000; // time each project sits fully visible before sliding on
 const SLIDE_MS = 1400;  // slide transition duration
 const SWIPE_THRESHOLD_PX = 40; // minimum horizontal drag before it counts as a swipe, not a tap
+
+const cardSlides = (item: WorkItem) =>
+  (item.slideshowImages ?? []).map(resolveMedia).filter(m => m.kind !== 'embed');
+
+// A slide's image, plus the same in-card slideshow as the Work rail tiles
+// (cover → gallery images/videos → cover) when `animate` is set — only the
+// centred slide animates; the off-screen prev/next show just their cover.
+// onCycleEnd fires when the slideshow wraps back round to the cover.
+function HeroMedia({ item, animate, onCycleEnd }: { item: WorkItem; animate: boolean; onCycleEnd?: () => void }) {
+  const slides = useMemo(() => cardSlides(item), [item]);
+  const coverRef = useRef<HTMLImageElement>(null);
+  const { frame, onScreen, next } = useCardSlideshow(
+    animate ? slides.length + 1 : 1, coverRef, f => slides[f - 1]?.kind === 'video',
+  );
+  const lastFrame = useRef(frame);
+  useEffect(() => {
+    if (lastFrame.current > 0 && frame === 0) onCycleEnd?.();
+    lastFrame.current = frame;
+  }, [frame, onCycleEnd]);
+
+  return (
+    <>
+      <img
+        ref={coverRef}
+        className="platform-img"
+        src={item.imageUrl}
+        alt={item.imageAlt}
+        draggable={false}
+        style={frameStyle(item.heroImageFrame)}
+      />
+      {animate && slides.map((m, i) => (
+        <CardSlide key={m.src} media={m} className="platform-img platform-frame" active={frame === i + 1} playing={onScreen} onEnded={next} />
+      ))}
+    </>
+  );
+}
 
 export default function HeroSection() {
   const groups = useWorkGroups();
@@ -23,29 +64,37 @@ export default function HeroSection() {
   // null = idle; 'next'/'prev' = a slide transition is currently animating
   // toward that direction, driven either by the dwell timer or a swipe.
   const [pending, setPending] = useState<'next' | 'prev' | null>(null);
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const dragRef = useRef<{ startX: number } | null>(null);
+  // Bumped by a swipe so the dwell clock restarts even if idx doesn't change yet.
+  const [timerKey, setTimerKey] = useState(0);
+  // Auto-rotation stops for the pause button (WCAG 2.2.2) and while keyboard
+  // focus is inside the card, so a slide never moves out from under focus.
+  const [paused, setPaused] = useState(false);
+  const [focusInside, setFocusInside] = useState(false);
+  const held = paused || focusInside;
 
-  // (Re)starts the auto-advance clock. Pulled out so a manual swipe can reset
-  // the dwell period instead of the next auto-advance landing a moment later.
-  const resetTimer = () => {
-    if (timerRef.current) clearInterval(timerRef.current);
-    if (items.length > 1) {
-      // Functional update + only set if idle: a tick that lands mid-swipe
-      // just no-ops instead of stomping the in-progress transition.
-      timerRef.current = setInterval(() => setPending(p => p ?? 'next'), DWELL_MS);
-    }
-  };
+  // A project with an in-card slideshow stays up until that slideshow has
+  // played through (HeroMedia's onCycleEnd); one without dwells DWELL_MS.
+  // Reduced-motion users get no in-card slideshow, so they always dwell.
+  const current = items[idx];
+  const waitsForSlideshow = !!current && cardSlides(current).length > 0
+    && !prefersReducedMotion() && !paused;
 
   useEffect(() => {
-    resetTimer();
-    return () => { if (timerRef.current) clearInterval(timerRef.current); };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [items]);
+    if (items.length <= 1 || waitsForSlideshow || held) return;
+    // Only set if idle: a tick that lands mid-swipe just no-ops instead of
+    // stomping the in-progress transition.
+    const t = setTimeout(() => setPending(p => p ?? 'next'), DWELL_MS);
+    return () => clearTimeout(t);
+  }, [idx, items.length, waitsForSlideshow, held, timerKey]);
+
+  const handleCycleEnd = useCallback(() => {
+    if (items.length > 1 && !focusInside) setPending(p => p ?? 'next');
+  }, [items.length, focusInside]);
 
   const triggerSlide = (dir: 'next' | 'prev') => {
     setPending(p => p ?? dir);
-    resetTimer();
+    setTimerKey(k => k + 1);
   };
 
   // Called when the track's transform transition finishes: commit the index
@@ -82,11 +131,9 @@ export default function HeroSection() {
     if (i === idx) return;
     setPending(null);
     setIdx(i);
-    resetTimer();
   };
 
   const prev = items[(idx - 1 + items.length) % items.length];
-  const current = items[idx];
   const next = items[(idx + 1) % items.length];
 
   // The dot to highlight jumps to the target as soon as a slide starts
@@ -98,15 +145,12 @@ export default function HeroSection() {
       ? (idx - 1 + items.length) % items.length
       : idx;
 
-  const renderSlide = (item: WorkItem) => {
+  const renderSlide = (item: WorkItem, isCurrent = false) => {
     return (
     <>
-      <img
-        className="platform-img"
-        src={item.imageUrl}
-        alt={item.imageAlt}
-        style={frameStyle(item.heroImageFrame)}
-      />
+      {/* Keyed so the centre slot remounts (back on the cover, frame 0) when
+          a new project lands in it, rather than carrying the last one's frame. */}
+      <HeroMedia key={item.title} item={item} animate={isCurrent && !paused} onCycleEnd={isCurrent ? handleCycleEnd : undefined} />
       <div className="platform-overlay" />
       {item.links.filter(l => !!l.url).length > 0 && (
         <div className="platform-links">
@@ -146,16 +190,16 @@ export default function HeroSection() {
             <p>Production-grade AI systems: Agentic RAG, MCP, structured outputs, and multi-provider.</p>
             <p>Based in Melbourne.</p>
           </div>
-          <div className="hero-link-stack">
-            <Link to="/profile" className="btn-ghost hero-profile-btn">Profile, References &amp; Media&nbsp;↗</Link>
-          </div>
           <div className="hero-status">
             <span className="hero-status-dot" />
             Open to remote opportunities
           </div>
           <div className="hero-ctas">
             <a href="#work" className="btn-primary">View Work →</a>
-            <a href={CV_PDF_PATH} download className="btn-ghost nav-cv-btn">CV ↓</a>
+            <a href={CV_PDF_PATH} download onClick={downloadCv} className="btn-ghost nav-cv-btn">CV ↓</a>
+          </div>
+          <div className="hero-link-stack">
+            <Link to="/profile" className="btn-ghost hero-profile-btn">Profile, References &amp; Media&nbsp;↗</Link>
           </div>
           <div className="hero-social">
             <SocialLinks arrow={false} />
@@ -165,6 +209,11 @@ export default function HeroSection() {
         <div className="hero-visual">
           <div
             className="platform-card"
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="Featured projects"
+            onFocus={() => setFocusInside(true)}
+            onBlur={e => { if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setFocusInside(false); }}
             onPointerDown={handlePointerDown}
             onPointerUp={handlePointerUp}
             onPointerCancel={handlePointerCancel}
@@ -179,9 +228,12 @@ export default function HeroSection() {
                 transition: pending ? `transform ${SLIDE_MS}ms ease` : 'none',
               }}
             >
-              <div className="platform-slide">{renderSlide(prev)}</div>
-              <div className="platform-slide">{renderSlide(current)}</div>
-              <div className="platform-slide">{renderSlide(next)}</div>
+              {/* The outer two are off-screen copies of the neighbours, there
+                  only for the slide animation — kept out of the tab order and
+                  the accessibility tree so each project is announced once. */}
+              <div className="platform-slide" aria-hidden="true" inert>{renderSlide(prev)}</div>
+              <div className="platform-slide" role="group" aria-roledescription="slide" aria-label={`${idx + 1} of ${items.length}: ${current.title}`}>{renderSlide(current, true)}</div>
+              <div className="platform-slide" aria-hidden="true" inert>{renderSlide(next)}</div>
             </div>
             {items.length > 1 && (
               <div className="platform-dots">
@@ -190,11 +242,13 @@ export default function HeroSection() {
                     key={item.title}
                     type="button"
                     aria-label={`Show ${item.title}`}
+                    aria-current={i === displayIdx ? 'true' : undefined}
                     className={`platform-dot${i === displayIdx ? ' active' : ''}`}
                     onClick={e => { e.stopPropagation(); goToIndex(i); }}
                     onPointerDown={e => e.stopPropagation()}
                   />
                 ))}
+                <MotionToggle paused={paused} onToggle={() => setPaused(p => !p)} what="featured projects" className="motion-toggle--on-photo" />
               </div>
             )}
           </div>

@@ -24,12 +24,13 @@ export default function Profile() {
   return (
     <div className="pf-page">
 
-      <nav className="pf-nav">
-        <Link to="/" className="pf-nav-back">← {window.location.host}</Link>
+      <nav className="pf-nav" aria-label="Page">
+        <Link to="/" className="pf-nav-back" aria-label={`Back to ${window.location.host}`}><span aria-hidden="true">←</span> {window.location.host}</Link>
         <span className="pf-nav-title">Profile &amp; References</span>
         <ThemeToggle />
       </nav>
 
+      <main id="main" tabIndex={-1}>
       <header className="pf-header">
         <div className="pf-header-inner">
           <div className="pf-eyebrow">Mark Scicluna</div>
@@ -40,7 +41,7 @@ export default function Profile() {
 
       <section className="pf-section">
         <div className="pf-section-inner">
-          <div className="pf-section-label">About</div>
+          <div className="pf-section-label" role="heading" aria-level={2}>About</div>
           <div className="pf-about-grid">
             <div className="pf-about-text">
               <p>Over a decade of shipping cross-platform software — my core focus is now in AI-assisted development and integration across Swift/SwiftUI, cross-platform mobile, .NET, and Kotlin, via the Claude and Gemini APIs — wiring intelligent behaviour into production mobile and web apps.</p>
@@ -59,11 +60,11 @@ export default function Profile() {
 
       <section id="references" className="pf-section pf-section--alt">
         <div className="pf-section-inner">
-          <div className="pf-section-label">References</div>
+          <div className="pf-section-label" role="heading" aria-level={2}>References</div>
           <div className="pf-refs">
 
             <div className="pf-ref">
-              <div className={`pf-ref-body${theoExpanded ? '' : ' pf-ref-collapsed'}`}>
+              <div id="ref-theo" className={`pf-ref-body${theoExpanded ? '' : ' pf-ref-collapsed'}`}>
                 <p>To Whom It May Concern,</p>
                 <p>I am pleased to provide this reference for Mark Scicluna who has worked at Rhizomenet Pty. Ltd. for the past seven years as a Senior Software Developer (UI and middleware). I am the Managing Director of the company, and I worked closely with Mark throughout his engagement over the course of seven years. Mark consistently delivered high quality work, typically in small teams, on site or abroad, while maintaining strong momentum and reliability.</p>
                 <p>With Mark's contribution, we successfully shipped ZOME across iOS, Android, VisionOS (Apple Vision Pro), and Android XR. We were a day-one launch partner for Apple Vision Pro, and achieved day-one availability on Samsung Galaxy XR. Mark played a meaningful role in helping us meet the engineering demands of these launches across multiple ecosystems, under tight deadlines and pressure, while ensuring quality, consistency, and reliable delivery.</p>
@@ -73,8 +74,8 @@ export default function Profile() {
                 <p>If you would like any additional information, please feel free to contact me directly via my email and phone number below.</p>
                 <p className="pf-ref-sign">With my kind regards,<br />Theodore Wohng</p>
               </div>
-              <button className="pf-ref-toggle" onClick={() => setTheoExpanded(e => !e)}>
-                {theoExpanded ? 'Show less ↑' : 'Read full reference ↓'}
+              <button type="button" className="pf-ref-toggle" onClick={() => setTheoExpanded(e => !e)} aria-expanded={theoExpanded} aria-controls="ref-theo">
+                {theoExpanded ? <>Show less <span aria-hidden="true">↑</span></> : <>Read full reference <span aria-hidden="true">↓</span></>}
               </button>
               <div className="pf-ref-meta">
                 <strong>Theodore Wohng</strong>
@@ -107,7 +108,7 @@ export default function Profile() {
 
       <section className="pf-section">
         <div className="pf-section-inner">
-          <div className="pf-section-label">Press &amp; Media</div>
+          <div className="pf-section-label" role="heading" aria-level={2}>Press &amp; Media</div>
 
           <div className="pf-store-badges">
             <a href="https://itunes.apple.com/us/app/zome/id1382123356?ls=1&mt=8" target="_blank" rel="noopener noreferrer">
@@ -143,14 +144,14 @@ export default function Profile() {
 
           <div className="pf-press">
             <div>
-              <div className="pf-press-group-title">Spatial Wearable Interface</div>
+              <div className="pf-press-group-title" role="heading" aria-level={3}>Spatial Wearable Interface</div>
               <a className="pf-press-link" href="https://www.fashiondive.com/press-release/20250701-zome-and-hussein-chalayan-launch-the-worlds-first-fully-functional-spatial-1/" target="_blank" rel="noopener noreferrer">World's First Spatial Wearable Interface — Fashion Dive</a>
               <a className="pf-press-link" href="https://www.cbs42.com/business/press-releases/ein-presswire/827212174/zome-and-hussein-chalayan-launch-the-worlds-first-fully-functional-spatial-wearable-interface/" target="_blank" rel="noopener noreferrer">World's First Spatial Wearable Interface — CBS</a>
               <a className="pf-press-link" href="https://ww.fashionnetwork.com/news/Zome-launches-hussein-chalayan-designed-spatial-wearable-interface-for-apple-vision-pro,1831280.html" target="_blank" rel="noopener noreferrer">Spatial Wearable Interface Launch — Fashion Network</a>
               <a className="pf-press-link" href="https://www.abc4.com/business/press-releases/ein-presswire/869748360/zome-brings-spatial-messaging-to-the-body-and-expands-the-worlds-first-spatial-wearable-interface/" target="_blank" rel="noopener noreferrer">Spatial Wearable Interface Expansion — ABC4</a>
             </div>
             <div>
-              <div className="pf-press-group-title">Hussein Chalayan &amp; Android XR</div>
+              <div className="pf-press-group-title" role="heading" aria-level={3}>Hussein Chalayan &amp; Android XR</div>
               <a className="pf-press-link" href="https://ww.fashionnetwork.com/news/Hussein-chalayan-is-creative-director-of-new-ar-social-platform-zome,1699684.html" target="_blank" rel="noopener noreferrer">Hussein Chalayan as Creative Director — Fashion Network</a>
               <a className="pf-press-link" href="https://www.abc4.com/business/press-releases/ein-presswire/858559260/zome-launches-android-xr-app-becoming-the-first-spatial-messenger-across-ios-android-apple-vision-pro-and-android-xr/" target="_blank" rel="noopener noreferrer">Android XR Launch — ABC4</a>
               <a className="pf-press-link" href="https://www.technologynewsuk.com/article/899074900-zome-launches-new-chat-feature-bringing-live-conversation-into-its-spatial-messaging-platform" target="_blank" rel="noopener noreferrer">New Chat Feature — Technology News UK</a>
@@ -158,9 +159,10 @@ export default function Profile() {
           </div>
         </div>
       </section>
+      </main>
 
       <div className="pf-footer">
-        <Link to="/" className="pf-footer-back">← Back to mscicluna.com</Link>
+        <Link to="/" className="pf-footer-back"><span aria-hidden="true">←</span> Back to mscicluna.com</Link>
       </div>
 
     </div>
