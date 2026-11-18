@@ -12,7 +12,7 @@
         "summary": "Self-scaffolding agent platform — give it a focus and it designs a purpose-built agent, leads a team of worker agents with live web search and MCP tools, and delivers reports, charts and spreadsheets while checking its own work.",
         "featured": true,
         "width": 50,
-        "screenshots": ["/img/screenshots/08-setup-focus.png", "/img/screenshots/09-setup-brief.png", "/img/screenshots/10-setup-outputs.png", "/img/screenshots/11a-deploy.png", "/img/screenshots/11e-export-menu.png", "/img/screenshots/12a-deploy.png"],
+        "screenshots": ["/img/screenshots/agent-one/01-splash.png", "/img/screenshots/agent-one/02-character.png", "/img/screenshots/agent-one/03-focus.png", "/img/screenshots/agent-one/04-brief.png", "/img/screenshots/agent-one/05-outputs.png", "/img/screenshots/agent-one/06-deploy.png", "/img/screenshots/agent-one/07-agent-made.png", "/img/screenshots/agent-one/08-workers.png", "/img/screenshots/agent-one/09-report.png"],
         "links": [
           { "label": "Open Agent One", "url": "https://agent.carkus.com" }
         ]
@@ -91,7 +91,8 @@
         "featured": false,
         "heroExclude": false,
         "width": 50,
-        "slideshowImages": ["/img/zome_phone1.png", "/img/zome_phone2.png", "/img/zome_phone3.png", "/img/zome_phone4.png", "/img/zome_phone5.png", "/img/zome_phone6.png", "/img/zome_phone7.png"],
+        "slideshowImages": ["/img/zome_phone1_square.jpg", "/img/zome_phone2_square.jpg", "/img/zome_phone3_square.jpg", "/img/zome_phone4_square.jpg", "/img/zome_phone5_square.jpg", "/img/zome_phone6_square.jpg", "/img/zome_phone7_square.jpg"],
+        "screenshots": ["/img/zome_phone1.png", "/img/zome_phone2.png", "/img/zome_phone3.png", "/img/zome_phone4.png", "/img/zome_phone5.png", "/img/zome_phone6.png", "/img/zome_phone7.png"],
         "links": [
           { "label": "App Store ↗", "url": "https://itunes.apple.com/us/app/zome/id1382123356?ls=1&mt=8" },
           { "label": "Play Store ↗", "url": "https://play.google.com/store/apps/details?id=com.zomecorp.zome" }
@@ -109,6 +110,7 @@
         "featured": true,
         "width": 50,
         "slideshowImages": ["/img/zome_ar1.png", "/img/zome_ar2.png", "/img/zome_ar3.png", "/img/zome_ar4.png", "/img/zome_ar5.png", "/img/zome_ar6.png", "/img/zome_ar7.png"],
+        "screenshots": ["/img/zome_ar1.png", "/img/zome_ar2.png", "/img/zome_ar3.png", "/img/zome_ar4.png", "/img/zome_ar5.png", "/img/zome_ar6.png", "/img/zome_ar7.png"],
         "links": [
           { "label": "App Store ↗", "url": "https://itunes.apple.com/us/app/zome/id1382123356?ls=1&mt=8" },
           { "label": "Play Store ↗", "url": "https://play.google.com/store/apps/details?id=com.zomecorp.zome" }

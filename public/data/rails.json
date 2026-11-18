@@ -71,7 +71,7 @@
     "id": "ai-threads",
     "eyebrow": "AI",
     "heading": "AI work across fields",
-    "intro": "Agentic systems that build their own workforce — a master agent decomposes a goal, sequences its own plan of dependent subtasks, then bootstraps and deploys purpose-built worker agents for each one, with self-evaluation feeding back into which models get used.",
+    "intro": "Agents that staff their own jobs: a lead agent reads the brief, spins up a small team of purpose-built workers to research in parallel, then writes one report — with every model call, tool and self-check on the record.",
     "layout": "slideshow",
     "peek": 10,
     "perView": 2,
@@ -85,24 +85,62 @@
     "badges": [
       {
         "type": "card",
-        "id": "agentic",
+        "id": "agent-teams",
         "icon": "✦",
-        "title": "Agentic Systems & Planning",
+        "title": "Agent Teams & Planning",
         "points": [
-          "A master agent breaks a goal into its own sequenced plan of dependent subtasks",
-          "Builds and deploys a purpose-built worker per subtask — own role, tools, MCP access",
-          "Self-evaluation scores each response and steers future model choice",
-          "Rooted in MSc heuristic search and PDDL planning"
+          "A lead agent splits each research turn across 2–3 workers, by angle or by topic",
+          "Every worker is built on demand with its own persona, tools and live web search",
+          "The lead writes one combined report, then proposes the next moves",
+          "Rooted in MSc research on heuristic search and PDDL planning"
         ],
         "href": "https://agent.carkus.com",
         "tags": [
-          "Self-Scaffolding Agents",
-          "Master/Worker Delegation",
-          "Self-Sequenced Planning",
+          "Multi-agent",
+          "Lead/Worker Delegation",
+          "Self-Scaffolding",
+          "Web Search",
+          "Heuristic Search"
+        ],
+        "cta": "Open Agent One ↗",
+        "className": "rail-badge--pill-cta"
+      },
+      {
+        "type": "card",
+        "id": "guardrails",
+        "icon": "⛨",
+        "title": "Guardrails & Safe Execution",
+        "points": [
+          "Generated tool code is checked before it runs, then run in a locked-down, secret-free sandbox",
+          "Mission, allowed tools and limits are written as a spec and enforced in code",
+          "A separate judge call screens replies that stray out of scope"
+        ],
+        "href": "https://agent.carkus.com",
+        "tags": [
+          "Sandboxing",
+          "AST Checks",
+          "Structured Spec",
+          "Scope Guard"
+        ],
+        "cta": "Open Agent One ↗",
+        "className": "rail-badge--pill-cta"
+      },
+      {
+        "type": "card",
+        "id": "evals",
+        "icon": "◎",
+        "title": "Evals & Observability",
+        "points": [
+          "Every reply, tool call and delegation is graded and tagged with the model behind it",
+          "Offline evals replay recorded tool responses, so model comparisons are repeatable",
+          "A case file shows each step's model, timing and tokens"
+        ],
+        "href": "https://agent.carkus.com",
+        "tags": [
           "Self-Evaluation",
-          "MCP",
-          "Heuristic Search",
-          "PDDL"
+          "Offline Evals",
+          "UCB1 Bandit",
+          "Tracing"
         ],
         "cta": "Open Agent One ↗",
         "className": "rail-badge--pill-cta"
@@ -111,60 +149,41 @@
         "type": "card",
         "id": "orchestration",
         "icon": "⇄",
-        "title": "Provider Orchestration & Resilience",
+        "title": "Provider Cascades & MCP",
         "points": [
-          "Fallback chain across Claude, Gemini and Ollama on errors, rate limits or bad keys",
-          "Correction-prompt retry on malformed output before failing over",
-          "Parallel multi-provider ensembles, with every fallback logged"
+          "Fallback chains across Claude, Gemini, Cloudflare-hosted Qwen and local Ollama",
+          "One cascade shared to other sites as an MCP server, instead of rebuilt in each",
+          "Agents and JobFit tools published over MCP for Claude and other clients"
         ],
         "href": "https://moot.carkus.com",
         "tags": [
           "Fallback Chains",
-          "Retry-on-Malformed",
-          "Parallel Ensembles",
-          "Cost Tiering"
-        ],
-        "cta": "Open in Chatty Prayers ↗",
-        "className": "rail-badge--pill-cta"
-      },
-      {
-        "type": "card",
-        "id": "local-first",
-        "icon": "⌂",
-        "title": "Local-First & Privacy",
-        "points": [
-          "Local LLM as fallback or default, keeping sensitive data off the cloud",
-          "Fully local agent bootstrapping and chat via Ollama for private development",
-          "Local model picks backed by measured pass rates, not assumptions"
-        ],
-        "href": "https://agent.carkus.com",
-        "tags": [
+          "MCP Servers",
+          "Workers AI",
           "Ollama",
-          "Local LLM",
-          "Data Privacy",
-          "Local Embeddings"
+          "Local-First"
         ],
-        "cta": "Open in Agent One ↗",
+        "cta": "Open Chatty Prayers ↗",
         "className": "rail-badge--pill-cta"
       },
       {
         "type": "card",
-        "id": "structured",
+        "id": "applied",
         "icon": "▤",
-        "title": "Structured Output & Prompt Discipline",
+        "title": "AI Inside the Product",
         "points": [
-          "Typed, schema-validated outputs from reusable, per-task-tuned prompts",
-          "Concrete JSON examples in prompts — an exact target, not a field list",
-          "Generated tool code compile-checked before it ever runs"
+          "JobFit ranks live job listings against a CV and hides the off-target ones",
+          "A daily digest email, where one click returns a tailored CV and cover letter",
+          "Typed, schema-validated outputs with a correction retry before any fallback"
         ],
-        "href": "https://editor.carkus.com/form-editor",
+        "href": "https://jobfit.carkus.com",
         "tags": [
-          "Schema-first Prompting",
-          "Typed Outputs",
-          "Prompt Templates",
-          "Tool Schemas"
+          "Structured Output",
+          "Ranking",
+          "Automation",
+          "Schema-first Prompting"
         ],
-        "cta": "Open Form Editor ↗",
+        "cta": "Open JobFit ↗",
         "className": "rail-badge--pill-cta"
       },
       {
@@ -173,16 +192,16 @@
         "icon": "⌕",
         "title": "Retrieval & Grounding",
         "points": [
-          "Semantic search chunked and pre-fetched as needed",
-          "Past successful runs retrieved as few-shot examples for new agents",
+          "New agents are grounded on similar past builds, retrieved by embedding",
+          "Topics are embedded to flag near-duplicates and suggest related ones",
           "Live context such as weather and news injected at generation time"
         ],
         "href": "https://moot.carkus.com",
         "tags": [
           "RAG",
           "Embeddings",
-          "Context Injection",
-          "Few-shot Retrieval"
+          "Few-shot Retrieval",
+          "Context Injection"
         ],
         "cta": "See it in Chatty Prayers ↗",
         "className": "rail-badge--pill-cta"
