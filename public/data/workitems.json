@@ -6,10 +6,10 @@
       {
         "id": "agent-one",
         "title": "Agent One - Agent Workers",
-        "tags": ["Local LLMs", "Ollama", "AWS Lambda", "Agentic"],
+        "tags": ["Local LLMs", "Ollama", "DigitalOcean", "Linux / nginx", "Agentic", "Multi-agent", "MCP"],
         "imageUrl": "/img/AgentOne_logo.jpg",
-        "description": "Self-scaffolding and self-evaluating agent platform — describe a task in plain language and it builds purpose-built agents, assigns a role, accesses MCP tools, via Ollama locally or through Gemini. Checks its own responses and learns which models perform best.",
-        "summary": "Self-scaffolding and self-evaluating agent platform — describe a task in plain language and it builds purpose-built agents, assigns a role and accesses MCP tools, via Ollama locally or through Gemini.",
+        "description": "Self-scaffolding, self-evaluating agent platform — give it a focus (keywords, an image or documents) and it writes a brief, designs a purpose-built agent with its own tools, and leads a team of worker agents researching in parallel with live web search and MCP tools. It proposes the outputs worth making — reports, charts, diagrams, spreadsheets — checks its own answers, shows a trace of every step, and learns which model (Gemini, Cloudflare-hosted Qwen or local Ollama) performs best.",
+        "summary": "Self-scaffolding agent platform — give it a focus and it designs a purpose-built agent, leads a team of worker agents with live web search and MCP tools, and delivers reports, charts and spreadsheets while checking its own work.",
         "featured": true,
         "width": 50,
         "links": [
@@ -230,6 +230,17 @@
         "title": "Markdown Viewer",
         "tags": ["React", "react-markdown"],
         "description": "Lightweight Markdown rendering utility with syntax-highlighted code blocks and GitHub-flavoured Markdown support.",
+        "featured": false,
+        "width": 25,
+        "links": []
+      },
+      {
+        "id": "globetrotter",
+        "title": "Globetrotter",
+        "tags": ["React Native", "Geo", "Social", "Tourism"],
+        "imageUrl": "/img/promo-square.jpg",
+        "description": "Pocket tour guide that flags what's worth seeing as you wander — or tell it your time, pace and interests and AI plans a routed day out from real places nearby.",
+        "summary": "Pocket tour guide that flags what's worth seeing as you wander — or tell it your time, pace and interests and AI plans a routed day out from real places nearby.",
         "featured": false,
         "width": 25,
         "links": []

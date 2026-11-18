@@ -1253,10 +1253,9 @@ footer p { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; 
     transform-origin: var(--img-pos, center); user-select: none;
 }
 /* In-card slideshow frames: stacked over the cover, fading in when active.
-   Shown whole (contain) on a dark ground, since gallery shots are often
-   phone screens or wide UI captures that a cover crop would cut apart. */
+   They fill the square tile (cover, centred) like the cover image does. */
 .rail-work-slide {
-    object-fit: contain; object-position: center; transform: none;
+    object-fit: cover; object-position: center; transform: none;
     background: #0b0f17; opacity: 0; transition: opacity 0.8s ease;
 }
 .rail-work-slide.active { opacity: 1; }
